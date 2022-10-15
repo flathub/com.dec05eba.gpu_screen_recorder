@@ -62,7 +62,7 @@ modules:
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder
-        commit: 9d185f309151a198e2f51e613e9a9dfaff5f6d6d
+        commit: 3266868c0a36f74aa71a4022300f766d48a2ee05
 
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
@@ -76,4 +76,4 @@ modules:
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder-gtk
-        commit: de8a42c584d39af683f90085c4222131226bf91f
+        commit: 44fd627564b99106de238e7f7ee322506d71ae15
