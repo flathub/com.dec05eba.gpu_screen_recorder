@@ -29,7 +29,6 @@ modules:
       - --disable-videotoolbox
       - --disable-vulkan
       - --disable-sdl2
-      - --disable-filters
       - --disable-postproc
       - --disable-autodetect
       - --enable-nvenc
