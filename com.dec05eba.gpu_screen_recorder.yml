@@ -29,8 +29,6 @@ modules:
       - --disable-videotoolbox
       - --disable-vulkan
       - --disable-sdl2
-      - --disable-filters
-      - --disable-avfilter
       - --disable-postproc
       - --disable-autodetect
       - --enable-nvenc
@@ -62,7 +60,7 @@ modules:
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder
-        commit: 397d3cb91968fdd7f9a4cf2ac74b4d8a4e5a208e
+        commit: 1d8d95fba49a6c1eb6304d439b671f39595b984d
 
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
@@ -76,4 +74,4 @@ modules:
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder-gtk
-        commit: ba21ad93a116f3a0de9421344c0e5a894a58689a
+        commit: 62a189716189f9ee6bdb78b0378d713627030894
