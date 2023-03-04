@@ -33,6 +33,7 @@ modules:
       - --disable-autodetect
       - --enable-nvenc
       - --enable-ffnvcodec
+      - --enable-libopus
     cleanup:
       - /share/ffmpeg/examples
     sources:
@@ -60,7 +61,7 @@ modules:
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder
-        commit: fdcdfd2b35c50cd292da6da9b783fa002df3c13e
+        commit: 8ca1ac70e8466d7aba0a57236a1d068939540a3f
 
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
@@ -74,4 +75,4 @@ modules:
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder-gtk
-        commit: f8a1b99a922d75bbd12f398e5d2e535c059c542e
+        commit: 1e72393013805da2581188504d33ec16d2cb1cf2
