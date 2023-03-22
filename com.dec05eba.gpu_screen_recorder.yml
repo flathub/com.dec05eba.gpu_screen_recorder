@@ -62,6 +62,18 @@ modules:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder
         commit: 78398f9bddf35e7a753f7bb41d9d063b671f6669
+    modules:
+      - name: libXNVCtrl
+        no-autogen: true
+        no-make-install: true
+        subdir: src/libXNVCtrl
+        build-commands:
+          - gcc -shared NVCtrl.c -o libXNVCtrl.so.0 -O2 -s -g0 -lX11 -lXext
+          - install -Dm755 libXNVCtrl.so.0 $FLATPAK_DEST/lib/libXNVCtrl.so.0
+        sources:
+          - type: archive
+            url: https://github.com/NVIDIA/nvidia-settings/archive/refs/tags/530.30.02.tar.gz
+            sha256: 8f69170b339f2cb720b3bb7e63bf851277a7238ebf4a5d581f74dcdff1c19433
 
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
