@@ -40,17 +40,27 @@ modules:
       - type: archive
         url: https://ffmpeg.org/releases/ffmpeg-5.1.2.tar.xz
         sha256: 619e706d662c8420859832ddc259cd4d4096a48a2ce1eefd052db9e440eef3dc
+        x-checker-data:
+          type: anitya
+          project-id: 5405
+          stable-only: true
+          url-template: https://ffmpeg.org/releases/ffmpeg-$version.tar.xz
     modules:
       - name: ffnvcodec
         no-autogen: true
         make-install-args:
           - PREFIX=${FLATPAK_DEST}
         cleanup:
-          - '*'
+          - "*"
         sources:
           - type: archive
             url: https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n11.1.5.1.tar.gz
             sha256: d095fbd56aa93772471a323be0ebe65504a0f43f06c76a30b6d25da77b06ae9c
+            x-checker-data:
+              type: anitya
+              project-id: 223796
+              stable-only: true
+              url-template: https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n$version.tar.gz
 
   - name: gpu-screen-recorder
     disabled: false
