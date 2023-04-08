@@ -62,7 +62,7 @@ modules:
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder
-        commit: bed3a2c681fd5827c22f02ad026dcff5fc7470fd
+        commit: d8d0e739e7e40c0b69ecd88160855646684ef3a8
     modules:
       - name: libXNVCtrl
         no-autogen: true
@@ -88,4 +88,4 @@ modules:
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder-gtk
-        commit: 3b775bd7f121a8309b1baa2c67296e5770a17dc1
+        commit: 6b78e40e256168742334897e1411fbe472b8b35a
