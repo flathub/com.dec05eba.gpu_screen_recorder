@@ -22,7 +22,6 @@ modules:
       - --disable-doc
       - --disable-programs
       - --disable-decoders
-      - --disable-vaapi
       - --disable-vdpau
       - --disable-amf
       - --disable-audiotoolbox
@@ -34,6 +33,7 @@ modules:
       - --enable-nvenc
       - --enable-ffnvcodec
       - --enable-libopus
+      - --enable-vaapi
     cleanup:
       - /share/ffmpeg/examples
     sources:
@@ -46,7 +46,7 @@ modules:
         make-install-args:
           - PREFIX=${FLATPAK_DEST}
         cleanup:
-          - '*'
+          - "*"
         sources:
           - type: archive
             url: https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n11.1.5.1.tar.gz
@@ -57,11 +57,12 @@ modules:
     buildsystem: simple
     build-commands:
       - ./build.sh
+      - install -Dm755 gsr-kms-server $FLATPAK_DEST/bin/gsr-kms-server
       - install -Dm755 gpu-screen-recorder $FLATPAK_DEST/bin/gpu-screen-recorder
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder
-        commit: 78398f9bddf35e7a753f7bb41d9d063b671f6669
+        commit: 8d250f7e33d568b26d2a034e10b33f0cd193268d
     modules:
       - name: libXNVCtrl
         no-autogen: true
@@ -87,4 +88,4 @@ modules:
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder-gtk
-        commit: 543d11a3c01029d40c5351d466803533a9a2ccd4
+        commit: 40b03ab0dca7d948051a40d68db7602a652b8351
