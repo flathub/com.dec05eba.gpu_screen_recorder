@@ -58,12 +58,12 @@ modules:
     buildsystem: simple
     build-commands:
       - ./build.sh
-      - install -Dm755 gsr-kms-server $FLATPAK_DEST/bin/gsr-kms-server
-      - install -Dm755 gpu-screen-recorder $FLATPAK_DEST/bin/gpu-screen-recorder
+      - install -Dm755 gsr-kms-server "$FLATPAK_DEST/bin/gsr-kms-server"
+      - install -Dm755 gpu-screen-recorder "$FLATPAK_DEST/bin/gpu-screen-recorder"
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder
-        commit: efea5741ca807be7924cacaf2e76ab3908524564
+        commit: ce5e0169c40cbb5b4ea93efec64fb72408605195
     modules:
       - name: libXNVCtrl
         no-autogen: true
@@ -81,12 +81,12 @@ modules:
     buildsystem: simple
     build-commands:
       - ./build.sh
-      - install -Dm755 gpu-screen-recorder-gtk $FLATPAK_DEST/bin/gpu-screen-recorder-gtk
-      - install -Dm644 gpu-screen-recorder-gtk.desktop $FLATPAK_DEST/share/applications/com.dec05eba.gpu_screen_recorder.desktop
-      - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml $FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml
-      - install -Dm644 icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png $FLATPAK_DEST/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png
-      - install -Dm644 icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png $FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png
+      - install -Dm755 gpu-screen-recorder-gtk "$FLATPAK_DEST/bin/gpu-screen-recorder-gtk"
+      - install -Dm644 gpu-screen-recorder-gtk.desktop "$FLATPAK_DEST/share/applications/com.dec05eba.gpu_screen_recorder.desktop"
+      - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
+      - install -Dm644 icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png "$FLATPAK_DEST/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
+      - install -Dm644 icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder-gtk
-        commit: 2723d51ec5ddbc4bd7b2479aaabc07ae397c89e6
+        commit: 0f15489942f57d01d180e68a9698576176328915
