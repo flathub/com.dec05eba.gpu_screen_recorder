@@ -11,7 +11,6 @@ finish-args:
   - --device=dri
   - --share=network
   - --filesystem=host
-  - --talk-name=org.freedesktop.Flatpak
 
 modules:
   - name: ffmpeg
@@ -63,7 +62,7 @@ modules:
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder
-        commit: e7020376e9b05bdcea5f4460a286218a41f3a6e7
+        commit: 5ea4e7fff1b332d2c16f8163a50b0b6d81ef23dd
     modules:
       - name: libXNVCtrl
         no-autogen: true
@@ -89,4 +88,4 @@ modules:
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder-gtk
-        commit: 79f6f7c1791a35a620cd6a00287083016f746353
+        commit: 13421a8802a7478002556da419852d004558317a
