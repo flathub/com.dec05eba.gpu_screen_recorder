@@ -37,9 +37,13 @@ modules:
     cleanup:
       - /share/ffmpeg/examples
     sources:
-      - type: archive
-        url: https://ffmpeg.org/releases/ffmpeg-5.1.2.tar.xz
-        sha256: 619e706d662c8420859832ddc259cd4d4096a48a2ce1eefd052db9e440eef3dc
+      - type: git
+        url: https://git.ffmpeg.org/ffmpeg.git
+        commit: eacfcbae690f914a4b1b4ad06999f138540cc3d8
+        tag: n5.1.2
+        x-checker-data:
+          type: git
+          tag-pattern: ^n(5[\d.]+)$
     modules:
       - name: ffnvcodec
         no-autogen: true
@@ -48,9 +52,13 @@ modules:
         cleanup:
           - "*"
         sources:
-          - type: archive
-            url: https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n11.1.5.1.tar.gz
-            sha256: d095fbd56aa93772471a323be0ebe65504a0f43f06c76a30b6d25da77b06ae9c
+          - type: git
+            url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
+            commit: 84483da70d903239d4536763fde8c7e6c4e80784
+            tag: n11.1.5.1
+            x-checker-data:
+              type: git
+              tag-pattern: ^n(11[\d.]+)$
 
   - name: gpu-screen-recorder
     disabled: false
