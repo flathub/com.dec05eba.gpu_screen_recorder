@@ -80,9 +80,13 @@ modules:
           - gcc -shared NVCtrl.c -o libXNVCtrl.so.0 -O2 -s -g0 -lX11 -lXext
           - install -Dm755 libXNVCtrl.so.0 $FLATPAK_DEST/lib/libXNVCtrl.so.0
         sources:
-          - type: archive
-            url: https://github.com/NVIDIA/nvidia-settings/archive/refs/tags/530.30.02.tar.gz
-            sha256: 8f69170b339f2cb720b3bb7e63bf851277a7238ebf4a5d581f74dcdff1c19433
+          - type: git
+            url: https://github.com/NVIDIA/nvidia-settings.git
+            commit: 51f784cfb23ea48cdf9339a104340993df261f5b
+            tag: 530.30.02
+            x-checker-data:
+              type: git
+              tag-pattern: ^(530[\d.]+)$
 
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
