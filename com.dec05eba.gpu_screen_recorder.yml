@@ -1,6 +1,6 @@
 app-id: com.dec05eba.gpu_screen_recorder
 runtime: org.freedesktop.Platform
-runtime-version: "22.08"
+runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
 command: gpu-screen-recorder-gtk
 separate-locales: false
@@ -38,20 +38,28 @@ modules:
     cleanup:
       - /share/ffmpeg/examples
     sources:
-      - type: archive
-        url: https://ffmpeg.org/releases/ffmpeg-5.1.2.tar.xz
-        sha256: 619e706d662c8420859832ddc259cd4d4096a48a2ce1eefd052db9e440eef3dc
+      - type: git
+        url: https://git.ffmpeg.org/ffmpeg.git
+        commit: 963937e408fc68b5925f938a253cfff1d506f784
+        tag: n5.1.3
+        x-checker-data:
+          type: git
+          tag-pattern: ^n(5[\d.]+)$
     modules:
       - name: ffnvcodec
         no-autogen: true
         make-install-args:
           - PREFIX=${FLATPAK_DEST}
         cleanup:
-          - "*"
+          - '*'
         sources:
-          - type: archive
-            url: https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n11.1.5.1.tar.gz
-            sha256: d095fbd56aa93772471a323be0ebe65504a0f43f06c76a30b6d25da77b06ae9c
+          - type: git
+            url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
+            commit: f8ae7a49bfef2f99d2c931a791dc3863fda67bf3
+            tag: n11.1.5.2
+            x-checker-data:
+              type: git
+              tag-pattern: ^n(11[\d.]+)$
 
   - name: gpu-screen-recorder
     disabled: false
@@ -73,9 +81,13 @@ modules:
           - gcc -shared NVCtrl.c -o libXNVCtrl.so.0 -O2 -s -g0 -lX11 -lXext
           - install -Dm755 libXNVCtrl.so.0 $FLATPAK_DEST/lib/libXNVCtrl.so.0
         sources:
-          - type: archive
-            url: https://github.com/NVIDIA/nvidia-settings/archive/refs/tags/530.30.02.tar.gz
-            sha256: 8f69170b339f2cb720b3bb7e63bf851277a7238ebf4a5d581f74dcdff1c19433
+          - type: git
+            url: https://github.com/NVIDIA/nvidia-settings.git
+            commit: 8c0ba0680bd4941dc66b471ed2b3fc13f661e45d
+            tag: 530.41.03
+            x-checker-data:
+              type: git
+              tag-pattern: ^(530[\d.]+)$
 
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
@@ -84,8 +96,10 @@ modules:
       - install -Dm755 gpu-screen-recorder-gtk "$FLATPAK_DEST/bin/gpu-screen-recorder-gtk"
       - install -Dm644 gpu-screen-recorder-gtk.desktop "$FLATPAK_DEST/share/applications/com.dec05eba.gpu_screen_recorder.desktop"
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
-      - install -Dm644 icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png "$FLATPAK_DEST/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
-      - install -Dm644 icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
+      - install -Dm644 icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png
+        "$FLATPAK_DEST/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
+      - install -Dm644 icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png
+        "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: git
         url: https://repo.dec05eba.com/gpu-screen-recorder-gtk
