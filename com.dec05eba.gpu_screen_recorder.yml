@@ -1,15 +1,12 @@
 app-id: com.dec05eba.gpu_screen_recorder
 runtime: org.freedesktop.Platform
-runtime-version: "22.08"
+runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
 command: gpu-screen-recorder-gtk
 separate-locales: false
 finish-args:
   - --device=dri
-  - --filesystem=/media
-  - --filesystem=/mnt
-  - --filesystem=/run/media
-  - --filesystem=xdg-videos
+  - --filesystem=host
   - --share=ipc
   - --share=network
   - --socket=pulseaudio
@@ -58,7 +55,7 @@ modules:
         make-install-args:
           - PREFIX=${FLATPAK_DEST}
         cleanup:
-          - "*"
+          - '*'
         sources:
           - type: git
             url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
