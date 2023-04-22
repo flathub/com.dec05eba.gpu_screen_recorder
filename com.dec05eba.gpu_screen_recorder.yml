@@ -5,13 +5,17 @@ sdk: org.freedesktop.Sdk
 command: gpu-screen-recorder-gtk
 separate-locales: false
 finish-args:
-  - --share=ipc
-  - --socket=x11
-  - --socket=pulseaudio
   - --device=dri
-  - --share=network
   - --filesystem=host
+  - --share=ipc
+  - --share=network
+  - --socket=pulseaudio
+  - --socket=x11
   - --talk-name=org.freedesktop.Flatpak
+
+cleanup:
+  - /include
+  - /lib/pkgconfig
 
 modules:
   - name: ffmpeg
