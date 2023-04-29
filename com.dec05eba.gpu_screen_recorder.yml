@@ -48,7 +48,9 @@ modules:
         tag: n5.1.3
         x-checker-data:
           type: git
-          tag-pattern: ^n(5[\d.]+)$
+          tag-pattern: ^n([\d.]+)$
+          versions:
+            <: '6'
     modules:
       - name: ffnvcodec
         no-autogen: true
@@ -63,7 +65,9 @@ modules:
             tag: n11.1.5.2
             x-checker-data:
               type: git
-              tag-pattern: ^n(11[\d.]+)$
+              tag-pattern: ^n([\d.]+)$
+              versions:
+                <: '12'
 
   - name: gpu-screen-recorder
     disabled: false
@@ -91,7 +95,9 @@ modules:
             tag: 530.41.03
             x-checker-data:
               type: git
-              tag-pattern: ^(530[\d.]+)$
+              tag-pattern: ^([\d.]+)$
+              versions:
+                <: '531'
 
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
