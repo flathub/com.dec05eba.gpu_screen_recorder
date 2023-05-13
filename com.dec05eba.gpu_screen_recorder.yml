@@ -77,9 +77,10 @@ modules:
       - install -Dm755 gsr-kms-server "$FLATPAK_DEST/bin/gsr-kms-server"
       - install -Dm755 gpu-screen-recorder "$FLATPAK_DEST/bin/gpu-screen-recorder"
     sources:
-      - type: git
-        url: https://repo.dec05eba.com/gpu-screen-recorder
-        commit: 26571094aa67d2f4829ea0fc1649aed37d8fbaf5
+      - type: archive
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r300.2657109.tar.gz
+        sha256: 55f4be23fdcfbf68988fd859e95671570fb1e15dec2195b2652fe610eef42543
+        strip-components: 0
     modules:
       - name: libXNVCtrl
         no-autogen: true
@@ -111,6 +112,7 @@ modules:
       - install -Dm644 icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
-      - type: git
-        url: https://repo.dec05eba.com/gpu-screen-recorder-gtk
-        commit: 81eef850242ea988366546dcb94137fd44d817c7
+      - type: archive
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r131.81eef85.tar.gz
+        sha256: 88840757bf1e56b8b30956a6e52f3cc3816d32aaee5915fa44c7f57a0052ba18
+        strip-components: 0
