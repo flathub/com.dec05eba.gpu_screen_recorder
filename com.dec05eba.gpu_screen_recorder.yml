@@ -79,7 +79,7 @@ modules:
     sources:
       - type: archive
         url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r304.cfec0ef.tar.gz
-        sha256: d83a03d8d35c15c938a9668e46f9dc5e423a56667876fdf89780a7a10d0af22b188667a25d30b6411f8f62034c33773a484daa8d4eb6bbeffc30a281f0b0fa62
+        sha512: d83a03d8d35c15c938a9668e46f9dc5e423a56667876fdf89780a7a10d0af22b188667a25d30b6411f8f62034c33773a484daa8d4eb6bbeffc30a281f0b0fa62
         strip-components: 0
     modules:
       - name: libXNVCtrl
