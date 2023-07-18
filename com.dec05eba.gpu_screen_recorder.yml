@@ -11,6 +11,7 @@ finish-args:
   - --share=network
   - --socket=pulseaudio
   - --socket=x11
+  - --socket=wayland
   - --talk-name=org.freedesktop.Flatpak
 
 cleanup:
@@ -78,8 +79,8 @@ modules:
       - install -Dm755 gpu-screen-recorder "$FLATPAK_DEST/bin/gpu-screen-recorder"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r319.f0710b1.tar.gz
-        sha512: a5d4e9e628fbb1707acbcda3b40b396eff533d2947162a4847925aba8eea439aeb2a4e90b81d65bcfdb6b6145c025a134c7bb799c9da5587673efbc200f9fe0f
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r327.a3beaeb.tar.gz
+        sha512: 696da0facdb768dd5690bab968b47992ecf3aa09581a3b65881c31e48652392c8f77910076f549ec110c28799501b3083e784fa3744d1c5939cb8cc225240173
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -113,6 +114,6 @@ modules:
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r141.32a194d.tar.gz
-        sha512: a7522eefae7a7642713afe5b25a8ef52b4637c8d4bc682204ac6201bda57ca628ad5e46488f094466c8d2535c29dca093f205a42837f2b8e9da2ce3eb373da13
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r144.0993c58.tar.gz
+        sha512: 05b302a9e51a18688c25a62cd3e099cf01d03f85137ca01077c5ac224c456d709f94251764aa53e604d9766feb1a0232df954c3655ff3bca883e084af15a3a9f
         strip-components: 0
