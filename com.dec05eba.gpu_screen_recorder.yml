@@ -81,8 +81,8 @@ modules:
       - install -Dm755 gpu-screen-recorder "$FLATPAK_DEST/bin/gpu-screen-recorder"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r395.44d5006.tar.gz
-        sha512: 54a2220082133b9091e0af5c39f98d14821d81533092be2a0588589827ebb825199b0a6646f09275cb9642a2beff58e4227e52b82876edc26dc7543658b60d95
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r396.51154b7.tar.gz
+        sha512: a1918a52f5a69d2da7f41bffe49803b80f4277126bf535134683cf66b70c11ed4d74e6aa40ab2972a73e0abd55ea854b54cf4029c47741b5485fc22aad261611
         strip-components: 0
     modules:
       - name: libXNVCtrl
