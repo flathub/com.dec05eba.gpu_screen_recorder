@@ -117,5 +117,5 @@ modules:
     sources:
       - type: archive
         url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r175.cfd18af.tar.gz
-        sha512: 524f9df25c350b50f5b7e7c7db4e94918c19f61d55bcc39b10e097de1f2bde25a36134570d5b04094504791c609511d15b448
+        sha512: 524f9df25c350b50f5b7e7c7db4e94918c19f61d55bcc39b10e097de1f2bde25a36134570d5b04094504791c609511d15b448a1efc08f8ab90082afb14164b14
         strip-components: 0
