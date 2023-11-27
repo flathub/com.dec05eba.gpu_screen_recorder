@@ -52,8 +52,6 @@ modules:
           tag-pattern: ^n([\d.]+)$
           versions:
             <: '6'
-      - type: patch
-        path: patches/clip-constants-used-with-shift.patch
     modules:
       - name: ffnvcodec
         no-autogen: true
