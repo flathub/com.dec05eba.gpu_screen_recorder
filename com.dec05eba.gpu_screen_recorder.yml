@@ -45,15 +45,13 @@ modules:
     sources:
       - type: git
         url: https://git.ffmpeg.org/ffmpeg.git
-        commit: 963937e408fc68b5925f938a253cfff1d506f784
-        tag: n5.1.3
+        commit: 4729204c17f756e186d622060088371d10b34f7e
+        tag: n5.1.4
         x-checker-data:
           type: git
           tag-pattern: ^n([\d.]+)$
           versions:
             <: '6'
-      - type: patch
-        path: patches/clip-constants-used-with-shift.patch
     modules:
       - name: ffnvcodec
         no-autogen: true
