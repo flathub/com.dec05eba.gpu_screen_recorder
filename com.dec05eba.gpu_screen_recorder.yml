@@ -79,8 +79,8 @@ modules:
       - install -Dm755 gpu-screen-recorder "$FLATPAK_DEST/bin/gpu-screen-recorder"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r434.31e8ba8.tar.gz
-        sha512: dd55e2d0a5bd90c0fe925dc80dc76a8f03b9b8f87c0797948767c2c36754f7cf1312b1e758e7640481baa3e889d1689f300821aa31a771f40d19f14f09ff017f
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r435.f9e067b.tar.gz
+        sha512: f347d30fb09c16fc213bfca28e1f39569ce9f68cc5bae73213efb4332493f6facfe99b3c550406fa15cac3fb39849ea645bf1ffe6f12dd5f6f8cbedfc52cd08d
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -114,6 +114,6 @@ modules:
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r187.e8df27f.tar.gz
-        sha512: cdcdc6291b7d7fc4a47466ad0c3569a369f6f9e14b2428765c667563e6333114b1698c471874bd57255a3b5204ce43f139daf146f0eeb20b9113e43c5cdcd930
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r188.84bc482.tar.gz
+        sha512: 62cd2967161a9fb9eda6e0bfcb981f8f1208ce23835c8385f92962558eb99d0e929d252028bddfa1dc59fa3ae2691d080c439606cbef4b68a3986fcd7dbdf96b
         strip-components: 0
