@@ -45,13 +45,13 @@ modules:
     sources:
       - type: git
         url: https://git.ffmpeg.org/ffmpeg.git
-        commit: 4729204c17f756e186d622060088371d10b34f7e
-        tag: n5.1.4
+        commit: d4ff0020b40b524a490cf62eccbd3a318f4c0e58
+        tag: n6.1
         x-checker-data:
           type: git
           tag-pattern: ^n([\d.]+)$
           versions:
-            <: '6'
+            <: '7'
     modules:
       - name: ffnvcodec
         no-autogen: true
@@ -75,12 +75,19 @@ modules:
     buildsystem: simple
     build-commands:
       - ./build.sh
+      - gcc -c kms/server/kms_server.c -I$FLATPAK_DEST/include/libdrm $GSR_KMS_SERVER_OPTS
+      - gcc -o gsr-kms-server kms_server.o $FLATPAK_DEST/lib/libdrm.a $GSR_KMS_SERVER_OPTS
+      - strip gsr-kms-server
+      - strip gpu-screen-recorder
       - install -Dm755 gsr-kms-server "$FLATPAK_DEST/bin/gsr-kms-server"
       - install -Dm755 gpu-screen-recorder "$FLATPAK_DEST/bin/gpu-screen-recorder"
+    build-options:
+      env:
+        GSR_KMS_SERVER_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra -Werror -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r425.21a8180.tar.gz
-        sha512: bead8bef971fd40f5997558ddb58a5bd2f11e02ff333098f50160d7ca6b6aaaa40b056a9ecc79422c7daa2cf9276682274011823a0f13d330cd36299c5c64e4c
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r439.1260598.tar.gz
+        sha512: eea194db1db89d93ad975643541d5edbc2a31674f22ed1b1bc4d66f4e7269f5f99988d03d7965d7d68de0d6f4297d0866da8beaebddfe7f7839f6e5c5172e331
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -100,11 +107,28 @@ modules:
               tag-pattern: ^([\d.]+)$
               versions:
                 <: '531'
+      - name: libdrm
+        buildsystem: meson
+        config-opts:
+          - -Dintel=disabled
+          - -Dradeon=disabled
+          - -Damdgpu=disabled
+          - -Dnouveau=disabled
+          - -Dvmwgfx=disabled
+          - -Dcairo-tests=disabled
+          - -Dtests=false
+          - --default-library=static
+        sources:
+          - type: git
+            url: https://gitlab.freedesktop.org/mesa/drm.git
+            commit: 02a41cf302a69f0cd94aae96ec01d98b9398076e
+            tag: libdrm-2.4.118
 
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
     build-commands:
       - ./build.sh
+      - strip gpu-screen-recorder-gtk
       - install -Dm755 gpu-screen-recorder-gtk "$FLATPAK_DEST/bin/gpu-screen-recorder-gtk"
       - install -Dm644 gpu-screen-recorder-gtk.desktop "$FLATPAK_DEST/share/applications/com.dec05eba.gpu_screen_recorder.desktop"
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
@@ -114,6 +138,6 @@ modules:
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r177.9d94266.tar.gz
-        sha512: faa21a92da7887728b92c4e902ecb011324ee6a142ffe26ff89533cef1eacfd7a3e3ab120e5168d28a07ce4620c2f776862b5d92a95c04c8aff19c8d29dfd466
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r192.2937028.tar.gz
+        sha512: 350ba8c5772351048d866418e49fe4cdef599f1d41f6e6dcf81f078ef0d22e3b9e74e0165d6f558b50fd61e3f0f7e0e0998f5f69ab4b8ac90cd4b27b254e98fe
         strip-components: 0
