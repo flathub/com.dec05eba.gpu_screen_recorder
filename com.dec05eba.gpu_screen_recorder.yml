@@ -45,13 +45,13 @@ modules:
     sources:
       - type: git
         url: https://git.ffmpeg.org/ffmpeg.git
-        commit: 4729204c17f756e186d622060088371d10b34f7e
-        tag: n5.1.4
+        commit: d4ff0020b40b524a490cf62eccbd3a318f4c0e58
+        tag: n6.1
         x-checker-data:
           type: git
           tag-pattern: ^n([\d.]+)$
           versions:
-            <: '6'
+            <: '7'
     modules:
       - name: ffnvcodec
         no-autogen: true
@@ -86,8 +86,8 @@ modules:
         GSR_KMS_SERVER_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra -Werror -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r438.8e66363.tar.gz
-        sha512: 0a64f1c2a3a4386fd951af4134693897f245ae3cf449dce4d5f50b0dd5114751f4bc0c42181462ebacd211d3ea58ec213651a6e18ed2ded9e50d654235c2ebc0
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r439.1260598.tar.gz
+        sha512: eea194db1db89d93ad975643541d5edbc2a31674f22ed1b1bc4d66f4e7269f5f99988d03d7965d7d68de0d6f4297d0866da8beaebddfe7f7839f6e5c5172e331
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -138,6 +138,6 @@ modules:
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r190.19b5652.tar.gz
-        sha512: 16506c9a6f855424f83c25812abf4785ae30fff13b87ac418ccae9adef2725e26d26d0c34cb4ad7f51c98fe79cbb43ed1f442d27235133a4798cad7a646c3dc8
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r192.2937028.tar.gz
+        sha512: 350ba8c5772351048d866418e49fe4cdef599f1d41f6e6dcf81f078ef0d22e3b9e74e0165d6f558b50fd61e3f0f7e0e0998f5f69ab4b8ac90cd4b27b254e98fe
         strip-components: 0
