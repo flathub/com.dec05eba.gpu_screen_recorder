@@ -17,6 +17,7 @@ finish-args:
 cleanup:
   - /include
   - /lib/pkgconfig
+  - /lib/libdrm.a
 
 modules:
   - name: ffmpeg
