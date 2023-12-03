@@ -87,8 +87,8 @@ modules:
         GSR_KMS_SERVER_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra -Werror -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r439.1260598.tar.gz
-        sha512: eea194db1db89d93ad975643541d5edbc2a31674f22ed1b1bc4d66f4e7269f5f99988d03d7965d7d68de0d6f4297d0866da8beaebddfe7f7839f6e5c5172e331
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r440.852882b.tar.gz
+        sha512: 81f51cf887f731467aeebe140c40e7d4aa64b40fd6c17117eb7576ab581167ab4f2ffc73357522adca03c08f01032cc79354cc460130d7815898f60b2ec88b37
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -139,6 +139,6 @@ modules:
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r192.2937028.tar.gz
-        sha512: 350ba8c5772351048d866418e49fe4cdef599f1d41f6e6dcf81f078ef0d22e3b9e74e0165d6f558b50fd61e3f0f7e0e0998f5f69ab4b8ac90cd4b27b254e98fe
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r194.1fe930b.tar.gz
+        sha512: 9a180b445dec4f8c551c0affe65ab608bd65c3dc41238d28236af19005ed3288ec66a19dec202d11b1bcb73be07fd5be29792536e2aea692046c704a9a8409bc
         strip-components: 0
