@@ -13,6 +13,7 @@ finish-args:
   - --socket=x11
   - --socket=wayland
   - --talk-name=org.freedesktop.Flatpak
+  - --talk-name=org.freedesktop.Notifications
 
 cleanup:
   - /include
@@ -87,8 +88,8 @@ modules:
         GSR_KMS_SERVER_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra -Werror -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r450.275d4d1.tar.gz
-        sha512: d4a1a01a48f3ac537234645179d56b36150dfc1e8b8c2077e2e11b64106edbe667e1948568130153387b12663fcbd27406682d18215a4deaa56b3fff3d4756ca
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r455.4c098a4.tar.gz
+        sha512: 6d91cb9a3aa76518b837d8ebcb21069675c7c7e7414c20ee2a528da5cb1f2cad1f95af72aa74f726b515b5f065461e5e73231600f83fb6c715046bf3a36442e4
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -139,6 +140,6 @@ modules:
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r198.8fd4646.tar.gz
-        sha512: 725ba7239f3e3dfa3428dfaa44029ea7944cd78d18bb25f78ce9336ede06a3133c395c7072462e0116b53e3446e6e2ba48146b773b504c8008e67fd9fd663af0
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r203.2cbbcc7.tar.gz
+        sha512: 9592bf41b09c988757d30a7fd110c3751698413e9f6df0629c4bb0a56fbb512ce2b9d388a9fbc6fa6bba2c5533f83d20109750053c0ee70788b3d382034fe076
         strip-components: 0
