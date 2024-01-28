@@ -88,8 +88,8 @@ modules:
         GSR_KMS_SERVER_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra -Werror -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r466.846bda7.tar.gz
-        sha512: 37b8e482687b78d290e002474299a8d4d8a2e20d7c667acf2870511da909bbefd24b9b0c74dbd4f0aa3364c509fc48334309c6290528d26e976e8835c41a9e10
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r468.0702aad.tar.gz
+        sha512: 2e13b8964d0fe06b65800bffc4c86af41be50aac5c8d68457728e4e5e9a03214adbfed919fbb0f93968975438b7953f641589b6e059717ac325505687293f96e
         strip-components: 0
     modules:
       - name: libXNVCtrl
