@@ -71,6 +71,18 @@ modules:
               tag-pattern: ^n([\d.]+)$
               versions:
                 <: '12'
+  
+  - name: kms-server-proxy
+    disabled: false
+    buildsystem: simple
+    build-commands:
+      - ./build.sh
+      - install -Dm755 kms-server-proxy "$FLATPAK_DEST/bin/kms-server-proxy"
+    sources:
+      - type: archive
+        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r4.08693e6.tar.gz
+        sha512: da2b12591aecf25e00af7c8b1f8a0e8f7278dbf45e396ef2af10eb93c1f0f546460ceb020ee55b551718b968ff381ee3728b6809dafd072f86bcf46225ca2a02
+        strip-components: 0
 
   - name: gpu-screen-recorder
     disabled: false
@@ -88,8 +100,8 @@ modules:
         GSR_KMS_SERVER_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra -Werror -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r466.846bda7.tar.gz
-        sha512: 37b8e482687b78d290e002474299a8d4d8a2e20d7c667acf2870511da909bbefd24b9b0c74dbd4f0aa3364c509fc48334309c6290528d26e976e8835c41a9e10
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r482.cad85fc.tar.gz
+        sha512: 30f464974edd35ee0b0c86ecf9bb4334df16895f3d5a562883b20aacb39020bf10a855ea155cad3b24c87fdd6e20a6c9d4710e8a258d8cfa1856c4ac18832199
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -140,6 +152,6 @@ modules:
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r212.7477640.tar.gz
-        sha512: e488dccbd9aba0ed356d7795e90483b0460dad54787b2e93ced87118ae17530746a84cf45ede7e17a8e8be290ce74b454b172959119c3a9b1128c4020fd1065c
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r225.80e8604.tar.gz
+        sha512: 88dc2005e6d4a65b1bbbfcb47f7dc5166cf753b4e8f910908c88a8e90d8669fba0a7a58d745e64242b5435c59e14bc9162d6195cd72f7ba3e0d67002edc8e7a2
         strip-components: 0
