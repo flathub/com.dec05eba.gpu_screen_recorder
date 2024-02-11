@@ -47,8 +47,8 @@ modules:
     sources:
       - type: git
         url: https://git.ffmpeg.org/ffmpeg.git
-        commit: d4ff0020b40b524a490cf62eccbd3a318f4c0e58
-        tag: n6.1
+        commit: e38092ef9395d7049f871ef4d5411eb410e283e0
+        tag: n6.1.1
         x-checker-data:
           type: git
           tag-pattern: ^n([\d.]+)$
@@ -71,7 +71,6 @@ modules:
               tag-pattern: ^n([\d.]+)$
               versions:
                 <: '12'
-  
   - name: kms-server-proxy
     disabled: false
     buildsystem: simple
@@ -97,7 +96,8 @@ modules:
       - install -Dm755 gpu-screen-recorder "$FLATPAK_DEST/bin/gpu-screen-recorder"
     build-options:
       env:
-        GSR_KMS_SERVER_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra -Werror -DNDEBUG -static -static-libgcc
+        GSR_KMS_SERVER_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra -Werror
+          -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
         url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r482.cad85fc.tar.gz
