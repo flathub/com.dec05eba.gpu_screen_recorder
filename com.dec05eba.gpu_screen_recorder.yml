@@ -71,6 +71,7 @@ modules:
               tag-pattern: ^n([\d.]+)$
               versions:
                 <: '12'
+
   - name: kms-server-proxy
     disabled: false
     buildsystem: simple
@@ -79,8 +80,8 @@ modules:
       - install -Dm755 kms-server-proxy "$FLATPAK_DEST/bin/kms-server-proxy"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r4.08693e6.tar.gz
-        sha512: da2b12591aecf25e00af7c8b1f8a0e8f7278dbf45e396ef2af10eb93c1f0f546460ceb020ee55b551718b968ff381ee3728b6809dafd072f86bcf46225ca2a02
+        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r7.9b5c4b5.tar.gz
+        sha512: 0ba0b728bc1fbafe1aacafb31b341d2a3d6a3bfdeff2bf704b6d3bd381656fb56f64ec79cdef156456c1557c110bfb21a2c882ee06ca28e59bdf4dbc622aabc0
         strip-components: 0
 
   - name: gpu-screen-recorder
@@ -152,6 +153,6 @@ modules:
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r229.b385eb4.tar.gz
-        sha512: 6a2fcbfe5aef107e22bdd409689e350f8d6f2c2e0d45241d0e3ece523503f1113d71f82d311f1f7acae923f1a53edd1b530e2ae1915c623f38adce128cedb721
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r232.9ace94a.tar.gz
+        sha512: f0b495fde1726cad38b5965de555d8bbab71f20031cbf130c23f40087cb5f83b2e6dc3a5e70cae7d295edcb3e79b31d390556ec27f82240adf87efef44f0a5e7
         strip-components: 0
