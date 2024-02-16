@@ -80,8 +80,8 @@ modules:
       - install -Dm755 kms-server-proxy "$FLATPAK_DEST/bin/kms-server-proxy"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r5.d31dc61.tar.gz
-        sha512: 19f8696565a09c6a4fad593b438eef7ea5917661ed75671c30bc21944f84c11fde37061d5f3b5b8316bc4f35f4d229f0c6c9e989026970c27d52416f28a577bb
+        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r6.dece098.tar.gz
+        sha512: f7fc8b41127b5a006c4119fbc49a4824f9a19cd477789f4bbe42c066ca000ad4b30e0dadacad5ff7df3bb7db7e7bbbd1167547e23f094844bc8767b724ea9a55
         strip-components: 0
 
   - name: gpu-screen-recorder
