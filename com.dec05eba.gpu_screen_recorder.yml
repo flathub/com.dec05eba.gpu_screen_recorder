@@ -27,10 +27,13 @@ modules:
       - --enable-gpl
       - --disable-static
       - --enable-shared
+      - --disable-debug
       - --disable-doc
       - --disable-programs
       - --disable-decoders
       - --disable-vdpau
+      #- --disable-encoders
+      - --disable-filters
       - --disable-amf
       - --disable-audiotoolbox
       - --disable-videotoolbox
@@ -38,6 +41,7 @@ modules:
       - --disable-sdl2
       - --disable-postproc
       - --disable-autodetect
+      - --enable-filter=amix
       - --enable-nvenc
       - --enable-ffnvcodec
       - --enable-libopus
@@ -101,8 +105,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r491.2ed90a3.tar.gz
-        sha512: 68656fa35947ab444c83eb156c6acaef5da8850f3d8d3f04027742b8810e07600177c479b80e70b4afcf903f77f2b809f0d27c17f35e6602ac7a5a3e68330a60
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r526.0ba3acd.tar.gz
+        sha512: 72b44efff53431c4dd631fe6a69cef4edbaadf7f8065a90265fb72a6e5b4364a93f46b8041d6394ad298b53afcea59a8beb5ce05cbbd743a7b721ffb4093a853
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -153,6 +157,6 @@ modules:
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r232.9ace94a.tar.gz
-        sha512: f0b495fde1726cad38b5965de555d8bbab71f20031cbf130c23f40087cb5f83b2e6dc3a5e70cae7d295edcb3e79b31d390556ec27f82240adf87efef44f0a5e7
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r240.98222c5.tar.gz
+        sha512: b6fcb3eda3b9bca502153283170264a3cf4eff422b07efc87f24251787bab9de2737fc6068b96af24f4aec5b13f8bb85d8a5a3927aec9b510708d29d260198da
         strip-components: 0
