@@ -119,8 +119,8 @@ modules:
         sources:
           - type: git
             url: https://github.com/NVIDIA/nvidia-settings.git
-            commit: cbaf2a77d2b53c907ad2ff9d21ded37f64d9e5bd
-            tag: 550.54.14
+            commit: 02b1b91083aef4b6f0c21ca8e02936b1a88a1b2b
+            tag: '550.67'
             x-checker-data:
               type: git
               tag-pattern: ^([\d.]+)$
