@@ -84,8 +84,8 @@ modules:
       - install -Dm755 kms-server-proxy "$FLATPAK_DEST/bin/kms-server-proxy"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r7.9b5c4b5.tar.gz
-        sha512: 0ba0b728bc1fbafe1aacafb31b341d2a3d6a3bfdeff2bf704b6d3bd381656fb56f64ec79cdef156456c1557c110bfb21a2c882ee06ca28e59bdf4dbc622aabc0
+        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r10.756865f.tar.gz
+        sha512: 1a68010d3407aa930b3f16f097d3dfea7be1e6382dfaaf940bbcbe517c42485fdbbeb33b170cf29c60eaf34ad51a7527aa21a0d9028972c961d29461831ef9cf
         strip-components: 0
 
   - name: gpu-screen-recorder
@@ -105,8 +105,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r537.1e46683.tar.gz
-        sha512: a8053a9488b21388d5eb6bc7943b9e20fd6d802043df5893320ceddea74aafdd0d2f2086dbc1a615392e1c195ff0cfcfa6e2ee3b4d7ae721842e47fdb065d897
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r543.6770bac.tar.gz
+        sha512: 1109450f93e1a8b5ff2aba952d691077940a48ac06634809715b4ce26d7b25d18ef0f96836be26829abaa72187dcc4d828c3d6d8dc5aa2c9cd116c6e95a5f7c9
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -141,6 +141,8 @@ modules:
           - -Dvc4=disabled
           - -Detnaviv=disabled
           - -Dcairo-tests=disabled
+          - -Dman-pages=disabled
+          - -Dvalgrind=disabled
           - -Dtests=false
           - --default-library=static
         sources:
@@ -163,6 +165,6 @@ modules:
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r248.c62c540.tar.gz
-        sha512: d18d9dc84323c6573d395eae2c9a329884fe080a3116413242461580399b949eb766e0787301c56ae958b162a7a1a76f1aff881971487b7aca31730978eb8f58
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r253.2cf76ac.tar.gz
+        sha512: 17a374f5f38c6edc99105a5b50d2e1ec2e24b563de16dcc307fba033bb180dab5fb3f09d19f03ad70d845b95d22c37d78532f9d9a96c65306178fbd0f72bdf61
         strip-components: 0
