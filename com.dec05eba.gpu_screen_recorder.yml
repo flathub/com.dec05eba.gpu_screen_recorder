@@ -165,6 +165,6 @@ modules:
         "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r253.2cf76ac.tar.gz
-        sha512: 17a374f5f38c6edc99105a5b50d2e1ec2e24b563de16dcc307fba033bb180dab5fb3f09d19f03ad70d845b95d22c37d78532f9d9a96c65306178fbd0f72bdf61
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r254.aaa4720.tar.gz
+        sha512: 48a0e77234fe583976d2a6d4435f06f0292e6a39d2b9bd14964c096878235c0b4a180d31e31fb4e923b5833f063458a6235bcdedafe386cd9057da3eadfaa483
         strip-components: 0
