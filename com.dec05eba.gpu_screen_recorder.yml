@@ -14,67 +14,18 @@ finish-args:
   - --socket=wayland
   - --talk-name=org.freedesktop.Flatpak
   - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.kde.StatusNotifierWatcher
 
 cleanup:
   - /include
   - /lib/pkgconfig
   - /lib/libdrm.a
+  - /share/man
+  - /share/gtk-doc
+  - /share/doc
 
 modules:
-  - name: ffmpeg
-    disabled: false
-    config-opts:
-      - --enable-gpl
-      - --disable-static
-      - --enable-shared
-      - --disable-debug
-      - --disable-doc
-      - --disable-programs
-      - --disable-decoders
-      - --disable-vdpau
-      #- --disable-encoders
-      - --disable-filters
-      - --disable-amf
-      - --disable-audiotoolbox
-      - --disable-videotoolbox
-      - --disable-vulkan
-      - --disable-sdl2
-      - --disable-postproc
-      - --disable-autodetect
-      - --enable-filter=amix
-      - --enable-nvenc
-      - --enable-ffnvcodec
-      - --enable-libopus
-      - --enable-vaapi
-    cleanup:
-      - /share/ffmpeg/examples
-    sources:
-      - type: git
-        url: https://git.ffmpeg.org/ffmpeg.git
-        commit: e38092ef9395d7049f871ef4d5411eb410e283e0
-        tag: n6.1.1
-        x-checker-data:
-          type: git
-          tag-pattern: ^n([\d.]+)$
-          versions:
-            <: '7'
-    modules:
-      - name: ffnvcodec
-        no-autogen: true
-        make-install-args:
-          - PREFIX=${FLATPAK_DEST}
-        cleanup:
-          - '*'
-        sources:
-          - type: git
-            url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
-            commit: 43d91706e097565f57b311e567f0219838bcc2f6
-            tag: n11.1.5.3
-            x-checker-data:
-              type: git
-              tag-pattern: ^n([\d.]+)$
-              versions:
-                <: '12'
+  - dependencies/ffmpeg.yml
 
   - name: kms-server-proxy
     disabled: false
@@ -105,8 +56,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r596.0d558a3.tar.gz
-        sha512: ab3c60e52a13c73fabfe590dd3b16492d228120cdd3c62da6d687853dc6ed44d63157859426c68d08d8cccb87ba122b725b17c2123d900491ca6fd72056f9438
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r613.e43934e.tar.gz
+        sha512: 76e3188bd8172dce7c42f3f2abb04912d731993aec8be13a9de902ac7ef00050b5608a67469005ab9f2bafe574bbcdcc92e75da28bb9e46a16d8d43572879ad8
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -151,6 +102,8 @@ modules:
             commit: 75254bf2390c10644ffb35a90fc8f18f196f9f0c
             tag: libdrm-2.4.120
 
+  - dependencies/libayatana-appindicator3-0.1.yml
+
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
     build-commands:
@@ -159,12 +112,20 @@ modules:
       - install -Dm755 gpu-screen-recorder-gtk "$FLATPAK_DEST/bin/gpu-screen-recorder-gtk"
       - install -Dm644 gpu-screen-recorder-gtk.desktop "$FLATPAK_DEST/share/applications/com.dec05eba.gpu_screen_recorder.desktop"
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
-      - install -Dm644 icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png
-        "$FLATPAK_DEST/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
-      - install -Dm644 icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png
-        "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
+      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-idle.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
+      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-recording.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
+      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-paused.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
+      - install -Dm644 "icons/hicolor/32x32/apps/com.dec05eba.gpu_screen_recorder.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/apps/com.dec05eba.gpu_screen_recorder.png"
+      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-idle.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
+      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-recording.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
+      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-paused.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
+      - install -Dm644 "icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
+      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-idle.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
+      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-recording.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
+      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-paused.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
+      - install -Dm644 "icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r279.ed7d32b.tar.gz
-        sha512: 59695433e228c657757a852c9aeba02812e68d022405cc02a3323c3e6e65de5f676da23398ee3d98e34460f71c8a8d23bc881d1eeb078cc5e930b896095e761a
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r295.5710cb1.tar.gz
+        sha512: 8c0f743a77d731a7fb9434e755d56518198ee1f17c916987e95fb24983e8985b4e6f83f10288fae7f3812d88de555511844a7bc4ada836348fbd3e2c0ab47bfd
         strip-components: 0
