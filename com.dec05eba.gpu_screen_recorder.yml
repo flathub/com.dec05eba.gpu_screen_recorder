@@ -15,8 +15,6 @@ finish-args:
   - --talk-name=org.freedesktop.Flatpak
   - --talk-name=org.freedesktop.Notifications
   - --talk-name=org.kde.StatusNotifierWatcher
-  # Required to make notifications work
-  - --talk-name=org.kde.*
 
 cleanup:
   - /include
@@ -28,60 +26,7 @@ cleanup:
   - /lib/debug
 
 modules:
-  - name: ffmpeg
-    disabled: false
-    config-opts:
-      - --enable-gpl
-      - --disable-static
-      - --enable-shared
-      - --disable-debug
-      - --disable-doc
-      - --disable-programs
-      - --disable-decoders
-      - --disable-vdpau
-      #- --disable-encoders
-      - --disable-filters
-      - --disable-amf
-      - --disable-audiotoolbox
-      - --disable-videotoolbox
-      - --disable-vulkan
-      - --disable-sdl2
-      - --disable-postproc
-      - --disable-autodetect
-      - --enable-filter=amix
-      - --enable-nvenc
-      - --enable-ffnvcodec
-      - --enable-libopus
-      - --enable-vaapi
-    cleanup:
-      - /share/ffmpeg/examples
-    sources:
-      - type: git
-        url: https://git.ffmpeg.org/ffmpeg.git
-        commit: e38092ef9395d7049f871ef4d5411eb410e283e0
-        tag: n6.1.1
-        x-checker-data:
-          type: git
-          tag-pattern: ^n([\d.]+)$
-          versions:
-            <: '7'
-    modules:
-      - name: ffnvcodec
-        no-autogen: true
-        make-install-args:
-          - PREFIX=${FLATPAK_DEST}
-        cleanup:
-          - '*'
-        sources:
-          - type: git
-            url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
-            commit: 43d91706e097565f57b311e567f0219838bcc2f6
-            tag: n11.1.5.3
-            x-checker-data:
-              type: git
-              tag-pattern: ^n([\d.]+)$
-              versions:
-                <: '12'
+  - dependencies/ffmpeg.yml
 
   - name: kms-server-proxy
     disabled: false
@@ -158,6 +103,8 @@ modules:
             commit: 75254bf2390c10644ffb35a90fc8f18f196f9f0c
             tag: libdrm-2.4.120
 
+  - dependencies/libayatana-appindicator3-0.1.yml
+
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
     build-commands:
@@ -166,66 +113,20 @@ modules:
       - install -Dm755 gpu-screen-recorder-gtk "$FLATPAK_DEST/bin/gpu-screen-recorder-gtk"
       - install -Dm644 gpu-screen-recorder-gtk.desktop "$FLATPAK_DEST/share/applications/com.dec05eba.gpu_screen_recorder.desktop"
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
-      - install -Dm644 "icons/hicolor/32x32/apps/com.dec05eba.gpu_screen_recorder.png"
-        "$FLATPAK_DEST/share/icons/hicolor/32x32/apps/com.dec05eba.gpu_screen_recorder.png"
-      - install -Dm644 "icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
-        "$FLATPAK_DEST/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
-      - install -Dm644 "icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
-        "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
-      - install -Dm644 "icons/tray_idle.png" "$FLATPAK_DEST/usr/share/com.dec05eba.gpu_screen_recorder/tray_idle.png"
-      - install -Dm644 "icons/tray_recording.png" "$FLATPAK_DEST/usr/share/com.dec05eba.gpu_screen_recorder/tray_recording.png"
-      - install -Dm644 "icons/tray_paused.png" "$FLATPAK_DEST/usr/share/com.dec05eba.gpu_screen_recorder/tray_paused.png"
+      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder_tray_idle.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder_tray_idle.png"
+      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder_tray_recording.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder_tray_recording.png"
+      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder_tray_paused.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder_tray_paused.png"
+      - install -Dm644 "icons/hicolor/32x32/apps/com.dec05eba.gpu_screen_recorder.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/apps/com.dec05eba.gpu_screen_recorder.png"
+      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder_tray_idle.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder_tray_idle.png"
+      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder_tray_recording.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder_tray_recording.png"
+      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder_tray_paused.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder_tray_paused.png"
+      - install -Dm644 "icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
+      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder_tray_idle.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder_tray_idle.png"
+      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder_tray_recording.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder_tray_recording.png"
+      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder_tray_paused.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder_tray_paused.png"
+      - install -Dm644 "icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r287.c5dd3c8.tar.gz
-        sha512: 5ccbe3d90168912a251d15dd219560d803ea1fcde7aa2649c68a82200634d579d8c7646e0e210169a30d210253c3327a61bf0f65bfe7a16a97615953134a76b4
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r294.6341dfa.tar.gz
+        sha512: df92457d40309313afda6f5aa8c4ba6bb603a5037da4fe2136df07b3c3f7365f0a868cd989f145435303fbfdcf48526aacbd8edd6976345b9804245876138b50
         strip-components: 0
-    modules:
-      - name: libayatana-indicator
-        buildsystem: cmake-ninja
-        config-opts:
-          - -DENABLE_LOADER=NO
-          - -DENABLE_IDO=NO
-        sources:
-          - type: git
-            url: https://github.com/AyatanaIndicators/libayatana-indicator.git
-            tag: 0.9.1
-
-      - name: intltool
-        buildsystem: autotools
-        build-options:
-          cflags: -Wno-error
-        sources:
-          - type: archive
-            url: https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
-            sha256: 67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd
-
-      - name: libdbusmenu-gtk3
-        buildsystem: autotools
-        build-options:
-          cflags: -Wno-error
-        config-opts:
-          - --with-gtk=3
-          - --disable-nls
-          - --disable-dumper
-          # TODO: disable this. Cant do this right now because there is a bug in libdbusmenu build with HAVE_VALGRIND
-          - --enable-tests
-          - --disable-static
-          - --enable-gtk-doc=no
-          - --enable-introspection=no
-          - --disable-vala
-        sources:
-          - type: archive
-            url: https://launchpad.net/libdbusmenu/16.04/16.04.0/+download/libdbusmenu-16.04.0.tar.gz
-            sha256: b9cc4a2acd74509435892823607d966d424bd9ad5d0b00938f27240a1bfa878a
-
-      - name: libayatana-appindicator
-        buildsystem: cmake-ninja
-        config-opts:
-          - -DENABLE_GTKDOC=NO
-          - -DENABLE_BINDINGS_MONO=NO
-          - -DENABLE_BINDINGS_VALA=NO
-        sources:
-          - type: git
-            url: https://github.com/AyatanaIndicators/libayatana-appindicator.git
-            tag: 0.5.90
