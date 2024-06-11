@@ -23,7 +23,6 @@ cleanup:
   - /share/man
   - /share/gtk-doc
   - /share/doc
-  - /lib/debug
 
 modules:
   - dependencies/ffmpeg.yml
