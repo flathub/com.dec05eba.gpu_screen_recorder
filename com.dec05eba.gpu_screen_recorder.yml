@@ -57,8 +57,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r618.3e2e244.tar.gz
-        sha512: e9b45e4f01a50da5d4cebf94c06e1b4a7aaaee8be649ac8dfd6527112ea488accd3f5607917ebc2d4765d65a2df70350d09612d1674440c532d1c55e32876262
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r631.42e5930.tar.gz
+        sha512: b01a9a13e439a022cc835bc810381e8f8ab9b906478e51f425be82cd56134a2cd30603875b7c5cc162bc22a9671002a2c25b3fb5cea4d23c3b99f4850d334a22
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -129,8 +129,10 @@ modules:
       - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-recording.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
       - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-paused.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
       - install -Dm644 "icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
+      - gtk-update-icon-cache -q -t -f "$FLATPAK_DEST/share/icons/hicolor"
+      - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r304.7bbdd07.tar.gz
-        sha512: 090d1b2735a73cc1e9be5aefac29fe1d4e3d1abae5e3e81e0fef27ba4b7eee73d965915f153add2e3c862090499e504a781ad18948f9e36205752759448386a2
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r306.dcae815.tar.gz
+        sha512: ad4b5c89df5cb066deb4ef003ca22c22ea30bfc3600961f6132db2552720daae19affe6c5cba239598649eb4fe8d758e79034c25214c2a78b9871ad8848ce277
         strip-components: 0
