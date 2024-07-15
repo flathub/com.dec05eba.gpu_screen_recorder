@@ -44,7 +44,8 @@ modules:
     buildsystem: simple
     build-commands:
       - meson setup build
-      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dcapabilities=false -Dstrip=true build
+      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dcapabilities=false
+        -Dstrip=true build
       - ninja -C build install
       - gcc -c kms/server/kms_server.c -I$FLATPAK_DEST/include/libdrm $GSR_KMS_SERVER_OPTS
       - gcc -o gsr-kms-server kms_server.o $FLATPAK_DEST/lib/libdrm.a $GSR_KMS_SERVER_OPTS
@@ -71,8 +72,8 @@ modules:
         sources:
           - type: git
             url: https://github.com/NVIDIA/nvidia-settings.git
-            commit: 5c35ca3593a93bdc7cfafc505398db9792abf0f8
-            tag: 550.90.07
+            commit: 041aab9475ccccf8899cb423c62d85960b93f765
+            tag: '550.100'
             x-checker-data:
               type: git
               tag-pattern: ^([\d.]+)$
@@ -117,18 +118,30 @@ modules:
       - install -Dm755 build/gpu-screen-recorder-gtk "$FLATPAK_DEST/bin/gpu-screen-recorder-gtk"
       - install -Dm644 gpu-screen-recorder-gtk.desktop "$FLATPAK_DEST/share/applications/com.dec05eba.gpu_screen_recorder.desktop"
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
-      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-idle.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
-      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-recording.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
-      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-paused.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
-      - install -Dm644 "icons/hicolor/32x32/apps/com.dec05eba.gpu_screen_recorder.png" "$FLATPAK_DEST/share/icons/hicolor/32x32/apps/com.dec05eba.gpu_screen_recorder.png"
-      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-idle.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
-      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-recording.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
-      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-paused.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
-      - install -Dm644 "icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png" "$FLATPAK_DEST/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
-      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-idle.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
-      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-recording.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
-      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-paused.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
-      - install -Dm644 "icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png" "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
+      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
+        "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
+      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
+        "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
+      - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
+        "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
+      - install -Dm644 "icons/hicolor/32x32/apps/com.dec05eba.gpu_screen_recorder.png"
+        "$FLATPAK_DEST/share/icons/hicolor/32x32/apps/com.dec05eba.gpu_screen_recorder.png"
+      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
+        "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
+      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
+        "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
+      - install -Dm644 "icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
+        "$FLATPAK_DEST/share/icons/hicolor/64x64/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
+      - install -Dm644 "icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
+        "$FLATPAK_DEST/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
+      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
+        "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
+      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
+        "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
+      - install -Dm644 "icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
+        "$FLATPAK_DEST/share/icons/hicolor/128x128/status/com.dec05eba.gpu_screen_recorder.tray-paused.png"
+      - install -Dm644 "icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
+        "$FLATPAK_DEST/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
       - gtk-update-icon-cache -q -t -f "$FLATPAK_DEST/share/icons/hicolor"
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
