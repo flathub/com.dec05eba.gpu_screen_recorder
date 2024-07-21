@@ -28,13 +28,13 @@ cleanup:
 sources:
   - type: git
     url: https://git.ffmpeg.org/ffmpeg.git
-    commit: e38092ef9395d7049f871ef4d5411eb410e283e0
-    tag: n6.1.1
+    commit: af25a4bfd2503caf3ee485b27b99b620302f5718
+    tag: n7.0.1
     x-checker-data:
       type: git
       tag-pattern: ^n([\d.]+)$
       versions:
-        <: '7'
+        <: '8'
 modules:
   - name: ffnvcodec
     no-autogen: true
