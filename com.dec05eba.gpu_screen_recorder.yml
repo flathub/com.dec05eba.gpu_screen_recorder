@@ -10,7 +10,7 @@ finish-args:
   - --share=ipc
   - --share=network
   - --socket=pulseaudio
-  - --socket=x11
+  - --socket=fallback-x11
   - --socket=wayland
   - --talk-name=org.freedesktop.Flatpak
   - --talk-name=org.freedesktop.Notifications
@@ -58,8 +58,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r631.42e5930.tar.gz
-        sha512: b01a9a13e439a022cc835bc810381e8f8ab9b906478e51f425be82cd56134a2cd30603875b7c5cc162bc22a9671002a2c25b3fb5cea4d23c3b99f4850d334a22
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r688.e9343cc.tar.gz
+        sha512: f7f8efe02dae9346e26045411d7ca9c57fd80f6d0422bc9f81c46397700195f316466f8770bd0134ffc5917570fefb7a443fc1ebe518478e2b280e4647b2069c
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -116,7 +116,7 @@ modules:
       - ninja -C build
       - strip build/gpu-screen-recorder-gtk
       - install -Dm755 build/gpu-screen-recorder-gtk "$FLATPAK_DEST/bin/gpu-screen-recorder-gtk"
-      - install -Dm644 gpu-screen-recorder-gtk.desktop "$FLATPAK_DEST/share/applications/com.dec05eba.gpu_screen_recorder.desktop"
+      - install -Dm644 com.dec05eba.gpu_screen_recorder.desktop "$FLATPAK_DEST/share/applications/com.dec05eba.gpu_screen_recorder.desktop"
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
       - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
         "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
@@ -146,6 +146,6 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r306.dcae815.tar.gz
-        sha512: ad4b5c89df5cb066deb4ef003ca22c22ea30bfc3600961f6132db2552720daae19affe6c5cba239598649eb4fe8d758e79034c25214c2a78b9871ad8848ce277
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r346.629fdcd.tar.gz
+        sha512: 8d9dac76fcc4ea6e0efc35efeee8be6175b5077c0d16d82acc54d970f3180f6bfb72d1cb5158d9c669971bafc843cc5488889b2cf1741550e25917a8d1ce9c30
         strip-components: 0
