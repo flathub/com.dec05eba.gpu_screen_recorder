@@ -10,7 +10,7 @@ finish-args:
   - --share=ipc
   - --share=network
   - --socket=pulseaudio
-  - --socket=fallback-x11
+  - --socket=x11
   - --socket=wayland
   - --talk-name=org.freedesktop.Flatpak
   - --talk-name=org.freedesktop.Notifications
