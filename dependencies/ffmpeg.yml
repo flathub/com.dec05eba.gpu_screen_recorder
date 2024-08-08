@@ -23,6 +23,7 @@ config-opts:
   - --enable-ffnvcodec
   - --enable-libopus
   - --enable-vaapi
+  - --enable-libx264
 cleanup:
   - /share/ffmpeg/examples
 sources:
@@ -52,3 +53,19 @@ modules:
           tag-pattern: ^n([\d.]+)$
           versions:
             <: '12'
+  - name: libx264
+    config-opts:
+      - --disable-cli
+      - --enable-shared
+      - --disable-opencl
+      - --disable-bashcompletion
+      - --enable-strip
+    no-autogen: true
+    make-install-args:
+      - PREFIX=${FLATPAK_DEST}
+   # cleanup:
+  #    - '*'
+    sources:
+      - type: git
+        url: https://code.videolan.org/videolan/x264.git
+        commit: 31e19f92f00c7003fa115047ce50978bc98c3a0d
