@@ -44,8 +44,8 @@ modules:
     buildsystem: simple
     build-commands:
       - meson setup build
-      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dcapabilities=false -Dsystemd=false -Dnvidia_suspend_fix=false
-        -Dstrip=true build
+      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dcapabilities=false
+        -Dsystemd=false -Dnvidia_suspend_fix=false -Dstrip=true build
       - ninja -C build install
       - gcc -c kms/server/kms_server.c -I$FLATPAK_DEST/include/libdrm $GSR_KMS_SERVER_OPTS
       - gcc -o gsr-kms-server kms_server.o $FLATPAK_DEST/lib/libdrm.a $GSR_KMS_SERVER_OPTS
@@ -72,8 +72,8 @@ modules:
         sources:
           - type: git
             url: https://github.com/NVIDIA/nvidia-settings.git
-            commit: 041aab9475ccccf8899cb423c62d85960b93f765
-            tag: '550.100'
+            commit: d12c2c33d96b8290644e2b82e6ef15afccee870f
+            tag: 550.107.02
             x-checker-data:
               type: git
               tag-pattern: ^([\d.]+)$
