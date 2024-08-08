@@ -44,7 +44,7 @@ modules:
     buildsystem: simple
     build-commands:
       - meson setup build
-      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dcapabilities=false
+      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dcapabilities=false -Dsystemd=false -Dnvidia_suspend_fix=false
         -Dstrip=true build
       - ninja -C build install
       - gcc -c kms/server/kms_server.c -I$FLATPAK_DEST/include/libdrm $GSR_KMS_SERVER_OPTS
