@@ -101,8 +101,8 @@ modules:
         sources:
           - type: git
             url: https://gitlab.freedesktop.org/mesa/drm.git
-            commit: 75254bf2390c10644ffb35a90fc8f18f196f9f0c
-            tag: libdrm-2.4.120
+            commit: ad78bb591d02162d3b90890aa4d0a238b2a37cde
+            tag: libdrm-2.4.122
 
   - dependencies/libayatana-appindicator3-0.1.yml
 
