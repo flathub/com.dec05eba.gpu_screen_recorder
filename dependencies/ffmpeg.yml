@@ -45,7 +45,7 @@ modules:
       - '*'
     sources:
       - type: git
-        url: https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
+        url: https://github.com/FFmpeg/nv-codec-headers.git
         commit: 43d91706e097565f57b311e567f0219838bcc2f6
         tag: n11.1.5.3
         x-checker-data:
