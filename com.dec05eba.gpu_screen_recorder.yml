@@ -7,11 +7,12 @@ separate-locales: false
 finish-args:
   - --device=dri
   - --filesystem=host
+  - --filesystem=xdg-run/pipewire-0
   - --share=ipc
   - --share=network
   - --socket=pulseaudio
-  - --socket=fallback-x11
   - --socket=wayland
+  - --socket=x11
   - --talk-name=org.freedesktop.Flatpak
   - --talk-name=org.kde.StatusNotifierWatcher
 
@@ -57,8 +58,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r877.74d30f1.tar.gz
-        sha512: 8502e8b50d0c8f656c6db8dcf37d6a5763cbe689d6a100e8483d5fcd1b815ce322a17acacee5c60f9d5371a0bcb122a95963c81f12097d23128f7d707b28fc00
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r895.0ee6814.tar.gz
+        sha512: cba2d06da85fdd2282acb951fc05df2ca62d0c85fc0fecb12d1ac44873a1086551bd2fc08f5095bbc22582e49609d44d960597bcbbb503ddef3836717e237c03
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -145,6 +146,6 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r402.ee137ee.tar.gz
-        sha512: daacf23afc565e78e3ef4f327cd4144ef439a2d6499aa5408698093cc17a63668aa05a2a40e55e22090d4f69d9de7e52bf2d9a42f56cc71a7cbbd0169c5587f7
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r412.00dca02.tar.gz
+        sha512: 737260b2b4b60a19ac4954d7ba1f9bc31509207eadf5fe6871ef89b502f2f579294aa0c901e42b7b28a48a7b3b88fa0bc555c049d1faafd08e0f1dd143b97dc6
         strip-components: 0
