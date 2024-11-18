@@ -58,8 +58,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r895.0ee6814.tar.gz
-        sha512: cba2d06da85fdd2282acb951fc05df2ca62d0c85fc0fecb12d1ac44873a1086551bd2fc08f5095bbc22582e49609d44d960597bcbbb503ddef3836717e237c03
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r897.6e0f541.tar.gz
+        sha512: 6dbb7589bdc6b0bdb174c68ff03d2174bffdcce744e9e098b2b1530c4c06b64e15303aca02c2f9d552dd1e48c37f9e0f9c705bb97d7c12ba3b6659607ad01cb2
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -146,6 +146,6 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r412.00dca02.tar.gz
-        sha512: 737260b2b4b60a19ac4954d7ba1f9bc31509207eadf5fe6871ef89b502f2f579294aa0c901e42b7b28a48a7b3b88fa0bc555c049d1faafd08e0f1dd143b97dc6
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r415.e487b2b.tar.gz
+        sha512: 8b985e87d7e73d1f3e9b30032a32d94dc7ad1bf99846618a49eb0b3060621640e7999f713f583f28f658e648cfa0ed8f6d759c06ed0d70cfe08cc46b2b5aa71a
         strip-components: 0
