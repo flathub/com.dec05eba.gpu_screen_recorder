@@ -35,8 +35,8 @@ modules:
       - install -Dm755 kms-server-proxy "$FLATPAK_DEST/bin/kms-server-proxy"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r14.12bb4a7.tar.gz
-        sha512: 602c54c8f6cbda9b016c47941145da258df1dffda5a9eb13903798a19a6c8cee6b2590cd3552f034d32dcdc2e35af9e154d1b425ad88841a50f25336527dd734
+        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r17.6633070.tar.gz
+        sha512: 1fdd427e8dd0e4b77821e2c5c65e2f0d7d3faaf9d9a54949b4375e09506edecb7c45aa5b6d6ba1fd918e17fb70780e9f98bf6fd3d12440c2a81c7f97f7062083
         strip-components: 0
 
   - name: gpu-screen-recorder
@@ -47,8 +47,8 @@ modules:
       - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dcapabilities=false
         -Dsystemd=false -Dnvidia_suspend_fix=false -Dstrip=true build
       - ninja -C build install
-      - gcc -c kms/server/kms_server.c -I$FLATPAK_DEST/include/libdrm $GSR_KMS_SERVER_OPTS
-      - gcc -o gsr-kms-server kms_server.o $FLATPAK_DEST/lib/libdrm.a $GSR_KMS_SERVER_OPTS
+      - gcc kms/server/kms_server.c -o gsr-kms-server $FLATPAK_DEST/lib/libdrm.a
+        -I$FLATPAK_DEST/include/libdrm $GSR_KMS_SERVER_OPTS
       - install -Dm755 gsr-kms-server "$FLATPAK_DEST/bin/gsr-kms-server"
       - strip "$FLATPAK_DEST/bin/gsr-kms-server"
       - strip "$FLATPAK_DEST/bin/gpu-screen-recorder"
@@ -58,8 +58,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r909.8644c72.tar.gz
-        sha512: 2e053b79a87e7397dda16385a0d431509e3586308436c2e0d5d7674429e8acfcb59a15fcda42709e4e103f43f9992b2699129a46baad881d5218fef6a29e85e6
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r932.027b29c.tar.gz
+        sha512: e7f4fa5d2f3a49c78f8d6c03cdc52227cdd5aa4a14e187a5144a6133010cdc7f8acf48d805d2c907c6c38c4185e34e4cc20498bc2a2ef34992aefb32bcc06ab2
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -98,6 +98,7 @@ modules:
           - -Dvalgrind=disabled
           - -Dtests=false
           - --default-library=static
+          - --buildtype=release
         sources:
           - type: git
             url: https://gitlab.freedesktop.org/mesa/drm.git
@@ -146,6 +147,42 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r421.c08811c.tar.gz
-        sha512: c67b2c7f8703e278de2ba38bcc2aeca8548e4762249a70c9494f72b9a1d2418edb0ad028f0885e7710d7a05663360828afc07bcde16405b35c02303a35056f1a
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r431.1dd7ed9.tar.gz
+        sha512: 4838c0464c13f5987a86e3d6db4493ee110e3efb8b1d2fc425233bc5bc2551a82ea6f9464d68d58663f6e9d8676efe8f5c11f328a2e6436ceb6d91fbe95ed91c
+        strip-components: 0
+
+  - name: gpu-screen-recorder-ui
+    buildsystem: simple
+    cleanup:
+      - /lib/debug
+    build-commands:
+      - meson setup build
+      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Dsystemd=false -Dcapabilities=false build
+      - ninja -C build install
+      - gcc tools/gsr-global-hotkeys/hotplug.c tools/gsr-global-hotkeys/keyboard_event.c tools/gsr-global-hotkeys/main.c
+        -o gsr-global-hotkeys $GSR_GLOBAL_HOTKEYS_OPTS
+      - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
+      - install -Dm644 flatpak/gpu-screen-recorder-ui.service "$FLATPAK_DEST/share/gpu-screen-recorder/gpu-screen-recorder-ui.service"
+      - strip "$FLATPAK_DEST/bin/gsr-ui"
+      - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
+    build-options:
+      env:
+        GSR_GLOBAL_HOTKEYS_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra -Werror
+          -DNDEBUG -static -static-libgcc
+    sources:
+      - type: archive
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r175.38e2a06.tar.gz
+        sha512: 8370996566f9dad1e7529223dddb4271e20012728790bd3c2c15d10608f567533a4da5d5dd0cc75b508f4b46d645057135b522a4326a77a4b7d862288bbeb28d
+        strip-components: 0
+
+  - name: gpu-screen-recorder-notification
+    buildsystem: meson
+    cleanup:
+      - /lib/debug
+    config-opts:
+      - --buildtype=release
+    sources:
+      - type: archive
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r49.48ac6b3.tar.gz
+        sha512: ec4678b703c4e67b91b09e032a02c9e96cbe59eb68e33acb6ee2cf7b1b93dae6c276101f51a81d27508b69ff5f25b23aefafe56fda13e1e0396f7ee76b04e84e
         strip-components: 0
