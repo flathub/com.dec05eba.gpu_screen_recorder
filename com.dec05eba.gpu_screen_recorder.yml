@@ -47,8 +47,8 @@ modules:
       - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dcapabilities=false
         -Dsystemd=false -Dnvidia_suspend_fix=false -Dstrip=true build
       - ninja -C build install
-      - gcc kms/server/kms_server.c -o gsr-kms-server $FLATPAK_DEST/lib/libdrm.a
-        -I$FLATPAK_DEST/include/libdrm $GSR_KMS_SERVER_OPTS
+      - gcc kms/server/kms_server.c -o gsr-kms-server $FLATPAK_DEST/lib/libdrm.a -I$FLATPAK_DEST/include/libdrm
+        $GSR_KMS_SERVER_OPTS
       - install -Dm755 gsr-kms-server "$FLATPAK_DEST/bin/gsr-kms-server"
       - strip "$FLATPAK_DEST/bin/gsr-kms-server"
       - strip "$FLATPAK_DEST/bin/gpu-screen-recorder"
@@ -72,8 +72,8 @@ modules:
         sources:
           - type: git
             url: https://github.com/NVIDIA/nvidia-settings.git
-            commit: c5f309b2d2260463e8c00f6552c881dafe17dcd2
-            tag: '550.120'
+            commit: 36bc43274d12557ac453025970a11583c64d4aac
+            tag: '550.142'
             x-checker-data:
               type: git
               tag-pattern: ^([\d.]+)$
@@ -157,18 +157,19 @@ modules:
       - /lib/debug
     build-commands:
       - meson setup build
-      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Dsystemd=false -Dcapabilities=false build
+      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Dsystemd=false
+        -Dcapabilities=false build
       - ninja -C build install
-      - gcc tools/gsr-global-hotkeys/hotplug.c tools/gsr-global-hotkeys/keyboard_event.c tools/gsr-global-hotkeys/main.c
-        -o gsr-global-hotkeys $GSR_GLOBAL_HOTKEYS_OPTS
+      - gcc tools/gsr-global-hotkeys/hotplug.c tools/gsr-global-hotkeys/keyboard_event.c
+        tools/gsr-global-hotkeys/main.c -o gsr-global-hotkeys $GSR_GLOBAL_HOTKEYS_OPTS
       - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - install -Dm644 flatpak/gpu-screen-recorder-ui.service "$FLATPAK_DEST/share/gpu-screen-recorder/gpu-screen-recorder-ui.service"
       - strip "$FLATPAK_DEST/bin/gsr-ui"
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     build-options:
       env:
-        GSR_GLOBAL_HOTKEYS_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra -Werror
-          -DNDEBUG -static -static-libgcc
+        GSR_GLOBAL_HOTKEYS_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra
+          -Werror -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
         url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r176.a853a99.tar.gz
