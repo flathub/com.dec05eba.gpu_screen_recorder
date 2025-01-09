@@ -2,6 +2,8 @@ app-id: com.dec05eba.gpu_screen_recorder
 runtime: org.freedesktop.Platform
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.ziglang
 command: gpu-screen-recorder-gtk
 separate-locales: false
 finish-args:
@@ -58,8 +60,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r936.621f253.tar.gz
-        sha512: e3dbe929fc293a1bd4b558ad4a7753f76923470b35e976ba1e2f69e910f6ccb72814a6454f856adf5e2f5ede6167adc17acc14e247b56501212c60f0bf6b1ec8
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r938.f6f8f20.tar.gz
+        sha512: 5a5f5042bf1347b1d363c597a8a92a239a99f2fc0258a7a45d11c0f817e2b8ee248978803da21183ec26b920d540d1224c814694e3666bc40b60b653133cf231
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -147,8 +149,8 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r451.a53f5e6.tar.gz
-        sha512: 1c6d6e5280942ba6c49a81a08d08c4624c572eec3876bad0de7247eb38b45b8829ffa0babdef1853782ebc39d0a99d177b4f423980d6fb9162e3134a5c2b700f
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r452.2b70a47.tar.gz
+        sha512: 8e4414778cbcc305f0351e57ecb972839ab4bc2095c055c797fb428d40d34d0f2e39a0508341f2154b8f2c9f396021c31463802f4495f2ee106475d4f98e6d5a
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -160,20 +162,16 @@ modules:
       - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Dsystemd=false
         -Dcapabilities=false build
       - ninja -C build install
-      - gcc tools/gsr-global-hotkeys/hotplug.c tools/gsr-global-hotkeys/keyboard_event.c
-        tools/gsr-global-hotkeys/main.c -o gsr-global-hotkeys $GSR_GLOBAL_HOTKEYS_OPTS
+      - /usr/lib/sdk/ziglang/zig cc -target native-native-gnu.2.14 tools/gsr-global-hotkeys/hotplug.c
+        tools/gsr-global-hotkeys/keyboard_event.c tools/gsr-global-hotkeys/main.c -O2 -g0 -o gsr-global-hotkeys
       - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - install -Dm644 flatpak/gpu-screen-recorder-ui.service "$FLATPAK_DEST/share/gpu-screen-recorder/gpu-screen-recorder-ui.service"
       - strip "$FLATPAK_DEST/bin/gsr-ui"
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
-    build-options:
-      env:
-        GSR_GLOBAL_HOTKEYS_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra
-          -Werror -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r213.affa44e.tar.gz
-        sha512: 0070c2c26997dde63895a6493b39d4b948f9746e89b6d2ca1189c1c0d649db0377a6d82897bb816f4f4e23bde563c4eb2d95c9e683cf9d552cfe2d8e57b03a7b
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r216.77dd32a.tar.gz
+        sha512: cb58a140601b6de556fc44809cace8c56b8c0cf2b0ee13f5d0cf8f54af37847cca59145e4b3be340109ec787829b8700bcca6f1adad82201c3a76aaa3ad38a67
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
