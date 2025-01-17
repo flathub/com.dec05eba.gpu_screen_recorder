@@ -74,8 +74,8 @@ modules:
         sources:
           - type: git
             url: https://github.com/NVIDIA/nvidia-settings.git
-            commit: 36bc43274d12557ac453025970a11583c64d4aac
-            tag: '550.142'
+            commit: cabdc134c623f5092c4ad07a5448cb37bc582422
+            tag: 550.144.03
             x-checker-data:
               type: git
               tag-pattern: ^([\d.]+)$
@@ -163,7 +163,8 @@ modules:
         -Dcapabilities=false build
       - ninja -C build install
       - /usr/lib/sdk/ziglang/zig cc -target native-native-gnu.2.24 tools/gsr-global-hotkeys/hotplug.c
-        tools/gsr-global-hotkeys/keyboard_event.c tools/gsr-global-hotkeys/main.c -O2 -g0 -o gsr-global-hotkeys
+        tools/gsr-global-hotkeys/keyboard_event.c tools/gsr-global-hotkeys/main.c
+        -O2 -g0 -o gsr-global-hotkeys
       - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - install -Dm644 flatpak/gpu-screen-recorder-ui.service "$FLATPAK_DEST/share/gpu-screen-recorder/gpu-screen-recorder-ui.service"
       - strip "$FLATPAK_DEST/bin/gsr-ui"
