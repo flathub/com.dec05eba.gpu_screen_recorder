@@ -7,8 +7,8 @@ sdk-extensions:
 command: gpu-screen-recorder-gtk
 separate-locales: false
 finish-args:
-  - --device=dri
-  - --device=input
+  # Only dri and input is needed, but input doesn't seem supported here yet? need all instead
+  - --device=all
   - --filesystem=host
   - --filesystem=xdg-run/pipewire-0
   - --share=ipc
