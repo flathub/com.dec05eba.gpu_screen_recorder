@@ -8,6 +8,7 @@ command: gpu-screen-recorder-gtk
 separate-locales: false
 finish-args:
   - --device=dri
+  - --device=input
   - --filesystem=host
   - --filesystem=xdg-run/pipewire-0
   - --share=ipc
