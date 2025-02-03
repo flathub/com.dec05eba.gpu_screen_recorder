@@ -162,7 +162,7 @@ modules:
       - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Dsystemd=false
         -Dcapabilities=false build
       - ninja -C build install
-      - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-gnu.2.24 tools/gsr-global-hotkeys/*.c
+      - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-musl tools/gsr-global-hotkeys/*.c
         -O2 -g0 -s -fstack-protector-all -o gsr-global-hotkeys
       - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - install -Dm644 flatpak/gpu-screen-recorder-ui.service "$FLATPAK_DEST/share/gpu-screen-recorder/gpu-screen-recorder-ui.service"
