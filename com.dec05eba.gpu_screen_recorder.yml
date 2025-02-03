@@ -62,8 +62,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r955.26e9029.tar.gz
-        sha512: 608f725d754bd115d238d12ed321a4e4a6c3865817d62cff53e352e6a4f946fc00437a59c20dad87d1ddf8a6a5d22d0e4d8cde7e8518697a6cb67fd6da36d5d9
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r956.31ca535.tar.gz
+        sha512: 6929ce3ad2c971620d6ec0c857641cd5724beae5ae61e8349fbdb2e7ff0e0b1319e01f36f9c4a48d9da1f9b05f6e6314d73111df92a04eae0bc194a859f4ef7d
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -149,8 +149,8 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r461.219b6f0.tar.gz
-        sha512: 956325e58c6cbc11e1dff705dc04c75a03cee8e4521d1652a12e094c7902be3b823ab204bf0e254746a5ada53e31cfc3b644566a978033b69ba488df3f4ec598
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r463.6c8f131.tar.gz
+        sha512: 4aa154c8323f6a5a5e88ff2b69b5b5ca8a02b5382d437349db2190907fe1f1a5e294c430fb36244ee538bf03a979102e113fb674f6b5e9d9e7bd5f5984ec8af1
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -162,8 +162,7 @@ modules:
       - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Dsystemd=false
         -Dcapabilities=false build
       - ninja -C build install
-      - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-gnu.2.24 tools/gsr-global-hotkeys/hotplug.c
-        tools/gsr-global-hotkeys/keyboard_event.c tools/gsr-global-hotkeys/main.c
+      - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-gnu.2.24 tools/gsr-global-hotkeys/*.c
         -O2 -g0 -s -fstack-protector-all -o gsr-global-hotkeys
       - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - install -Dm644 flatpak/gpu-screen-recorder-ui.service "$FLATPAK_DEST/share/gpu-screen-recorder/gpu-screen-recorder-ui.service"
@@ -171,8 +170,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r248.309cc34.tar.gz
-        sha512: f578e596c7fe11efee97e94e497ec1d2ea9595a713aaf98107d27cb5c1adceb2a41a59e6d0f1dba9ed5534c2e38d6093a8ba873ba7a105a342822e8c977049f0
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r252.b4c8591.tar.gz
+        sha512: d9a588c9989c3c3fe21996b39a14965e07e8163e1b1bdeabf9b4d63f9aa9b55023b10003c70c2d0eb964996361749804c3e6d2a97b39dc798212cef0e9257507
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
@@ -183,6 +182,6 @@ modules:
       - --buildtype=release
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r63.afd22a6.tar.gz
-        sha512: b15fcb69a6ea4ef002b297af3ce4ef20d1f70c31cb5ac8699b44a8e0505d0da1c1b7c689c6d380bd71c495b88ea8d93f02400310013c3e953c3dd32f32e7468e
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r64.db7f67f.tar.gz
+        sha512: b418c60f759657d8dc27aaeb8d6053ffc05f3542ad598b20afaf7b167b5522ce74afd9b19db4aaf1de530ec9c8629278562d2083e8f2ed5d580238fd703ec92a
         strip-components: 0
