@@ -39,8 +39,8 @@ modules:
       - install -Dm755 kms-server-proxy "$FLATPAK_DEST/bin/kms-server-proxy"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r17.6633070.tar.gz
-        sha512: 1fdd427e8dd0e4b77821e2c5c65e2f0d7d3faaf9d9a54949b4375e09506edecb7c45aa5b6d6ba1fd918e17fb70780e9f98bf6fd3d12440c2a81c7f97f7062083
+        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r19.c4f902c.tar.gz
+        sha512: 3cc36972afb1e8f72de44a190cb99fdf322b88285d956f12ffb63de41834e10aac33777ed5f58cd89ea3d71d5a7641874a8e90aa4cc922dd210ed10a42ba7a51
         strip-components: 0
 
   - name: gpu-screen-recorder
@@ -149,8 +149,8 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r463.6c8f131.tar.gz
-        sha512: 4aa154c8323f6a5a5e88ff2b69b5b5ca8a02b5382d437349db2190907fe1f1a5e294c430fb36244ee538bf03a979102e113fb674f6b5e9d9e7bd5f5984ec8af1
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r464.2cb246b.tar.gz
+        sha512: 2aeddd11ab29ee2bbac68eeaa78b93d0c55025c4b157e1213b537046f6c59a9ffbaf8a9ab3219ae30eff2cd3b597866fed4d7e1f5b7e5eaccc99c27cc451273e
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -170,8 +170,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r252.b4c8591.tar.gz
-        sha512: d9a588c9989c3c3fe21996b39a14965e07e8163e1b1bdeabf9b4d63f9aa9b55023b10003c70c2d0eb964996361749804c3e6d2a97b39dc798212cef0e9257507
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r256.4a0612a.tar.gz
+        sha512: 53bf00127e306794b4c6e489cb1286bf0f6754fd8e1a4a5d715dda8be7944a2208670923844c3b5bbf40f1278a096c2c88e9ecb65153b46d484f94ea8d0fda34
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
@@ -182,6 +182,6 @@ modules:
       - --buildtype=release
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r64.db7f67f.tar.gz
-        sha512: b418c60f759657d8dc27aaeb8d6053ffc05f3542ad598b20afaf7b167b5522ce74afd9b19db4aaf1de530ec9c8629278562d2083e8f2ed5d580238fd703ec92a
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r66.238492a.tar.gz
+        sha512: e01a87aff8af66ab508c5db08056485dc3d913d73ee363836f5bbbe603d080231dc890d2b3e5b717e006d65abaf8e336996d5484d1b1b0da03a8fd4de42f8ea0
         strip-components: 0
