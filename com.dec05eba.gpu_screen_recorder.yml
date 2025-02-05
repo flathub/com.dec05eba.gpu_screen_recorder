@@ -149,8 +149,8 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r465.21deba0.tar.gz
-        sha512: 1fbcc837c99520e9423b7662f9fb164566199d18126c09ada2e5d341589afefdc309d6daa1b1d35fc8bbfedefa2850b55b1e1fa31e3df298202b7dae9677e416
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r466.312dda2.tar.gz
+        sha512: 9ae9dffdf36b2ec2c9ce5c13ca8429c51da933cccf99460a4fe2ee029ebf23afafe9fb3de811f250175c7fafe92a43ae5cf07b81d77fcf4a4439261cdb70c6c2
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
