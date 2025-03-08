@@ -39,8 +39,8 @@ modules:
       - install -Dm755 kms-server-proxy "$FLATPAK_DEST/bin/kms-server-proxy"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r30.49c4d67.tar.gz
-        sha512: 5ebc6ea0ab6381fa8ca3a10f432cc37fa04ec219eafbfeab3d0cc0fac958f623e6b80850ac9df08401bc074fda7fb351573b9db800db525e9537bfbe2e8fe8b0
+        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r31.f5cfd40.tar.gz
+        sha512: cd5fef3ba3dbadaaa8856ef75b724d0f9d9d43a8cbd26f3cd748bd1304cf9bb1fbda4a23c3fea3c8fba57478703e3da342f5361ed6698f079bf7d9744f294318
         strip-components: 0
 
   - name: gpu-screen-recorder
