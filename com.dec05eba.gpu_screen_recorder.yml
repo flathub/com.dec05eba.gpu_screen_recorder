@@ -39,8 +39,8 @@ modules:
       - install -Dm755 kms-server-proxy "$FLATPAK_DEST/bin/kms-server-proxy"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r28.8c86bf1.tar.gz
-        sha512: 785a85cf2f746c5336f6875137457fa95ed0920ddf4e5b1898d05ba4e0eda726b982891501ba16021c41d54eec98908c98f9205a5d79c2827cd1355beb285ec5
+        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r29.616b174.tar.gz
+        sha512: a4b656941e4b8b21886e614c12d7198de0a24256e15696196f99c7392e6d8e64977438c9b08dbb3c102ea86a3494abff9a04d195f9fe2362623c5283446505af
         strip-components: 0
 
   - name: gpu-screen-recorder
@@ -149,8 +149,8 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r474.24e4647.tar.gz
-        sha512: d74e2bdcba7b72e5df211e210aa7ac140f7f7f6a91b2fee0f35f8b3c41c5e34b4dd4771f627599a415eaa28b2e3ed6a47a2aea43a97640b346f9d7a54b352b4b
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r475.9375157.tar.gz
+        sha512: 61ed422460aea16ae402f7dfe88c5b9f119e3d8205abddff99019b6c8319f9ccc75ead4c955bab6cac8d0d128c7757b911dd10a1c10eda44b3f8d30950a01f74
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -170,8 +170,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r277.3c8dd9c.tar.gz
-        sha512: 8827d0bab7d86cc21feeaffa3140ed140a67f50441c07e8ac791382f54960c06926ae42a214480a8fc3378cb529534d14f8d72e213011cf8aa381e0602aec456
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r278.7d1f6f9.tar.gz
+        sha512: dd9ad16e654efea2f3294e3f98770bf357fe2ea070b3f9c38e0560893e3f320e5b0975cdb9fc37359906dc17902d8bac6cb59bfb027084da9ea438c57e0bc2f8
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
