@@ -62,8 +62,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1088.811a144.tar.gz
-        sha512: cea494ccba43005341e34fc58c25c1d78333b5a282648ef24b75eabdb97aba62d96ec782594a6cc5bde7995a62aae1873e789adaadf6f6cff85d26f85a2b5957
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1091.e1992ae.tar.gz
+        sha512: 9e6314bbc6f65ea4ee4f9566af478f5a994165d43764cffba2646ff44ff2e359e6f1240f25bf9f003a510fede248554c5f19efa5ea0d2ad414b41b1a5f162cd1
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -120,7 +120,6 @@ modules:
       - strip build/gpu-screen-recorder-gtk
       - install -Dm755 build/gpu-screen-recorder-gtk "$FLATPAK_DEST/bin/gpu-screen-recorder-gtk"
       - install -Dm644 com.dec05eba.gpu_screen_recorder.desktop "$FLATPAK_DEST/share/applications/com.dec05eba.gpu_screen_recorder.desktop"
-      - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
       - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
         "$FLATPAK_DEST/share/icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-idle.png"
       - install -Dm644 "icons/hicolor/32x32/status/com.dec05eba.gpu_screen_recorder.tray-recording.png"
@@ -149,8 +148,18 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r485.8ce9531.tar.gz
-        sha512: f7957dd12ad50cfea6cb7cc81365f26a12cd42cc55df960229d21eb2f7ab9371eb73f957c81acd211be881c15512c58c16feae982e24f165df225b625c0f3f07
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r488.6994fb1.tar.gz
+        sha512: bfba260884408cc2adc385cd2434045ca10ff306911358123f869756245a2fb504819e4418264f5b41d6513e5ca1c766876ff74edc83e6e4b507581d7e332512
+        strip-components: 0
+
+  - name: gpu-screen-recorder-appdata
+    buildsystem: simple
+    build-commands:
+      - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
+    sources:
+      - type: archive
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r1.5c13ff6.tar.gz
+        sha512: 9d7bc969fc2aab9be9d0f28249d8bfb99891c2bfd55e15b2ab5c82fc6067a72d4373965fad70cdf607adff908d9002008a1bcd69b8e17c6d6446a8464eb93e59
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -183,6 +192,6 @@ modules:
       - -Dstrip=true
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r76.1d66c2b.tar.gz
-        sha512: d3ec93fa27f57eec15673a58204432395e7b31f9c1afe68ce57fb395bde32200c8d3a3bc017039ffe3b72371762f948a24fcbe33b21f3f93e2777e20850fe2bb
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r78.1d19340.tar.gz
+        sha512: 7c5ae05dd11c6e178c7586ada84e92fe70d923bfa077ac6a5d0d37f9231a477934368e3541f0d814f750cd6a187ecad4d896c66192e9477bfa5a9ca1b311ca2c
         strip-components: 0
