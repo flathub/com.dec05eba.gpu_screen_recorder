@@ -3,6 +3,6 @@ This is a screen recorder that has minimal impact on system performance by recor
 
 The source code is available at https://git.dec05eba.com/gpu-screen-recorder/ and the source code for the gui is available at https://git.dec05eba.com/gpu-screen-recorder-gtk/
 
-Do not report issues here unless it's an issue with the flatpak specifically. GPU Screen Recorder issues should be reported here: https://github.com/dec05eba/gpu-screen-recorder-issues/issues
+Do not report issues here unless it's an issue with the flatpak specifically. GPU Screen Recorder issues should be reported by email, as mentioned here: https://git.dec05eba.com/?p=about
 
 I do not accept feature requests!
