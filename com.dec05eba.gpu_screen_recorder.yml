@@ -148,8 +148,8 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r496.b38657c.tar.gz
-        sha512: 896c4a078a8d5e1d1df8c4bac5d07356f8e743fe2a0af1853f7dea4100112e487a572b04aafbec80c947717368fb4c12b4abc1ab370ba67fd9d47a87009aaaa1
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r499.c52c772.tar.gz
+        sha512: e7766b10b8ec7dfcef4bbeb314c099c5dda6e2e51b414fe1c57fbfd2043b9ec6d208fa5ad4536722a41d040d35c253b15a2724e26d570746ea735eba0dd9cee6
         strip-components: 0
 
   - name: gpu-screen-recorder-appdata
@@ -158,8 +158,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r5.2304989.tar.gz
-        sha512: 810b795fc8445ffe07f030086a36a69c67db6b331bc8dbd287bc41b0559c2a0e492313483c994883120b954f9768eabe16dc1045dbe6a607bcaf0faf161cc8dd
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r6.5512604.tar.gz
+        sha512: 942a1601afb31a41f12a4a2bfabe076404050b3485991c559cfbb52af34d83078c8c2eebcba25ebd9b42b8a5f049fcc39de70e3f1ac5efe326c97799b833a91d
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -179,8 +179,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r368.0b8a381.tar.gz
-        sha512: 4cccd772db1da3dd98aa0c025d24cd43554c5d851b26976690f9e4387734ecd3a93cf06c40d88740e86fbc5aa84e405460588f6c3ca3708956a00666be19c21d
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r369.c0cd633.tar.gz
+        sha512: dbef6252728e5544aa8bdb589543655bb3562c59b96abfd615c598008fdd97639c9c31f469d572e84bb84e500f959d5bd891c6988ecf2592e5ee2f6fa223f444
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
