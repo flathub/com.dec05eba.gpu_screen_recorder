@@ -7,7 +7,7 @@ sdk-extensions:
 command: gpu-screen-recorder-gtk
 separate-locales: false
 finish-args:
-  # Only dri and input devices are needed, but input doesn't seem supported input yet? need all instead
+  # Only dri and input devices are needed, but device doesn't seem supported input yet? need all instead
   - --device=all
   - --filesystem=host
   - --filesystem=xdg-run/pipewire-0
@@ -62,8 +62,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1149.c7d156a.tar.gz
-        sha512: e66caf853ecbcb0810d65e08b5c82cfa90675f2220f56c07276af1fd95a22fbf4ae84fd987351ca266e4ff7b3b6d647b190485a2d5f615977f498ebbfe9c82bb
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1154.a1ef9ee.tar.gz
+        sha512: 496e23086c13c9da562ed3e5679dc30a49b5c89114686e45142a0b11bc6924c85d7d35f616831aea0fd9fe06e706c451088633678a04de0490eaddc5d05d9802
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -148,8 +148,8 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r501.6e41490.tar.gz
-        sha512: 476ff05016fd593fd7f8f9a380a455fba2ee0f16520907c5e3c5505e2806a9677e98f43687e37829b457b09edf724293f0d4e664c12f809c4bbd6df20d020e97
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r502.74cc5de.tar.gz
+        sha512: 7ed921e4aec56b0ec0666e468ac9e4eaa9a93f1a93fd5baafecca0368076eba3c1fc9e739727803e60a05a7def8823d9ed39e9936befcf7d10054aa4a21cf849
         strip-components: 0
 
   - name: gpu-screen-recorder-appdata
@@ -158,8 +158,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r9.e7e9f5b.tar.gz
-        sha512: f43a93752c4c3bd8176e84de6b96bb362ddd0755f8c7b145aae095d5b27ebb4cc997eee4588b84b079f960d6a0310daff2bcc863c99ebf96cb83447665c36088
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r10.859ce61.tar.gz
+        sha512: 9fd893e9bf775fc607c0c2193f75011236186c4e9ef130b22e43b39edc2dcdb0b4fb73937b46985c5578a698afd34fc76742ca5aece3c03abcf82a072e3b3b52
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -179,8 +179,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r395.2d3abac.tar.gz
-        sha512: 972bc6912f0f790f2a7de5d681183fe480347c05a6fcd797f38fe5e64f3ad0790bcd3185c9376a4e5c10b84fea3254a384d281bcfd4e66c6f1e559dc4cd75c1e
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r399.ef4a0fe.tar.gz
+        sha512: f81279b54c12412fb180da6b9cb1736f609bc43bd807a994662dcfa485cef5cdb298815ec402c5a1dd16e913142dec0fc4be101d10381947af776a5306110ab0
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
