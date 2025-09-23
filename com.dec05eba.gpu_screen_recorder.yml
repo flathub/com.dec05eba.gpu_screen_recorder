@@ -62,8 +62,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1171.e4b801f.tar.gz
-        sha512: 863ad1910ad7a14048d7bd35093c9b60028589c07c097baca30d9c1303467ccd52235e9e1933c1e817c1fd25119e3c785e633e4b39a123a026efd28aa48d8f89
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1175.cb8104d.tar.gz
+        sha512: d54dc98a850db429325a9c50f999813ee258e401af225661dedc93cc2bd2cccb60001ccf41ab352cd2c92e4f90ddf368c44e0c279963ff5351de93e2ad0dc2d6
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -158,8 +158,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r13.a19a30f.tar.gz
-        sha512: 8124f2a8a3ec73df788bb7fa07b821cebe64a049a7d4263e8459506d9fc524f4a831a1f65266b41081057b627e656835ca20565fd3f7488001cc2c0301f364b1
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r14.6b413ac.tar.gz
+        sha512: 93b143d8502916028434ee657201899d41895249f94b205cc5e5a8cbe37cf980b7728269719ed99f40e7ac0c65183f56d95a28dfeabe637e6110a049d1a51d5e
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -179,8 +179,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r409.70780ae.tar.gz
-        sha512: 9d05a04f27af41b92a860ebaf79853b78a43db04335ebda1eb51e8a823ea82aef1fef128802c9a3d02a09de6fcd4917c094871b4ae033f98b1a6122c54a3fd3f
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r410.d610a98.tar.gz
+        sha512: 2e5c0b9dc194c5ca57bc44efb31faaab395ca85c2308db5d70c1eed497d1b26298aa9a7ddb9552876282c517d3cca2b600b1cddbc831efdffc7b2f6638e8036b
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
