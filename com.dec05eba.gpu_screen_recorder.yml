@@ -148,8 +148,8 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r502.74cc5de.tar.gz
-        sha512: 7ed921e4aec56b0ec0666e468ac9e4eaa9a93f1a93fd5baafecca0368076eba3c1fc9e739727803e60a05a7def8823d9ed39e9936befcf7d10054aa4a21cf849
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r503.b207b3b.tar.gz
+        sha512: b631046a51de4481ef50a3b36d697228ee7fb055e5ad9b3c95790ac3050e8bf93b0dbd348d8a2937c3d2c4d749aa03b5b9e5677bfe9f61829f61a9795ea89978
         strip-components: 0
 
   - name: gpu-screen-recorder-appdata
@@ -179,8 +179,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r413.3d4badf.tar.gz
-        sha512: dab11fdc77442ef6c52bc18b1e20d6cd6f68a7bbf6fbcccdb34708c6ef5fc1e3c1c4d8ab2446107cad482ccd7475cf9b12503644bff98c1813be7dc68be29769
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r416.ca4061f.tar.gz
+        sha512: 91a28110400e8e2a20d5ea431eac46d834ff7939511d18a9e9c662edce5355e7c6bbac17f73d427c783615f9f4d22bb64ea3c96a94a508d3ff40932957d37c30
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
