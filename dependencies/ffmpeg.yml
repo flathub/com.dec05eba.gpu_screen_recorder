@@ -29,13 +29,13 @@ cleanup:
 sources:
   - type: git
     url: https://git.ffmpeg.org/ffmpeg.git
-    commit: db69d06eeeab4f46da15030a80d539efb4503ca8
-    tag: n7.1.1
+    commit: 140fd653aed8cad774f991ba083e2d01e86420c7
+    tag: n8.0
     x-checker-data:
       type: git
       tag-pattern: ^n([\d.]+)$
       versions:
-        <: '8'
+        <: '9'
 modules:
   - name: ffnvcodec
     no-autogen: true
@@ -68,4 +68,4 @@ modules:
     sources:
       - type: git
         url: https://code.videolan.org/videolan/x264.git
-        commit: 31e19f92f00c7003fa115047ce50978bc98c3a0d
+        commit: b35605ace3ddf7c1a5d67a2eb553f034aef41d55
