@@ -16,7 +16,6 @@ config-opts:
   - --disable-videotoolbox
   - --disable-vulkan
   - --disable-sdl2
-  - --disable-postproc
   - --disable-autodetect
   - --enable-filter=amix
   - --enable-nvenc
