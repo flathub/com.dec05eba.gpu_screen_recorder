@@ -2,12 +2,13 @@ name: ffmpeg
 disabled: false
 config-opts:
   - --enable-gpl
-  - --disable-static
   - --enable-shared
+  - --disable-static
   - --disable-debug
   - --disable-doc
   - --disable-programs
   - --disable-decoders
+  - --disable-indevs
   - --disable-vdpau
   #- --disable-encoders
   - --disable-filters
@@ -17,6 +18,17 @@ config-opts:
   - --disable-vulkan
   - --disable-sdl2
   - --disable-autodetect
+  - --disable-avdevice
+  - --disable-dwt
+  - --disable-lsp
+  - --disable-faan
+  - --disable-iamf
+  - --disable-alsa
+  - --disable-iconv
+  - --disable-sndio
+  - --disable-xlib
+  - --disable-cuda-llvm
+  - --disable-debug
   - --enable-filter=amix
   - --enable-nvenc
   - --enable-ffnvcodec
