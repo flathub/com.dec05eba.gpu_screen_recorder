@@ -1,6 +1,6 @@
 app-id: com.dec05eba.gpu_screen_recorder
 runtime: org.freedesktop.Platform
-runtime-version: '24.08'
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.ziglang
@@ -62,8 +62,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1188.e623145.tar.gz
-        sha512: ef150c3a617d5a828014b9d8267be1247dd5bc0b7df19d462eafeeba8dd414dc625cbfa75d3c3da66c9cc4e1d0a75d112c4ccc628cfb880356f4152f107c4532
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1192.9e59f5f.tar.gz
+        sha512: ebd25998d52fb21f726bd0d3008b3e5399d56a26046a09d8874539dcc10fb5efdeef124b92203a6811f89d5003e73e7540d3c5316741a5ae4f8f456ec07e4bc5
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -158,8 +158,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r18.4342882.tar.gz
-        sha512: fef57ff83b288db3fa3fe6179284a809d593705b6c95964ada7c1eba778d81081f51e8b187a823e19705f92d958e88a58bef5595a4652347d7a9d8d262622bcc
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r20.8696628.tar.gz
+        sha512: fdd39532642dda110cc1ac458b55ba59288560ad5575e07465807f9c0348737dce72128233a4683eae4c6f1c6ee7b399c90df4a41593891c9451609075ff1344
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -179,8 +179,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r425.c4ff7fd.tar.gz
-        sha512: ae0e50c300fed68afd70624d1851d342dd3040ab87f82a188430bc7649f0256c124a934a8b778572564fb106f55d8244aa782a0dc5235f411ba6701d861f81ee
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r441.2506750.tar.gz
+        sha512: b091baa73ab8cfb5f4da8579c129562b0da912331bb94b6a1797db8894cd9767448b5519a9cd63d6505072ee822bf7de260448f86fb531e06d7d62b8b061e134
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
