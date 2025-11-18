@@ -4,8 +4,6 @@ config-opts:
   - -DENABLE_BINDINGS_MONO=NO
   - -DENABLE_BINDINGS_VALA=NO
   - -DENABLE_GTKDOC=NO
-cleanup:
-  - /lib/debug
 sources:
   - type: git
     url: https://github.com/AyatanaIndicators/libayatana-appindicator.git
@@ -21,8 +19,6 @@ modules:
     config-opts:
       - -DENABLE_LOADER=NO
       - -DENABLE_IDO=NO
-    cleanup:
-      - /lib/debug
     sources:
       - type: git
         url: https://github.com/AyatanaIndicators/libayatana-indicator.git
@@ -57,7 +53,6 @@ modules:
     cleanup:
       - /share/gtk-doc
       - /share/libdbusmenu
-      - /lib/debug
     sources:
       - type: archive
         url: https://launchpad.net/libdbusmenu/16.04/16.04.0/+download/libdbusmenu-16.04.0.tar.gz

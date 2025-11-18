@@ -62,8 +62,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1197.ec90166.tar.gz
-        sha512: bec3841299e986857464fc52a9957e2b3fb93514ac047ef22219f8dfe60dde3af5ed1ad6ef132b7bf7f0a4cae7b01bb7b1949f4ef5696fdf191444902e05f84b
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1206.f9ab3eb.tar.gz
+        sha512: 923209bec83ea262193dd54aa7a08d6c3dfcc7d0c8af9cc483037804a920bfaab7521b2069891356d2c6b9798f27f4f5b45d7828d7e9831a7614820a7ee55232
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -111,8 +111,6 @@ modules:
 
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
-    cleanup:
-      - /lib/debug
     build-commands:
       - meson setup build
       - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true build
@@ -158,14 +156,12 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r21.0e665f0.tar.gz
-        sha512: 975b34a04021f16682ae87b33b72f55dfeb57148c9578a2b7f489145f1d80fb1147588a3f7d0a902455cb0104abecf08fba3e9117c5fef0ba85f18261f19a36f
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r22.dc18f60.tar.gz
+        sha512: ee0b9ff24461a0930541f7185e648f6d7d0b8d4162185430edf9e3552912c667e3760b876b3fb8fdd46d8000d3e871de9a15bc9458674969830ac044bd2469f6
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
     buildsystem: simple
-    cleanup:
-      - /lib/debug
     build-commands:
       - meson setup build
       - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Dsystemd=false
@@ -179,14 +175,12 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r442.a9a1f9d.tar.gz
-        sha512: 5e795b78bd33b321cc28983a2394ead196278e9d0f5a9d69329fe1bcf83bc6fdd66d4ee490b3746974f80fbdca909d30d147f9b53455d115a2d865c78d0bec86
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r443.ed23f56.tar.gz
+        sha512: e63dd945a817a6ee2a2bb9378b0e531dab7ea75d3c5f5bd386b0bae32869fe7926f5553ea79ef71a789512b259ebe2fa2dabd4b9cb7823b2b696662cf61d84c3
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
     buildsystem: meson
-    cleanup:
-      - /lib/debug
     config-opts:
       - --buildtype=release
       - -Dstrip=true
