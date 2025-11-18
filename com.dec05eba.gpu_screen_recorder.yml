@@ -111,8 +111,6 @@ modules:
 
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
-    cleanup:
-      - /lib/debug
     build-commands:
       - meson setup build
       - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true build
@@ -164,8 +162,6 @@ modules:
 
   - name: gpu-screen-recorder-ui
     buildsystem: simple
-    cleanup:
-      - /lib/debug
     build-commands:
       - meson setup build
       - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Dsystemd=false
@@ -185,8 +181,6 @@ modules:
 
   - name: gpu-screen-recorder-notification
     buildsystem: meson
-    cleanup:
-      - /lib/debug
     config-opts:
       - --buildtype=release
       - -Dstrip=true
