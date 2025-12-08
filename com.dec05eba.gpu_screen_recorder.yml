@@ -62,8 +62,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1226.2c53638.tar.gz
-        sha512: 25ad04a0d17ee50ae6576ddc1b8f5bc0ef453c25962e0ffbf5382838de6c58a69825909f8a814cd8ed5c26e229c5ef6ca111eac5731a18b9bf1e9122347e7ad4
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1228.4363f8b.tar.gz
+        sha512: ea8c5220b1e016d394ce9882fd4314fe60a7d432baf98390e1e9cba18ce7241ec61eb3a188c2c10d8b8154d36adb43232f5f2884eb30cb3a34113b0c845ec6c2
         strip-components: 0
     modules:
       - name: libXNVCtrl
