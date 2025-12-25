@@ -1,0 +1,12 @@
+name: libjpeg-turbo
+buildsystem: cmake-ninja
+config-opts:
+  - -DENABLE_SHARED=YES
+  - -DENABLE_STATIC=NO
+  - -DWITH_TOOLS=NO
+  - -DCMAKE_BUILD_TYPE=Release
+sources:
+  - type: git
+    url: https://github.com/libjpeg-turbo/libjpeg-turbo.git
+    tag: 3.1.2
+    commit: 4e151a4ad91001b3aa8c2ece2205c15f487ce320
