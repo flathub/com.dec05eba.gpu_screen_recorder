@@ -1,5 +1,6 @@
 app-id: com.dec05eba.gpu_screen_recorder
 runtime: org.freedesktop.Platform
+# 25.08 doesn't work on older intel devices that need i956_drv_video.so vaapi
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
@@ -176,8 +177,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r461.202c0b2.tar.gz
-        sha512: 4d7b3f796d5375609387f5e11338661bcf840187a9b462e5d512b4321ffed1e2d7af4df8544cecbe968cf7c299318b9d29465986e3c257cb21e1e22327c8c368
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r463.45ae7c9.tar.gz
+        sha512: 09a05f250e5b089f0e91fecdce6aaf6e4b735d04815aa41f2a083628d23b582d674721f6bf543eb55501275eeacea87d5d551fd2ca5be62e804f399a9ca01ad8
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
