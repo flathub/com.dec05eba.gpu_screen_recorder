@@ -177,8 +177,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r471.d1220b0.tar.gz
-        sha512: faf024d6364e50786609a805b724721ae19ea9749e8f2e1882d3dad25ab16a6e2cb5803428d29a1d3dc691f66ef765e383e939ee54d74a80320462cb5905e450
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r474.fed4700.tar.gz
+        sha512: 649a7652382fb6dfe36c49a1a94565693acf9c73be2dc79ecdbef144090660891d37540ca7ac56f4c54e3da10a073d5263c6065cb82888c203ddfb9f5dfa1dc7
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
