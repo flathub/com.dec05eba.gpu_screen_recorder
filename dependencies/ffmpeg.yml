@@ -2,6 +2,7 @@ name: ffmpeg
 disabled: false
 config-opts:
   - --enable-gpl
+  - --enable-version3
   - --enable-shared
   - --disable-static
   - --disable-debug
@@ -35,6 +36,7 @@ config-opts:
   - --enable-libopus
   - --enable-vaapi
   - --enable-libx264
+  - --enable-openssl
 cleanup:
   - /share/ffmpeg/examples
 sources:
