@@ -22,7 +22,7 @@ finish-args:
   # Both of these are needed to get the title of the active window, to save videos automatically
   # in a folder based on the games name
   - --talk-name=org.kde.KWin
-  - --own-name=com.dec05eba.gsr_kwin_helper
+  - --own-name=com.dec05eba.gpu_screen_recorder.gsr_kwin_helper
 
 cleanup:
   - /include
@@ -185,8 +185,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-hyprland-helper"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r506.0341930.tar.gz
-        sha512: 7484b5407fe10ea618ae1b7aa6d5b8b3969e66c2b135bcda9de40a01a33b96d9657a05d95364b424bffa3b91829d2567da88b0bba6b148c74eacdd022f695bdc
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r507.c6339ac.tar.gz
+        sha512: a6ce43f5c7aca02ad5da1008e60d5151e9ea5356b5f14f71e99db3d09ea965feebef186813ef00ac9ce5496690cb9b6970f23379acc7ab9e668bc38d92bf6485
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
