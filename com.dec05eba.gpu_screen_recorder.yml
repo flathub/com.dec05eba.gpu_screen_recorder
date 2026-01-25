@@ -185,8 +185,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-hyprland-helper"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r507.c6339ac.tar.gz
-        sha512: a6ce43f5c7aca02ad5da1008e60d5151e9ea5356b5f14f71e99db3d09ea965feebef186813ef00ac9ce5496690cb9b6970f23379acc7ab9e668bc38d92bf6485
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r510.b48c971.tar.gz
+        sha512: 3a5703c891f0ac57cec7bf7b5d70cc39ed0949b1f7173a4735e787e637d8fe89b36b366dd4e02c0d34ec03d0f31d6d5886b99424b735173ac222fe8fe7dce352
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
