@@ -68,8 +68,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1281.01d0df5.tar.gz
-        sha512: c55e861874bfd99e2a54a706bcf814070a977b26bbe51a57d6b34af62fb2ce1aece14bd7ba103ec1ce675746e1e0556582fb7a80b0cfe5d66cc28a354c5368b7
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1285.144b481.tar.gz
+        sha512: f83b57c51e1f7d26ec5edccde7862eea0853f82d71c216ca40cde881ed929c25914d3520e57bf10e25484f3cf3d120c2f2621d375fc217abded3e69016115135
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -162,8 +162,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r30.111942a.tar.gz
-        sha512: bb73ae4b0fbc16a38ed47d796e223fa5431b250e5727610431e6fe11113bda0af0677ae03ad1f7e31afde9f37b71d6496f6e39394574fafea1bbaa713a21e824
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r31.7d5c3ef.tar.gz
+        sha512: f108eb6fdf343c331607609080edf47f81011425396c7429fc06d291d2786dc0d1a277ac92826c732a9ebcebca265fb10545052768ad389ef84c59d4b209c632
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -185,8 +185,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-hyprland-helper"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r510.b48c971.tar.gz
-        sha512: 3a5703c891f0ac57cec7bf7b5d70cc39ed0949b1f7173a4735e787e637d8fe89b36b366dd4e02c0d34ec03d0f31d6d5886b99424b735173ac222fe8fe7dce352
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r523.bed241e.tar.gz
+        sha512: 54d8309aeb4cd15baa68fb82344eed791544f934a6751988d1959714d17b9c635bb2a0267a045e2e61eee397e1f82f8d92672cfe17c179c249fdb35ba98b1adf
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
