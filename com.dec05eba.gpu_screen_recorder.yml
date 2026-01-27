@@ -34,7 +34,6 @@ cleanup:
 modules:
   - dependencies/ffmpeg.yml
   - dependencies/libayatana-appindicator3-0.1.yml
-  - dependencies/libjpeg-turbo.yml
 
   - name: kms-server-proxy
     disabled: false
