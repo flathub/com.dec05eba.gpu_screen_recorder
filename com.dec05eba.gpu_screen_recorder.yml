@@ -19,10 +19,9 @@ finish-args:
   - --socket=x11
   - --talk-name=org.freedesktop.Flatpak
   - --talk-name=org.kde.StatusNotifierWatcher
-  # Both of these are needed to get the title of the active window, to save videos automatically
+  # This is needed to get the title of the active window, to save videos automatically
   # in a folder based on the games name
   - --talk-name=org.kde.KWin
-  - --own-name=com.dec05eba.gpu_screen_recorder.gsr_kwin_helper
 
 cleanup:
   - /include
@@ -35,7 +34,6 @@ cleanup:
 modules:
   - dependencies/ffmpeg.yml
   - dependencies/libayatana-appindicator3-0.1.yml
-  - dependencies/libjpeg-turbo.yml
 
   - name: kms-server-proxy
     disabled: false
@@ -185,8 +183,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-hyprland-helper"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r524.ee873e2.tar.gz
-        sha512: 979c824c7ec34a4f16343495222b1356fb66a300b8f07fc3f5f762ad72a091b34feec3f314a77fc3dc26337e9c90cfbf2fa96aacfe1fff4fc2cc72629edf6df9
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r526.f921be4.tar.gz
+        sha512: 71df3ddffbcccbcb32c6cf79965375f53e7123c8dd490d4e164a25c3cff5b0d723f441f5e26c29ed28be716eacf5ab1eca42cadcad2954c41069b2c5335b3f6f
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
