@@ -19,10 +19,9 @@ finish-args:
   - --socket=x11
   - --talk-name=org.freedesktop.Flatpak
   - --talk-name=org.kde.StatusNotifierWatcher
-  # Both of these are needed to get the title of the active window, to save videos automatically
+  # This is needed to get the title of the active window, to save videos automatically
   # in a folder based on the games name
   - --talk-name=org.kde.KWin
-  - --own-name=com.dec05eba.gpu_screen_recorder.gsr_kwin_helper
 
 cleanup:
   - /include
