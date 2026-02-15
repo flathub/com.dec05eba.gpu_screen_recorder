@@ -41,7 +41,7 @@ cleanup:
   - /share/ffmpeg/examples
 sources:
   - type: git
-    url: https://git.ffmpeg.org/ffmpeg.git
+    url: https://github.com/FFmpeg/FFmpeg.git
     commit: 894da5ca7d742e4429ffb2af534fcda0103ef593
     tag: n8.0.1
     x-checker-data:
