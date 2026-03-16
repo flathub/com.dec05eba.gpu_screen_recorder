@@ -42,8 +42,8 @@ cleanup:
 sources:
   - type: git
     url: https://github.com/FFmpeg/FFmpeg.git
-    commit: 894da5ca7d742e4429ffb2af534fcda0103ef593
-    tag: n8.0.1
+    commit: 9047fa1b084f76b1b4d065af2d743df1b40dfb56
+    tag: n8.1
     x-checker-data:
       type: git
       tag-pattern: ^n([\d.]+)$
