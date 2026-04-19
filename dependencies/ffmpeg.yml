@@ -16,7 +16,6 @@ config-opts:
   - --disable-amf
   - --disable-audiotoolbox
   - --disable-videotoolbox
-  - --disable-vulkan
   - --disable-sdl2
   - --disable-autodetect
   - --disable-avdevice
@@ -35,6 +34,7 @@ config-opts:
   - --enable-ffnvcodec
   - --enable-libopus
   - --enable-vaapi
+  - --enable-vulkan
   - --enable-libx264
   - --enable-openssl
 cleanup:

@@ -66,8 +66,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1304.4ed0483.tar.gz
-        sha512: 8578426595f51dfb343d65437d8f99caea98d4f0cd19343898a1632aef9a1049587c60fb37fbeed068c56cbd59c87c021fa6ef91bace89ed1a611ea1898e9d05
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1310.ac15027.tar.gz
+        sha512: 5bb4d3c265f77a6aea17084a7f35911631dcc5151edf6522aa898c52e7d05768b663fd7b60b33160ded1833a664340698added0291f8ae3c66b36f0606f6c1f4
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -150,8 +150,8 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r505.ece6b5f.tar.gz
-        sha512: a132593dc7ea379855baae178abe227c33c5e597e26b051ef25b3643711a2b76231e6562a9e6c0a21eea9c7425642b94d92bd34d23b121b8bf5683359147aa47
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r507.d3e5d91.tar.gz
+        sha512: 32695ac201cc71f19421acbc4dec0e3a963a2ec3c4b31d9eb5a98b9818e333bb9a26bdfafad0c0b24812ef9e5761916ffe2809ca57822e76581176386a3e924a
         strip-components: 0
 
   - name: gpu-screen-recorder-appdata
@@ -160,8 +160,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r32.4aa51c5.tar.gz
-        sha512: 7a334280f8c414d18b078e6ec655f8204c172a6aae39cb07f37ae9acf2e22fb6c9eb36df2a1dc8cd3cfb23424edf96720d2206de13e97ba08a5ca1cfa9132863
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r33.b0090e0.tar.gz
+        sha512: b954bb8501df9a82de4d90582e8ee237023115414d7d67637e521ac37d57e80b9b79ac34e552862387ada5102b1924ac825f336ed14e7b9b1890c3e0d297bc20
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -175,16 +175,20 @@ modules:
         -O2 -g0 -s -fstack-protector-all -o gsr-global-hotkeys
       - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-musl tools/gsr-hyprland-helper/*.c
         -O2 -g0 -s -o gsr-hyprland-helper
+      - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-musl tools/gsr-game-tracker/*.c
+        -O2 -g0 -s -o gsr-game-tracker
       - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - install -Dm755 gsr-hyprland-helper "$FLATPAK_DEST/bin/gsr-hyprland-helper"
+      - install -Dm755 gsr-game-tracker "$FLATPAK_DEST/bin/gsr-game-helper"
       - install -Dm644 flatpak/gpu-screen-recorder-ui.service "$FLATPAK_DEST/share/gpu-screen-recorder/gpu-screen-recorder-ui.service"
       - strip "$FLATPAK_DEST/bin/gsr-ui"
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - strip "$FLATPAK_DEST/bin/gsr-hyprland-helper"
+      - strip "$FLATPAK_DEST/bin/gsr-game-tracker"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r554.2adc462.tar.gz
-        sha512: 3afdb6a0040c773d406c54c2847a0067621208ed66f860031ed317c57c1b74b51851d7626266d2c102c604aca71698f5184dff8bec103ea0543ad1a4d4d8fea7
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r596.adb4ff9.tar.gz
+        sha512: fbf6ff0830db54e825d61a3d17972d3b53011806012cdde9ae4e2bac44b513cc7985315016a43db3657c00db573f6a7ae3af5bf9bda951e590ccb6cc0ca93948
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
@@ -194,6 +198,6 @@ modules:
       - -Dstrip=true
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r87.2f86097.tar.gz
-        sha512: 023a75df2f72b8ca1ca85df225e1361326b4ef153f83511fbbc12561423ce35623d38058aeed76a63be93f50b1f9229ffcbb904b5d2b03c0515cc6d894507bf2
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r90.ae5de77.tar.gz
+        sha512: 5798799c870c83ec8c2c39eb2765f07516267314401c7e37fc4272ae89cfc15367e5eab69cd9f19894f27d5df5b41518955b21ca9659787b30c16df773b60af5
         strip-components: 0
