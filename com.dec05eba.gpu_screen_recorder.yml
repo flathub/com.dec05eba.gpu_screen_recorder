@@ -66,8 +66,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1310.ac15027.tar.gz
-        sha512: 5bb4d3c265f77a6aea17084a7f35911631dcc5151edf6522aa898c52e7d05768b663fd7b60b33160ded1833a664340698added0291f8ae3c66b36f0606f6c1f4
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1317.feac27c.tar.gz
+        sha512: 885e6f7ace5f22adbe95119e788ad62fdef7720d64c55297b37aa534fcf78fb9d6018d5c191371b2ce1148ef63d9b18f1ce331930b40e609d1ad32d0a5fd7620
         strip-components: 0
     modules:
       - name: libXNVCtrl
@@ -160,15 +160,15 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r33.b0090e0.tar.gz
-        sha512: b954bb8501df9a82de4d90582e8ee237023115414d7d67637e521ac37d57e80b9b79ac34e552862387ada5102b1924ac825f336ed14e7b9b1890c3e0d297bc20
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r34.838df59.tar.gz
+        sha512: bdb9055ba2df9059ab4d88e49c4076f37965aaef2871ed376b952f92a54ef33eab2780a40bd6c981a09b3efbb2782ce43feafc39c7a70160fdb160616a8cbeeb
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
     buildsystem: simple
     build-commands:
       - meson setup build
-      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Dsystemd=false -Ddesktop-files=false
+      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Ddesktop-files=false
         -Dcapabilities=false build
       - ninja -C build install
       - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-musl tools/gsr-global-hotkeys/*.c
@@ -180,15 +180,14 @@ modules:
       - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - install -Dm755 gsr-hyprland-helper "$FLATPAK_DEST/bin/gsr-hyprland-helper"
       - install -Dm755 gsr-game-tracker "$FLATPAK_DEST/bin/gsr-game-helper"
-      - install -Dm644 flatpak/gpu-screen-recorder-ui.service "$FLATPAK_DEST/share/gpu-screen-recorder/gpu-screen-recorder-ui.service"
       - strip "$FLATPAK_DEST/bin/gsr-ui"
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - strip "$FLATPAK_DEST/bin/gsr-hyprland-helper"
       - strip "$FLATPAK_DEST/bin/gsr-game-tracker"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r596.adb4ff9.tar.gz
-        sha512: fbf6ff0830db54e825d61a3d17972d3b53011806012cdde9ae4e2bac44b513cc7985315016a43db3657c00db573f6a7ae3af5bf9bda951e590ccb6cc0ca93948
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r604.eb6aed9.tar.gz
+        sha512: 47b88e230d5f49027852c030991e790c75693703ccb013a8a2d1341c03e94db04327308135c845e46d37fad8798b4732d8e516195926fadfb7cc00d348e75944
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
