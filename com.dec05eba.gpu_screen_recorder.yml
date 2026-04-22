@@ -180,7 +180,6 @@ modules:
       - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - install -Dm755 gsr-hyprland-helper "$FLATPAK_DEST/bin/gsr-hyprland-helper"
       - install -Dm755 gsr-game-tracker "$FLATPAK_DEST/bin/gsr-game-helper"
-      - install -Dm644 flatpak/gpu-screen-recorder-ui.service "$FLATPAK_DEST/share/gpu-screen-recorder/gpu-screen-recorder-ui.service"
       - strip "$FLATPAK_DEST/bin/gsr-ui"
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - strip "$FLATPAK_DEST/bin/gsr-hyprland-helper"
