@@ -168,7 +168,7 @@ modules:
     buildsystem: simple
     build-commands:
       - meson setup build
-      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Dsystemd=false -Ddesktop-files=false
+      - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dstrip=true -Ddesktop-files=false
         -Dcapabilities=false build
       - ninja -C build install
       - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-musl tools/gsr-global-hotkeys/*.c
