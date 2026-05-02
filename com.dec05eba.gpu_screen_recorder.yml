@@ -66,27 +66,10 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1320.e48be50.tar.gz
-        sha512: ade099964ead39f953a3c62be862083bb014f1ba34e88883921cce11b74358951f9860b87299bc1be2f8ed38f44bec2f4cdead9a4ce173689e6868a4d3c605a9
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1323.be5e51b.tar.gz
+        sha512: da40aa71ca7ed3a7b61215ec59416c1902f495f816adc05e440621a145abe774ea114bae5dea40aa1540ff9526414f9aa5aab704cb53004ee1a8dec8cade4d93
         strip-components: 0
     modules:
-      - name: libXNVCtrl
-        no-autogen: true
-        no-make-install: true
-        subdir: src/libXNVCtrl
-        build-commands:
-          - gcc -shared NVCtrl.c -o libXNVCtrl.so.0 -O2 -s -g0 -lX11 -lXext
-          - install -Dm755 libXNVCtrl.so.0 $FLATPAK_DEST/lib/libXNVCtrl.so.0
-        sources:
-          - type: git
-            url: https://github.com/NVIDIA/nvidia-settings.git
-            commit: cabdc134c623f5092c4ad07a5448cb37bc582422
-            tag: 550.144.03
-            x-checker-data:
-              type: git
-              tag-pattern: ^([\d.]+)$
-              versions:
-                <: '551'
       - name: libdrm
         buildsystem: meson
         config-opts:
@@ -160,8 +143,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r34.838df59.tar.gz
-        sha512: bdb9055ba2df9059ab4d88e49c4076f37965aaef2871ed376b952f92a54ef33eab2780a40bd6c981a09b3efbb2782ce43feafc39c7a70160fdb160616a8cbeeb
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r35.693763d.tar.gz
+        sha512: 7188f0e3727ba10dc092586afc6f9b907902241e873c0237b92402d835e2c2e9faf85be38284ae868f031501cfe4f8131ba84a21accc5c373c1f8d0507ca9fcb
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -186,8 +169,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-game-tracker"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r607.962e4c9.tar.gz
-        sha512: f5c5bbf4c22d1a0529b3712051de8ce78c7f7995fd1c1383edf14dc5b2395bfdf4f7fcbb746110b967aef15d680acf97ba1915dc840a4ad0b7aa3bb1878b15b9
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r623.f571cc4.tar.gz
+        sha512: d717bc5331135ffe2e987caa1d4967fd84b50a3fff66bb7982c0f9d7d3ef991435cf3d48838612677004e6b42d2154106dd3a8a156e9feb6fd632779e4334cbc
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
@@ -197,6 +180,6 @@ modules:
       - -Dstrip=true
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r92.30bac91.tar.gz
-        sha512: b5ccb6dbd712accedd954be8a4484e2607ae5f6968789910109e5e056f9945d41dee09fb3e17663167ac312e7ffe7f84e8b3471b5aa67025d72a2f1e40cbac93
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r94.6dc74a8.tar.gz
+        sha512: d106137c4079fea11bdcfaf0f72b4d48a6e5f6facac20becba1b4c65bf24f816f745231c372c122580856e70ef50e3c9746db6ed140e1aa4160f8450d3cc7400
         strip-components: 0
