@@ -19,9 +19,10 @@ finish-args:
   - --socket=x11
   - --talk-name=org.freedesktop.Flatpak
   - --talk-name=org.kde.StatusNotifierWatcher
-  # This is needed to get the title of the active window, to save videos automatically
+  # These are needed to get the title of the active window, to save videos automatically
   # in a folder based on the games name
   - --talk-name=org.kde.KWin
+  - --talk-name=org.gnome.Shell.Extensions
 
 cleanup:
   - /include
@@ -66,8 +67,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1323.be5e51b.tar.gz
-        sha512: da40aa71ca7ed3a7b61215ec59416c1902f495f816adc05e440621a145abe774ea114bae5dea40aa1540ff9526414f9aa5aab704cb53004ee1a8dec8cade4d93
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1331.898dd91.tar.gz
+        sha512: 597ee2e44defe730b34317f2e5e7d3f0ec8a9b27ba91b26b56f0bd6a91b3b196f1e50ac2752e2117ae64bed8b50ccccff75310fc2f9d61122aabd7c9ad20529c
         strip-components: 0
     modules:
       - name: libdrm
@@ -143,8 +144,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r35.693763d.tar.gz
-        sha512: 7188f0e3727ba10dc092586afc6f9b907902241e873c0237b92402d835e2c2e9faf85be38284ae868f031501cfe4f8131ba84a21accc5c373c1f8d0507ca9fcb
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r36.82849a2.tar.gz
+        sha512: a536aceef9e0dc69bd40169853002eb9edf7e19db510467b1d3c464656385537c7cf35d6b93d084f5af5a59985f69a57321e07b9f97c3d34e797e17a46765a00
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -156,21 +157,17 @@ modules:
       - ninja -C build install
       - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-musl tools/gsr-global-hotkeys/*.c
         -O2 -g0 -s -fstack-protector-all -o gsr-global-hotkeys
-      - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-musl tools/gsr-hyprland-helper/*.c
-        -O2 -g0 -s -o gsr-hyprland-helper
       - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-musl tools/gsr-game-tracker/*.c
         -O2 -g0 -s -o gsr-game-tracker
       - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
-      - install -Dm755 gsr-hyprland-helper "$FLATPAK_DEST/bin/gsr-hyprland-helper"
       - install -Dm755 gsr-game-tracker "$FLATPAK_DEST/bin/gsr-game-helper"
       - strip "$FLATPAK_DEST/bin/gsr-ui"
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
-      - strip "$FLATPAK_DEST/bin/gsr-hyprland-helper"
       - strip "$FLATPAK_DEST/bin/gsr-game-tracker"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r623.f571cc4.tar.gz
-        sha512: d717bc5331135ffe2e987caa1d4967fd84b50a3fff66bb7982c0f9d7d3ef991435cf3d48838612677004e6b42d2154106dd3a8a156e9feb6fd632779e4334cbc
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r643.f0377aa.tar.gz
+        sha512: 37ea247e1067b1e8a0ab2a47f9dc0fa417ace9c6f6e794212eadb870ab4b277059cb7cd3e31a57d9783720723ba86c1f50f8acb907a4183de578345c0b611032
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
