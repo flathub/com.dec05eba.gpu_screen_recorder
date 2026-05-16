@@ -166,8 +166,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-game-tracker"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r661.a9c55b6.tar.gz
-        sha512: 2b3355c08abeccb98c9a5567632e484505ddf7e61e66b1b9830b958f0ad3f5448546c20fc61d05daf6716961979cc9f28536aa3f1495ab07a7156d99fcbcab11
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r662.c4fce38.tar.gz
+        sha512: dbd13b2aecf82c764d8a9dca4aac48984760919e4e51b73c5d696638da99eff5cd21dbd2a4735a76fdb2204dfdedf18044379973613752238298065019132063
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
