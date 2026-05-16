@@ -67,8 +67,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1337.b6b9b32.tar.gz
-        sha512: bbabdd54d3407eb2cfe60c0042a9c6576e1dfabde7da8d90d15ff63f3629907e1f63437c254ab92b108e984cfbaa8c01c80c922064621e12d2d6fdb748f71792
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1345.23703bb.tar.gz
+        sha512: 44586ba72e9d691fb93fb0d80f5a0f622da9b31fb9c48926227634e89a02e8fd7c32dd8ae94ab4b557d86463e8ca3c91a25593b57a371f24efcac9333b43b1f1
         strip-components: 0
     modules:
       - name: libdrm
@@ -144,8 +144,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r37.c18e8af.tar.gz
-        sha512: c90135aeb3619e2068f162448e4b5c70d9f1bc15b989d96489f677f975d011137b69098cb6c7b3cf7fed8ae0417beeaf9c36d4a43a8f801bb2cbdd7677ca6597
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r38.f827afc.tar.gz
+        sha512: 3f7c3fa77edbc7b7c87504417d2e12792fe9683203b0c45b9362abc16081767f2438e8429a209e9059db5818f4ed223f935af632afba957d1c0c773b4e7f31f3
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -166,8 +166,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-game-tracker"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r656.2544249.tar.gz
-        sha512: c9c68fa183c4f5e04266f7342e89526c40eeae6555956fb1570e6a10e1883f5e1dd1c077d7f041f0c93938f823822d114d13f966228be668fa44d71d5915a1ad
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r661.a9c55b6.tar.gz
+        sha512: 2b3355c08abeccb98c9a5567632e484505ddf7e61e66b1b9830b958f0ad3f5448546c20fc61d05daf6716961979cc9f28536aa3f1495ab07a7156d99fcbcab11
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
