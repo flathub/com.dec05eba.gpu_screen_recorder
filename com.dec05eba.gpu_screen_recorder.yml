@@ -159,11 +159,14 @@ modules:
         -O2 -g0 -s -fstack-protector-all -o gsr-global-hotkeys
       - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-musl tools/gsr-game-tracker/*.c
         -O2 -g0 -s -o gsr-game-tracker
+      - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-musl tools/gsr-wayland-bridge/*.c
+        -O2 -g0 -s -o gsr-wayland-bridge
       - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
       - install -Dm755 gsr-game-tracker "$FLATPAK_DEST/bin/gsr-game-helper"
+      - install -Dm755 gsr-wayland-bridge "$FLATPAK_DEST/bin/gsr-wayland-bridge"
       - strip "$FLATPAK_DEST/bin/gsr-ui"
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
-      - strip "$FLATPAK_DEST/bin/gsr-game-tracker"
+      - strip "$FLATPAK_DEST/bin/gsr-wayland-bridge"
     sources:
       - type: archive
         url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r664.44b5650.tar.gz
