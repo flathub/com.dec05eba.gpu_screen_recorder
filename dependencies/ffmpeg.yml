@@ -49,6 +49,16 @@ sources:
       tag-pattern: ^n([\d.]+)$
       versions:
         <: '9'
+  # Runtime NVENC API version negotiation: built against nv-codec-headers 13.0
+  # (for AV1 and RTX 5000 series support) but still works on drivers down to
+  # 470.57.02 (nvenc API 11.1, the last driver branch for the first NVENC
+  # generation, Kepler) by presenting the older API's struct versions at
+  # runtime and disabling features the driver doesn't support.
+  # The patch is written against ffmpeg n8.1 and pins nv-codec-headers to
+  # 13.0.x (its struct version table and legacy 10-bit field layout were
+  # validated for exactly that combination; it fails the build otherwise).
+  - type: patch
+    path: ffmpeg-nvenc-runtime-api-version.patch
 modules:
   - name: ffnvcodec
     no-autogen: true
@@ -59,13 +69,16 @@ modules:
     sources:
       - type: git
         url: https://github.com/FFmpeg/nv-codec-headers.git
-        commit: 43d91706e097565f57b311e567f0219838bcc2f6
-        tag: n11.1.5.3
+        commit: e844e5b26f46bb77479f063029595293aa8f812d
+        tag: n13.0.19.0
         x-checker-data:
           type: git
           tag-pattern: ^n([\d.]+)$
           versions:
-            <: '12'
+            # The nvenc runtime API negotiation patch is validated against
+            # 13.0.x headers only; bumping past that requires re-validating
+            # the patch (it will fail the build on purpose).
+            <: '13.1'
   - name: libx264
     config-opts:
       - --disable-cli
