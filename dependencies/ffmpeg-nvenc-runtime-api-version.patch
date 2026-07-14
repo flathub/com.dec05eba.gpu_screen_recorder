@@ -1,0 +1,837 @@
+diff --git a/libavcodec/nvenc.c b/libavcodec/nvenc.c
+index 392230526d..ba26580acb 100644
+--- a/libavcodec/nvenc.c
++++ b/libavcodec/nvenc.c
+@@ -263,7 +263,15 @@ static void nvenc_map_preset(NvencContext *ctx)
+ 
+ static void nvenc_print_driver_requirement(AVCodecContext *avctx, int level)
+ {
+-#if NVENCAPI_CHECK_VERSION(13, 1)
++/* With runtime API version negotiation the build-time header version no
++ * longer dictates the required driver; the runtime floor is API 11.1. */
++#if 1
++# if defined(_WIN32) || defined(__CYGWIN__)
++    const char *minver = "471.41";
++# else
++    const char *minver = "470.57.02";
++# endif
++#elif NVENCAPI_CHECK_VERSION(13, 1)
+     const char *minver = "(unknown)";
+ #elif NVENCAPI_CHECK_VERSION(13, 0)
+     const char *minver = "570.0";
+@@ -347,6 +355,193 @@ static void nvenc_print_driver_requirement(AVCodecContext *avctx, int level)
+ #define to_nv_color_trc(n)      (uint32_t)(n)
+ #endif
+ 
++/*
++ * Runtime NVENC API version negotiation, see nvenc.h.
++ *
++ * Each row holds the exact NV_ENC_*_VER constants of one SDK's nvEncodeAPI.h.
++ * A struct version word is composed as
++ *     major | (minor << 24) | (struct_revision << 16) | (0x7 << 28)
++ * optionally OR'd with (1u << 31); the driver validates the whole word, so
++ * presenting a row of these values is indistinguishable from an FFmpeg that
++ * was actually compiled against that SDK's headers.
++ */
++#define NVENC_API_WORD(major, minor) \
++    ((uint32_t)(major) | ((uint32_t)(minor) << 24))
++#define NVENC_STRUCT_VER(major, minor, rev) \
++    (NVENC_API_WORD(major, minor) | ((uint32_t)(rev) << 16) | (0x7u << 28))
++#define NVENC_STRUCT_VER_RES(major, minor, rev) \
++    (NVENC_STRUCT_VER(major, minor, rev) | (1u << 31))
++
++// Newest first; negotiation picks the first row the driver supports.
++static const NvencApiVersion nvenc_api_versions[] = {
++    { // SDK 13.0, driver >= 570.0 (Linux) / 570.0 (Windows)
++        .packed                  = NVENC_API_PACKED(13, 0),
++        .api                     = NVENC_API_WORD(13, 0),
++        .function_list           = NVENC_STRUCT_VER(13, 0, 2),
++        .open_session_params     = NVENC_STRUCT_VER(13, 0, 1),
++        .caps_param              = NVENC_STRUCT_VER(13, 0, 1),
++        .initialize_params       = NVENC_STRUCT_VER_RES(13, 0, 7),
++        .config                  = NVENC_STRUCT_VER_RES(13, 0, 9),
++        .preset_config           = NVENC_STRUCT_VER_RES(13, 0, 5),
++        .pic_params              = NVENC_STRUCT_VER_RES(13, 0, 7),
++        .lock_bitstream          = NVENC_STRUCT_VER_RES(13, 0, 2),
++        .lock_input_buffer       = NVENC_STRUCT_VER(13, 0, 1),
++        .map_input_resource      = NVENC_STRUCT_VER(13, 0, 4),
++        .register_resource       = NVENC_STRUCT_VER(13, 0, 5),
++        .create_input_buffer     = NVENC_STRUCT_VER(13, 0, 2),
++        .create_bitstream_buffer = NVENC_STRUCT_VER(13, 0, 1),
++        .reconfigure_params      = NVENC_STRUCT_VER_RES(13, 0, 2),
++        .sequence_param_payload  = NVENC_STRUCT_VER(13, 0, 1),
++    },
++    { // SDK 12.2, driver >= 550.54.14 (Linux) / 551.76 (Windows)
++        .packed                  = NVENC_API_PACKED(12, 2),
++        .api                     = NVENC_API_WORD(12, 2),
++        .function_list           = NVENC_STRUCT_VER(12, 2, 2),
++        .open_session_params     = NVENC_STRUCT_VER(12, 2, 1),
++        .caps_param              = NVENC_STRUCT_VER(12, 2, 1),
++        .initialize_params       = NVENC_STRUCT_VER_RES(12, 2, 7),
++        .config                  = NVENC_STRUCT_VER_RES(12, 2, 9),
++        .preset_config           = NVENC_STRUCT_VER_RES(12, 2, 5),
++        .pic_params              = NVENC_STRUCT_VER_RES(12, 2, 7),
++        .lock_bitstream          = NVENC_STRUCT_VER_RES(12, 2, 2),
++        .lock_input_buffer       = NVENC_STRUCT_VER(12, 2, 1),
++        .map_input_resource      = NVENC_STRUCT_VER(12, 2, 4),
++        .register_resource       = NVENC_STRUCT_VER(12, 2, 5),
++        .create_input_buffer     = NVENC_STRUCT_VER(12, 2, 2),
++        .create_bitstream_buffer = NVENC_STRUCT_VER(12, 2, 1),
++        .reconfigure_params      = NVENC_STRUCT_VER_RES(12, 2, 2),
++        .sequence_param_payload  = NVENC_STRUCT_VER(12, 2, 1),
++    },
++    { // SDK 12.1, driver >= 530.41.03 (Linux) / 531.61 (Windows)
++        .packed                  = NVENC_API_PACKED(12, 1),
++        .api                     = NVENC_API_WORD(12, 1),
++        .function_list           = NVENC_STRUCT_VER(12, 1, 2),
++        .open_session_params     = NVENC_STRUCT_VER(12, 1, 1),
++        .caps_param              = NVENC_STRUCT_VER(12, 1, 1),
++        .initialize_params       = NVENC_STRUCT_VER_RES(12, 1, 6),
++        .config                  = NVENC_STRUCT_VER_RES(12, 1, 8),
++        .preset_config           = NVENC_STRUCT_VER_RES(12, 1, 4),
++        .pic_params              = NVENC_STRUCT_VER_RES(12, 1, 6),
++        .lock_bitstream          = NVENC_STRUCT_VER_RES(12, 1, 1),
++        .lock_input_buffer       = NVENC_STRUCT_VER(12, 1, 1),
++        .map_input_resource      = NVENC_STRUCT_VER(12, 1, 4),
++        .register_resource       = NVENC_STRUCT_VER(12, 1, 4),
++        .create_input_buffer     = NVENC_STRUCT_VER(12, 1, 1),
++        .create_bitstream_buffer = NVENC_STRUCT_VER(12, 1, 1),
++        .reconfigure_params      = NVENC_STRUCT_VER_RES(12, 1, 1),
++        .sequence_param_payload  = NVENC_STRUCT_VER(12, 1, 1),
++    },
++    { // SDK 12.0, driver >= 520.56.06 (Linux) / 522.25 (Windows)
++        .packed                  = NVENC_API_PACKED(12, 0),
++        .api                     = NVENC_API_WORD(12, 0),
++        .function_list           = NVENC_STRUCT_VER(12, 0, 2),
++        .open_session_params     = NVENC_STRUCT_VER(12, 0, 1),
++        .caps_param              = NVENC_STRUCT_VER(12, 0, 1),
++        .initialize_params       = NVENC_STRUCT_VER_RES(12, 0, 5),
++        .config                  = NVENC_STRUCT_VER_RES(12, 0, 8),
++        .preset_config           = NVENC_STRUCT_VER_RES(12, 0, 4),
++        .pic_params              = NVENC_STRUCT_VER_RES(12, 0, 6),
++        .lock_bitstream          = NVENC_STRUCT_VER(12, 0, 2),
++        .lock_input_buffer       = NVENC_STRUCT_VER(12, 0, 1),
++        .map_input_resource      = NVENC_STRUCT_VER(12, 0, 4),
++        .register_resource       = NVENC_STRUCT_VER(12, 0, 4),
++        .create_input_buffer     = NVENC_STRUCT_VER(12, 0, 1),
++        .create_bitstream_buffer = NVENC_STRUCT_VER(12, 0, 1),
++        .reconfigure_params      = NVENC_STRUCT_VER_RES(12, 0, 1),
++        .sequence_param_payload  = NVENC_STRUCT_VER(12, 0, 1),
++    },
++    { // SDK 11.1, driver >= 470.57.02 (Linux) / 471.41 (Windows) - Kepler's last branch
++        .packed                  = NVENC_API_PACKED(11, 1),
++        .api                     = NVENC_API_WORD(11, 1),
++        .function_list           = NVENC_STRUCT_VER(11, 1, 2),
++        .open_session_params     = NVENC_STRUCT_VER(11, 1, 1),
++        .caps_param              = NVENC_STRUCT_VER(11, 1, 1),
++        .initialize_params       = NVENC_STRUCT_VER_RES(11, 1, 5),
++        .config                  = NVENC_STRUCT_VER_RES(11, 1, 7),
++        .preset_config           = NVENC_STRUCT_VER_RES(11, 1, 4),
++        .pic_params              = NVENC_STRUCT_VER_RES(11, 1, 4),
++        .lock_bitstream          = NVENC_STRUCT_VER(11, 1, 1),
++        .lock_input_buffer       = NVENC_STRUCT_VER(11, 1, 1),
++        .map_input_resource      = NVENC_STRUCT_VER(11, 1, 4),
++        .register_resource       = NVENC_STRUCT_VER(11, 1, 3),
++        .create_input_buffer     = NVENC_STRUCT_VER(11, 1, 1),
++        .create_bitstream_buffer = NVENC_STRUCT_VER(11, 1, 1),
++        .reconfigure_params      = NVENC_STRUCT_VER_RES(11, 1, 1),
++        .sequence_param_payload  = NVENC_STRUCT_VER(11, 1, 1),
++    },
++};
++
++/* The newest row must be exactly what this build would present anyway; if any
++ * of these fire, the headers changed and the whole table needs re-validation. */
++_Static_assert(NVENC_API_WORD(13, 0)          == NVENCAPI_VERSION,                          "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER(13, 0, 2)     == NV_ENCODE_API_FUNCTION_LIST_VER,           "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER(13, 0, 1)     == NV_ENC_OPEN_ENCODE_SESSION_EX_PARAMS_VER,  "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER(13, 0, 1)     == NV_ENC_CAPS_PARAM_VER,                     "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER_RES(13, 0, 7) == NV_ENC_INITIALIZE_PARAMS_VER,              "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER_RES(13, 0, 9) == NV_ENC_CONFIG_VER,                         "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER_RES(13, 0, 5) == NV_ENC_PRESET_CONFIG_VER,                  "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER_RES(13, 0, 7) == NV_ENC_PIC_PARAMS_VER,                     "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER_RES(13, 0, 2) == NV_ENC_LOCK_BITSTREAM_VER,                 "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER(13, 0, 1)     == NV_ENC_LOCK_INPUT_BUFFER_VER,              "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER(13, 0, 4)     == NV_ENC_MAP_INPUT_RESOURCE_VER,             "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER(13, 0, 5)     == NV_ENC_REGISTER_RESOURCE_VER,              "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER(13, 0, 2)     == NV_ENC_CREATE_INPUT_BUFFER_VER,            "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER(13, 0, 1)     == NV_ENC_CREATE_BITSTREAM_BUFFER_VER,        "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER_RES(13, 0, 2) == NV_ENC_RECONFIGURE_PARAMS_VER,             "nvenc api version table outdated");
++_Static_assert(NVENC_STRUCT_VER(13, 0, 1)     == NV_ENC_SEQUENCE_PARAM_PAYLOAD_VER,         "nvenc api version table outdated");
++
++/* Layout guards for the compatibility padding after NV_ENC_INITIALIZE_PARAMS /
++ * NV_ENC_RECONFIGURE_PARAMS / NV_ENC_LOCK_BITSTREAM (their pre-12.2 layouts
++ * are up to 8 bytes larger: 1808, 1824 and 1552 bytes respectively) and for
++ * the legacy bit-depth pokes below. */
++_Static_assert(sizeof(NV_ENC_INITIALIZE_PARAMS)  == 1800, "unexpected NV_ENC_INITIALIZE_PARAMS layout");
++_Static_assert(sizeof(NV_ENC_RECONFIGURE_PARAMS) == 1816, "unexpected NV_ENC_RECONFIGURE_PARAMS layout");
++_Static_assert(sizeof(NV_ENC_LOCK_BITSTREAM)     == 1544, "unexpected NV_ENC_LOCK_BITSTREAM layout");
++_Static_assert(offsetof(NV_ENC_CONFIG_HEVC, tier) == 4 && offsetof(NV_ENC_CONFIG_HEVC, idrPeriod) == 20,
++               "unexpected NV_ENC_CONFIG_HEVC layout");
++_Static_assert(offsetof(NV_ENC_CONFIG_AV1, tier) == 4 && offsetof(NV_ENC_CONFIG_AV1, idrPeriod) == 20,
++               "unexpected NV_ENC_CONFIG_AV1 layout");
++
++/*
++ * SDK 12.2 removed the NV_ENC_CONFIG_HEVC.pixelBitDepthMinus8 and
++ * NV_ENC_CONFIG_AV1.inputPixelBitDepthMinus8/pixelBitDepthMinus8 bitfields
++ * and replaced them with the inputBitDepth/outputBitDepth enums that live at
++ * different offsets. Drivers negotiated to API < 12.2 still read the old bit
++ * positions (reserved-and-zero in the compiled 12.2+ layout), so 10 bit
++ * encoding on those drivers has to set the old bits by hand.
++ *
++ * Verified against the SDK 11.1/12.0/12.1 headers: both codec configs keep
++ * their flag bitfields in the uint32 word at byte offset 16 (between
++ * maxCUSize/maxPartSize at 12 and idrPeriod at 20, anchored by the asserts
++ * above). Within that word:
++ *   NV_ENC_CONFIG_HEVC: pixelBitDepthMinus8 = bits 11-13
++ *   NV_ENC_CONFIG_AV1:  inputPixelBitDepthMinus8 = bits 12-14,
++ *                       pixelBitDepthMinus8      = bits 15-17
++ */
++static void nvenc_legacy_bitfield_poke(void *codec_config, size_t word_offset,
++                                       unsigned bit_offset, unsigned width, uint32_t value)
++{
++    uint32_t word;
++    memcpy(&word, (uint8_t*)codec_config + word_offset, sizeof(word));
++    word &= ~(((1u << width) - 1) << bit_offset);
++    word |= (value & ((1u << width) - 1)) << bit_offset;
++    memcpy((uint8_t*)codec_config + word_offset, &word, sizeof(word));
++}
++
++static void nvenc_set_legacy_hevc_bit_depth(NV_ENC_CONFIG_HEVC *hevc, uint32_t depth_minus8)
++{
++    nvenc_legacy_bitfield_poke(hevc, 16, 11, 3, depth_minus8);
++}
++
++#if CONFIG_AV1_NVENC_ENCODER
++static void nvenc_set_legacy_av1_bit_depth(NV_ENC_CONFIG_AV1 *av1,
++                                           uint32_t input_depth_minus8, uint32_t output_depth_minus8)
++{
++    nvenc_legacy_bitfield_poke(av1, 16, 12, 3, input_depth_minus8);
++    nvenc_legacy_bitfield_poke(av1, 16, 15, 3, output_depth_minus8);
++}
++#endif
++
+ static av_cold int nvenc_load_libraries(AVCodecContext *avctx)
+ {
+     NvencContext *ctx            = avctx->priv_data;
+@@ -371,16 +566,35 @@ static av_cold int nvenc_load_libraries(AVCodecContext *avctx)
+ 
+     av_log(avctx, AV_LOG_VERBOSE, "Loaded Nvenc version %d.%d\n", nvenc_max_ver >> 4, nvenc_max_ver & 0xf);
+ 
+-    if ((NVENCAPI_MAJOR_VERSION << 4 | NVENCAPI_MINOR_VERSION) > nvenc_max_ver) {
++    /* Negotiate: present the newest API version both the driver and this
++     * build support instead of failing on drivers older than the headers. */
++    ctx->api_vers = NULL;
++    for (int i = 0; i < (int)FF_ARRAY_ELEMS(nvenc_api_versions); i++) {
++        if (nvenc_api_versions[i].packed <= nvenc_max_ver) {
++            ctx->api_vers = &nvenc_api_versions[i];
++            break;
++        }
++    }
++
++    if (!ctx->api_vers) {
+         av_log(avctx, AV_LOG_ERROR, "Driver does not support the required nvenc API version. "
+                "Required: %d.%d Found: %d.%d\n",
+-               NVENCAPI_MAJOR_VERSION, NVENCAPI_MINOR_VERSION,
++               11, 1,
+                nvenc_max_ver >> 4, nvenc_max_ver & 0xf);
+         nvenc_print_driver_requirement(avctx, AV_LOG_ERROR);
+         return AVERROR(ENOSYS);
+     }
+ 
+-    dl_fn->nvenc_funcs.version = NV_ENCODE_API_FUNCTION_LIST_VER;
++    ctx->api_version = ctx->api_vers->packed;
++
++    if (ctx->api_version < NVENC_API_PACKED(NVENCAPI_MAJOR_VERSION, NVENCAPI_MINOR_VERSION))
++        av_log(avctx, AV_LOG_VERBOSE, "Driver supports nvenc API up to %d.%d (compiled for %d.%d), "
++               "using API %d.%d; features requiring a newer driver are disabled\n",
++               nvenc_max_ver >> 4, nvenc_max_ver & 0xf,
++               NVENCAPI_MAJOR_VERSION, NVENCAPI_MINOR_VERSION,
++               ctx->api_version >> 4, ctx->api_version & 0xf);
++
++    dl_fn->nvenc_funcs.version = ctx->api_vers->function_list;
+ 
+     err = dl_fn->nvenc_dl->NvEncodeAPICreateInstance(&dl_fn->nvenc_funcs);
+     if (err != NV_ENC_SUCCESS)
+@@ -421,8 +635,8 @@ static av_cold int nvenc_open_session(AVCodecContext *avctx)
+     NV_ENCODE_API_FUNCTION_LIST *p_nvenc = &ctx->nvenc_dload_funcs.nvenc_funcs;
+     NVENCSTATUS ret;
+ 
+-    params.version    = NV_ENC_OPEN_ENCODE_SESSION_EX_PARAMS_VER;
+-    params.apiVersion = NVENCAPI_VERSION;
++    params.version    = ctx->api_vers->open_session_params;
++    params.apiVersion = ctx->api_vers->api;
+     if (ctx->d3d11_device) {
+         params.device     = ctx->d3d11_device;
+         params.deviceType = NV_ENC_DEVICE_TYPE_DIRECTX;
+@@ -483,7 +697,7 @@ static int nvenc_check_cap(AVCodecContext *avctx, NV_ENC_CAPS cap)
+     NV_ENC_CAPS_PARAM params        = { 0 };
+     int ret, val = 0;
+ 
+-    params.version     = NV_ENC_CAPS_PARAM_VER;
++    params.version     = ctx->api_vers->caps_param;
+     params.capsToQuery = cap;
+ 
+     ret = p_nvenc->nvEncGetEncodeCaps(ctx->nvencoder, ctx->init_encode_params.encodeGUID, &params, &val);
+@@ -498,6 +712,15 @@ static int nvenc_check_capabilities(AVCodecContext *avctx)
+     NvencContext *ctx = avctx->priv_data;
+     int tmp, ret;
+ 
++#if CONFIG_AV1_NVENC_ENCODER
++    if (avctx->codec->id == AV_CODEC_ID_AV1 && !NVENC_API_AT_LEAST(ctx, 12, 0)) {
++        av_log(avctx, AV_LOG_ERROR, "AV1 encoding needs nvenc API 12.0, but the driver "
++               "only supports %d.%d. Driver 520.56.06 or newer is required for AV1.\n",
++               ctx->api_version >> 4, ctx->api_version & 0xf);
++        return AVERROR(ENOSYS);
++    }
++#endif
++
+     ret = nvenc_check_codec_support(avctx);
+     if (ret < 0) {
+         av_log(avctx, AV_LOG_WARNING, "Codec not supported\n");
+@@ -1219,7 +1442,10 @@ static av_cold int nvenc_setup_rate_control(AVCodecContext *avctx)
+                     ctx->encode_config.rcParams.lookaheadDepth, ctx->rc_lookahead);
+ 
+ #ifdef NVENC_HAVE_LOOKAHEAD_LEVEL
+-            if (ctx->lookahead_level >= 0) {
++            if (ctx->lookahead_level >= 0 && !NVENC_API_AT_LEAST(ctx, 12, 2)) {
++                av_log(avctx, AV_LOG_WARNING, "Lookahead level needs nvenc API 12.2 "
++                       "(driver 550.54.14+), ignoring.\n");
++            } else if (ctx->lookahead_level >= 0) {
+                 switch (ctx->lookahead_level) {
+                     case NV_ENC_LOOKAHEAD_LEVEL_0:
+                     case NV_ENC_LOOKAHEAD_LEVEL_1:
+@@ -1413,8 +1639,12 @@ static av_cold int nvenc_setup_h264_config(AVCodecContext *avctx)
+     h264->level = ctx->level;
+ 
+ #ifdef NVENC_HAVE_NEW_BIT_DEPTH_API
+-    h264->inputBitDepth = IS_10BIT(ctx->data_pix_fmt) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
+-    h264->outputBitDepth = (IS_10BIT(ctx->data_pix_fmt) || ctx->highbitdepth) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
++    /* Pre-12.2 drivers read reserved space at these offsets; H264 on such
++     * drivers is always 8 bit (10 bit was rejected by the caps check). */
++    if (NVENC_API_AT_LEAST(ctx, 12, 2)) {
++        h264->inputBitDepth = IS_10BIT(ctx->data_pix_fmt) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
++        h264->outputBitDepth = (IS_10BIT(ctx->data_pix_fmt) || ctx->highbitdepth) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
++    }
+ #endif
+ 
+     if (ctx->coder >= 0)
+@@ -1450,6 +1680,13 @@ static av_cold int nvenc_setup_h264_config(AVCodecContext *avctx)
+ #endif
+ 
+ #ifdef NVENC_HAVE_TIME_CODE
++    /* On by default; quietly drop it on old drivers like a pre-12.2 build
++     * (this also disables the per-frame timeCode fill). */
++    if (ctx->s12m_tc && !NVENC_API_AT_LEAST(ctx, 12, 2)) {
++        av_log(avctx, AV_LOG_VERBOSE, "S12M timecodes need nvenc API 12.2, disabling.\n");
++        ctx->s12m_tc = 0;
++    }
++
+     if (ctx->s12m_tc)
+         h264->enableTimeCode = 1;
+ #endif
+@@ -1501,7 +1738,8 @@ static av_cold int nvenc_setup_hevc_config(AVCodecContext *avctx)
+         hevc->intraRefreshCnt = cc->gopLength - 1;
+         cc->gopLength = NVENC_INFINITE_GOPLENGTH;
+ #ifdef NVENC_HAVE_HEVC_OUTPUT_RECOVERY_POINT_SEI
+-        hevc->outputRecoveryPointSEI = 1;
++        if (NVENC_API_AT_LEAST(ctx, 12, 0))
++            hevc->outputRecoveryPointSEI = 1;
+ #endif
+ #ifdef NVENC_HAVE_SINGLE_SLICE_INTRA_REFRESH
+         hevc->singleSliceIntraRefresh = ctx->single_slice_intra_refresh;
+@@ -1509,12 +1747,14 @@ static av_cold int nvenc_setup_hevc_config(AVCodecContext *avctx)
+     }
+ 
+ #ifdef NVENC_HAVE_HEVC_AND_AV1_MASTERING_METADATA
+-    ctx->mdm = hevc->outputMasteringDisplay = !!av_frame_side_data_get(avctx->decoded_side_data,
+-                                                                       avctx->nb_decoded_side_data,
+-                                                                       AV_FRAME_DATA_MASTERING_DISPLAY_METADATA);
+-    ctx->cll = hevc->outputMaxCll           = !!av_frame_side_data_get(avctx->decoded_side_data,
+-                                                                       avctx->nb_decoded_side_data,
+-                                                                       AV_FRAME_DATA_CONTENT_LIGHT_LEVEL);
++    if (NVENC_API_AT_LEAST(ctx, 13, 0)) {
++        ctx->mdm = hevc->outputMasteringDisplay = !!av_frame_side_data_get(avctx->decoded_side_data,
++                                                                           avctx->nb_decoded_side_data,
++                                                                           AV_FRAME_DATA_MASTERING_DISPLAY_METADATA);
++        ctx->cll = hevc->outputMaxCll           = !!av_frame_side_data_get(avctx->decoded_side_data,
++                                                                           avctx->nb_decoded_side_data,
++                                                                           AV_FRAME_DATA_CONTENT_LIGHT_LEVEL);
++    }
+ #endif
+ 
+ #ifdef NVENC_HAVE_HEVC_CONSTRAINED_ENCODING
+@@ -1613,8 +1853,18 @@ static av_cold int nvenc_setup_hevc_config(AVCodecContext *avctx)
+     hevc->chromaFormatIDC = IS_YUV444(ctx->data_pix_fmt) ? 3 : IS_YUV422(ctx->data_pix_fmt) ? 2 : 1;
+ 
+ #ifdef NVENC_HAVE_NEW_BIT_DEPTH_API
+-    hevc->inputBitDepth = IS_10BIT(ctx->data_pix_fmt) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
+-    hevc->outputBitDepth = (IS_10BIT(ctx->data_pix_fmt) || ctx->highbitdepth) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
++    if (NVENC_API_AT_LEAST(ctx, 12, 2)) {
++        hevc->inputBitDepth = IS_10BIT(ctx->data_pix_fmt) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
++        hevc->outputBitDepth = (IS_10BIT(ctx->data_pix_fmt) || ctx->highbitdepth) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
++    } else {
++        if (ctx->highbitdepth && !IS_10BIT(ctx->data_pix_fmt)) {
++            av_log(avctx, AV_LOG_ERROR, "8 -> 10 bit HEVC encoding needs nvenc API 12.2 "
++                   "(driver 550.54.14+).\n");
++            return AVERROR(ENOSYS);
++        }
++        // The old pixelBitDepthMinus8 bitfield read by pre-12.2 drivers
++        nvenc_set_legacy_hevc_bit_depth(hevc, IS_10BIT(ctx->data_pix_fmt) ? 2 : 0);
++    }
+ #else
+     hevc->pixelBitDepthMinus8 = IS_10BIT(ctx->data_pix_fmt) ? 2 : 0;
+ #endif
+@@ -1722,20 +1972,28 @@ static av_cold int nvenc_setup_av1_config(AVCodecContext *avctx)
+     av1->chromaFormatIDC = IS_YUV444(ctx->data_pix_fmt) ? 3 : 1;
+ 
+ #ifdef NVENC_HAVE_NEW_BIT_DEPTH_API
+-    av1->inputBitDepth = IS_10BIT(ctx->data_pix_fmt) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
+-    av1->outputBitDepth = (IS_10BIT(ctx->data_pix_fmt) || ctx->highbitdepth) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
++    if (NVENC_API_AT_LEAST(ctx, 12, 2)) {
++        av1->inputBitDepth = IS_10BIT(ctx->data_pix_fmt) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
++        av1->outputBitDepth = (IS_10BIT(ctx->data_pix_fmt) || ctx->highbitdepth) ? NV_ENC_BIT_DEPTH_10 : NV_ENC_BIT_DEPTH_8;
++    } else {
++        // The old bitfields read by 12.0/12.1 drivers
++        nvenc_set_legacy_av1_bit_depth(av1, IS_10BIT(ctx->data_pix_fmt) ? 2 : 0,
++                                       (IS_10BIT(ctx->data_pix_fmt) || ctx->highbitdepth) ? 2 : 0);
++    }
+ #else
+     av1->inputPixelBitDepthMinus8 = IS_10BIT(ctx->data_pix_fmt) ? 2 : 0;
+     av1->pixelBitDepthMinus8 = (IS_10BIT(ctx->data_pix_fmt) || ctx->highbitdepth) ? 2 : 0;
+ #endif
+ 
+ #ifdef NVENC_HAVE_HEVC_AND_AV1_MASTERING_METADATA
+-    ctx->mdm = av1->outputMasteringDisplay = !!av_frame_side_data_get(avctx->decoded_side_data,
+-                                                                      avctx->nb_decoded_side_data,
+-                                                                      AV_FRAME_DATA_MASTERING_DISPLAY_METADATA);
+-    ctx->cll = av1->outputMaxCll           = !!av_frame_side_data_get(avctx->decoded_side_data,
+-                                                                      avctx->nb_decoded_side_data,
+-                                                                      AV_FRAME_DATA_CONTENT_LIGHT_LEVEL);
++    if (NVENC_API_AT_LEAST(ctx, 13, 0)) {
++        ctx->mdm = av1->outputMasteringDisplay = !!av_frame_side_data_get(avctx->decoded_side_data,
++                                                                          avctx->nb_decoded_side_data,
++                                                                          AV_FRAME_DATA_MASTERING_DISPLAY_METADATA);
++        ctx->cll = av1->outputMaxCll           = !!av_frame_side_data_get(avctx->decoded_side_data,
++                                                                          avctx->nb_decoded_side_data,
++                                                                          AV_FRAME_DATA_CONTENT_LIGHT_LEVEL);
++    }
+ #endif
+ 
+     if (ctx->b_ref_mode >= 0)
+@@ -1829,16 +2087,16 @@ static av_cold int nvenc_setup_encoder(AVCodecContext *avctx)
+     int res = 0;
+     int dw, dh;
+ 
+-    ctx->encode_config.version = NV_ENC_CONFIG_VER;
+-    ctx->init_encode_params.version = NV_ENC_INITIALIZE_PARAMS_VER;
++    ctx->encode_config.version = ctx->api_vers->config;
++    ctx->init_encode_params.version = ctx->api_vers->initialize_params;
+ 
+     ctx->init_encode_params.encodeHeight = avctx->height;
+     ctx->init_encode_params.encodeWidth = avctx->width;
+ 
+     ctx->init_encode_params.encodeConfig = &ctx->encode_config;
+ 
+-    preset_config.version = NV_ENC_PRESET_CONFIG_VER;
+-    preset_config.presetCfg.version = NV_ENC_CONFIG_VER;
++    preset_config.version = ctx->api_vers->preset_config;
++    preset_config.presetCfg.version = ctx->api_vers->config;
+ 
+ #ifdef NVENC_HAVE_NEW_PRESETS
+     ctx->init_encode_params.tuningInfo = ctx->tuning_info;
+@@ -1848,6 +2106,16 @@ static av_cold int nvenc_setup_encoder(AVCodecContext *avctx)
+     else if (ctx->flags & NVENC_LOWLATENCY)
+         ctx->init_encode_params.tuningInfo = NV_ENC_TUNING_INFO_LOW_LATENCY;
+ 
++#ifdef NVENC_HAVE_UHQ_TUNING
++    if (ctx->init_encode_params.tuningInfo == NV_ENC_TUNING_INFO_ULTRA_HIGH_QUALITY &&
++        (!NVENC_API_AT_LEAST(ctx, 12, 2) ||
++         (avctx->codec->id == AV_CODEC_ID_AV1 && !NVENC_API_AT_LEAST(ctx, 13, 0)))) {
++        av_log(avctx, AV_LOG_ERROR, "UHQ tuning needs nvenc API 12.2 (driver 550.54.14+), "
++               "13.0 (driver 570+) for AV1.\n");
++        return AVERROR(ENOSYS);
++    }
++#endif
++
+     nv_status = p_nvenc->nvEncGetEncodePresetConfigEx(ctx->nvencoder,
+         ctx->init_encode_params.encodeGUID,
+         ctx->init_encode_params.presetGUID,
+@@ -1864,7 +2132,7 @@ static av_cold int nvenc_setup_encoder(AVCodecContext *avctx)
+ 
+     memcpy(&ctx->encode_config, &preset_config.presetCfg, sizeof(ctx->encode_config));
+ 
+-    ctx->encode_config.version = NV_ENC_CONFIG_VER;
++    ctx->encode_config.version = ctx->api_vers->config;
+ 
+     compute_dar(avctx, &dw, &dh);
+     ctx->init_encode_params.darHeight = dh;
+@@ -1897,11 +2165,16 @@ static av_cold int nvenc_setup_encoder(AVCodecContext *avctx)
+         ctx->init_encode_params.enableWeightedPrediction = 1;
+ 
+ #ifdef NVENC_HAVE_SPLIT_FRAME_ENCODING
+-    ctx->init_encode_params.splitEncodeMode = ctx->split_encode_mode;
++    if (NVENC_API_AT_LEAST(ctx, 12, 1)) {
++        ctx->init_encode_params.splitEncodeMode = ctx->split_encode_mode;
+ 
+-    if (ctx->split_encode_mode != NV_ENC_SPLIT_DISABLE_MODE) {
+-        if (avctx->codec->id == AV_CODEC_ID_HEVC && ctx->weighted_pred == 1)
+-            av_log(avctx, AV_LOG_WARNING, "Split encoding not supported with weighted prediction enabled.\n");
++        if (ctx->split_encode_mode != NV_ENC_SPLIT_DISABLE_MODE) {
++            if (avctx->codec->id == AV_CODEC_ID_HEVC && ctx->weighted_pred == 1)
++                av_log(avctx, AV_LOG_WARNING, "Split encoding not supported with weighted prediction enabled.\n");
++        }
++    } else if (ctx->split_encode_mode != NV_ENC_SPLIT_AUTO_MODE) {
++        av_log(avctx, AV_LOG_WARNING, "Split frame encoding needs nvenc API 12.1 "
++               "(driver 530.41.03+), ignoring.\n");
+     }
+ #endif
+ 
+@@ -2042,7 +2315,7 @@ static av_cold int nvenc_alloc_surface(AVCodecContext *avctx, int idx)
+ 
+     NVENCSTATUS nv_status;
+     NV_ENC_CREATE_BITSTREAM_BUFFER allocOut = { 0 };
+-    allocOut.version = NV_ENC_CREATE_BITSTREAM_BUFFER_VER;
++    allocOut.version = ctx->api_vers->create_bitstream_buffer;
+ 
+     if (avctx->pix_fmt == AV_PIX_FMT_CUDA || avctx->pix_fmt == AV_PIX_FMT_D3D11) {
+         ctx->surfaces[idx].in_ref = av_frame_alloc();
+@@ -2058,7 +2331,7 @@ static av_cold int nvenc_alloc_surface(AVCodecContext *avctx, int idx)
+             return AVERROR(EINVAL);
+         }
+ 
+-        allocSurf.version = NV_ENC_CREATE_INPUT_BUFFER_VER;
++        allocSurf.version = ctx->api_vers->create_input_buffer;
+         allocSurf.width = avctx->width;
+         allocSurf.height = avctx->height;
+         allocSurf.bufferFmt = ctx->surfaces[idx].format;
+@@ -2146,7 +2419,7 @@ static av_cold int nvenc_setup_extradata(AVCodecContext *avctx)
+     char tmpHeader[NV_MAX_SEQ_HDR_LEN];
+ 
+     NV_ENC_SEQUENCE_PARAM_PAYLOAD payload = { 0 };
+-    payload.version = NV_ENC_SEQUENCE_PARAM_PAYLOAD_VER;
++    payload.version = ctx->api_vers->sequence_param_payload;
+ 
+     payload.spsppsBuffer = tmpHeader;
+     payload.inBufferSize = sizeof(tmpHeader);
+@@ -2178,7 +2451,7 @@ av_cold int ff_nvenc_encode_close(AVCodecContext *avctx)
+ 
+     /* the encoder has to be flushed before it can be closed */
+     if (ctx->nvencoder) {
+-        NV_ENC_PIC_PARAMS params        = { .version        = NV_ENC_PIC_PARAMS_VER,
++        NV_ENC_PIC_PARAMS params        = { .version        = ctx->api_vers->pic_params,
+                                             .encodePicFlags = NV_ENC_PIC_FLAG_EOS };
+ 
+         res = nvenc_push_context(avctx);
+@@ -2402,7 +2675,7 @@ static int nvenc_register_frame(AVCodecContext *avctx, const AVFrame *frame)
+     if (idx < 0)
+         return idx;
+ 
+-    reg.version            = NV_ENC_REGISTER_RESOURCE_VER;
++    reg.version            = ctx->api_vers->register_resource;
+     reg.width              = frames_ctx->width;
+     reg.height             = frames_ctx->height;
+     reg.pitch              = frame->linesize[0];
+@@ -2457,7 +2730,7 @@ static int nvenc_upload_frame(AVCodecContext *avctx, const AVFrame *frame,
+             return res;
+ 
+         if (!ctx->registered_frames[reg_idx].mapped) {
+-            ctx->registered_frames[reg_idx].in_map.version = NV_ENC_MAP_INPUT_RESOURCE_VER;
++            ctx->registered_frames[reg_idx].in_map.version = ctx->api_vers->map_input_resource;
+             ctx->registered_frames[reg_idx].in_map.registeredResource = ctx->registered_frames[reg_idx].regptr;
+             nv_status = p_nvenc->nvEncMapInputResource(ctx->nvencoder, &ctx->registered_frames[reg_idx].in_map);
+             if (nv_status != NV_ENC_SUCCESS) {
+@@ -2477,7 +2750,7 @@ static int nvenc_upload_frame(AVCodecContext *avctx, const AVFrame *frame,
+     } else {
+         NV_ENC_LOCK_INPUT_BUFFER lockBufferParams = { 0 };
+ 
+-        lockBufferParams.version = NV_ENC_LOCK_INPUT_BUFFER_VER;
++        lockBufferParams.version = ctx->api_vers->lock_input_buffer;
+         lockBufferParams.inputBuffer = nvenc_frame->input_surface;
+ 
+         nv_status = p_nvenc->nvEncLockInputBuffer(ctx->nvencoder, &lockBufferParams);
+@@ -2725,31 +2998,38 @@ static int process_output_surface(AVCodecContext *avctx, AVPacket *pkt, NvencSur
+     NvencDynLoadFunctions *dl_fn = &ctx->nvenc_dload_funcs;
+     NV_ENCODE_API_FUNCTION_LIST *p_nvenc = &dl_fn->nvenc_funcs;
+ 
+-    NV_ENC_LOCK_BITSTREAM lock_params = { 0 };
++    /* The SDK 12.1 NV_ENC_LOCK_BITSTREAM layout is 8 bytes larger than the
++     * 12.2+ layout this is compiled against; keep zeroed spare space after it
++     * for drivers negotiated to API <= 12.1. */
++    struct {
++        NV_ENC_LOCK_BITSTREAM params;
++        uint32_t compat_pad[2];
++    } lock_params_padded = { 0 };
++    NV_ENC_LOCK_BITSTREAM *lock_params = &lock_params_padded.params;
+     NVENCSTATUS nv_status;
+     int res = 0;
+ 
+     enum AVPictureType pict_type;
+ 
+-    lock_params.version = NV_ENC_LOCK_BITSTREAM_VER;
++    lock_params->version = ctx->api_vers->lock_bitstream;
+ 
+-    lock_params.doNotWait = 0;
+-    lock_params.outputBitstream = tmpoutsurf->output_surface;
++    lock_params->doNotWait = 0;
++    lock_params->outputBitstream = tmpoutsurf->output_surface;
+ 
+-    nv_status = p_nvenc->nvEncLockBitstream(ctx->nvencoder, &lock_params);
++    nv_status = p_nvenc->nvEncLockBitstream(ctx->nvencoder, lock_params);
+     if (nv_status != NV_ENC_SUCCESS) {
+         res = nvenc_print_error(avctx, nv_status, "Failed locking bitstream buffer");
+         goto error;
+     }
+ 
+-    res = ff_get_encode_buffer(avctx, pkt, lock_params.bitstreamSizeInBytes, 0);
++    res = ff_get_encode_buffer(avctx, pkt, lock_params->bitstreamSizeInBytes, 0);
+ 
+     if (res < 0) {
+         p_nvenc->nvEncUnlockBitstream(ctx->nvencoder, tmpoutsurf->output_surface);
+         goto error;
+     }
+ 
+-    memcpy(pkt->data, lock_params.bitstreamBufferPtr, lock_params.bitstreamSizeInBytes);
++    memcpy(pkt->data, lock_params->bitstreamBufferPtr, lock_params->bitstreamSizeInBytes);
+ 
+     nv_status = p_nvenc->nvEncUnlockBitstream(ctx->nvencoder, tmpoutsurf->output_surface);
+     if (nv_status != NV_ENC_SUCCESS) {
+@@ -2776,7 +3056,7 @@ static int process_output_surface(AVCodecContext *avctx, AVPacket *pkt, NvencSur
+         tmpoutsurf->input_surface = NULL;
+     }
+ 
+-    switch (lock_params.pictureType) {
++    switch (lock_params->pictureType) {
+     case NV_ENC_PIC_TYPE_IDR:
+         pkt->flags |= AV_PKT_FLAG_KEY;
+     case NV_ENC_PIC_TYPE_I:
+@@ -2799,13 +3079,13 @@ static int process_output_surface(AVCodecContext *avctx, AVPacket *pkt, NvencSur
+     }
+ 
+     ff_encode_add_stats_side_data(pkt,
+-        (lock_params.frameAvgQP - 1) * FF_QP2LAMBDA, NULL, 0, pict_type);
++        (lock_params->frameAvgQP - 1) * FF_QP2LAMBDA, NULL, 0, pict_type);
+ 
+-    res = nvenc_set_timestamp(avctx, &lock_params, pkt);
++    res = nvenc_set_timestamp(avctx, lock_params, pkt);
+     if (res < 0)
+         goto error2;
+ 
+-    res = nvenc_retrieve_frame_data(avctx, &lock_params, pkt);
++    res = nvenc_retrieve_frame_data(avctx, lock_params, pkt);
+     if (res < 0)
+         goto error2;
+ 
+@@ -2948,14 +3228,21 @@ static void reconfig_encoder(AVCodecContext *avctx, const AVFrame *frame)
+     NV_ENCODE_API_FUNCTION_LIST *p_nvenc = &ctx->nvenc_dload_funcs.nvenc_funcs;
+     NVENCSTATUS ret;
+ 
+-    NV_ENC_RECONFIGURE_PARAMS params = { 0 };
++    /* The pre-12.2 NV_ENC_RECONFIGURE_PARAMS layout is 8 bytes larger than
++     * the 12.2+ layout this is compiled against; keep zeroed spare space
++     * after it for drivers negotiated to API < 12.2. */
++    struct {
++        NV_ENC_RECONFIGURE_PARAMS params;
++        uint32_t compat_pad[2];
++    } params_padded = { 0 };
++    NV_ENC_RECONFIGURE_PARAMS *params = &params_padded.params;
+     int needs_reconfig = 0;
+     int needs_encode_config = 0;
+     int reconfig_bitrate = 0, reconfig_dar = 0;
+     int dw, dh;
+ 
+-    params.version = NV_ENC_RECONFIGURE_PARAMS_VER;
+-    params.reInitEncodeParams = ctx->init_encode_params;
++    params->version = ctx->api_vers->reconfigure_params;
++    params->reInitEncodeParams = ctx->init_encode_params;
+ 
+     compute_dar(avctx, &dw, &dh);
+     if (dw != ctx->init_encode_params.darWidth || dh != ctx->init_encode_params.darHeight) {
+@@ -2964,47 +3251,59 @@ static void reconfig_encoder(AVCodecContext *avctx, const AVFrame *frame)
+                ctx->init_encode_params.darWidth,
+                ctx->init_encode_params.darHeight, dw, dh);
+ 
+-        params.reInitEncodeParams.darHeight = dh;
+-        params.reInitEncodeParams.darWidth = dw;
++        params->reInitEncodeParams.darHeight = dh;
++        params->reInitEncodeParams.darWidth = dw;
+ 
+         needs_reconfig = 1;
+         reconfig_dar = 1;
+     }
+ 
+     if (ctx->rc != NV_ENC_PARAMS_RC_CONSTQP && ctx->support_dyn_bitrate) {
+-        if (avctx->bit_rate > 0 && params.reInitEncodeParams.encodeConfig->rcParams.averageBitRate != avctx->bit_rate) {
++        if (avctx->bit_rate > 0 && params->reInitEncodeParams.encodeConfig->rcParams.averageBitRate != avctx->bit_rate) {
+             av_log(avctx, AV_LOG_VERBOSE,
+                    "avg bitrate change: %d -> %d\n",
+-                   params.reInitEncodeParams.encodeConfig->rcParams.averageBitRate,
++                   params->reInitEncodeParams.encodeConfig->rcParams.averageBitRate,
+                    (uint32_t)avctx->bit_rate);
+ 
+-            params.reInitEncodeParams.encodeConfig->rcParams.averageBitRate = avctx->bit_rate;
++            params->reInitEncodeParams.encodeConfig->rcParams.averageBitRate = avctx->bit_rate;
+             reconfig_bitrate = 1;
+         }
+ 
+         if (avctx->rc_max_rate > 0 && ctx->encode_config.rcParams.maxBitRate != avctx->rc_max_rate) {
+             av_log(avctx, AV_LOG_VERBOSE,
+                    "max bitrate change: %d -> %d\n",
+-                   params.reInitEncodeParams.encodeConfig->rcParams.maxBitRate,
++                   params->reInitEncodeParams.encodeConfig->rcParams.maxBitRate,
+                    (uint32_t)avctx->rc_max_rate);
+ 
+-            params.reInitEncodeParams.encodeConfig->rcParams.maxBitRate = avctx->rc_max_rate;
++            params->reInitEncodeParams.encodeConfig->rcParams.maxBitRate = avctx->rc_max_rate;
+             reconfig_bitrate = 1;
+         }
+ 
+         if (avctx->rc_buffer_size > 0 && ctx->encode_config.rcParams.vbvBufferSize != avctx->rc_buffer_size) {
+             av_log(avctx, AV_LOG_VERBOSE,
+                    "vbv buffer size change: %d -> %d\n",
+-                   params.reInitEncodeParams.encodeConfig->rcParams.vbvBufferSize,
++                   params->reInitEncodeParams.encodeConfig->rcParams.vbvBufferSize,
+                    avctx->rc_buffer_size);
+ 
+-            params.reInitEncodeParams.encodeConfig->rcParams.vbvBufferSize = avctx->rc_buffer_size;
++            params->reInitEncodeParams.encodeConfig->rcParams.vbvBufferSize = avctx->rc_buffer_size;
+             reconfig_bitrate = 1;
+         }
+ 
+         if (reconfig_bitrate) {
+-            params.resetEncoder = 1;
+-            params.forceIDR = 1;
++            if (NVENC_API_AT_LEAST(ctx, 12, 2)) {
++                params->resetEncoder = 1;
++                params->forceIDR = 1;
++            } else {
++                /* SDK 12.2 inserted a reserved word at offset 4 of
++                 * NV_ENC_RECONFIGURE_PARAMS, shifting the trailing
++                 * resetEncoder/forceIDR bits from byte 1816 to 1808. Pre-12.2
++                 * drivers read them at 1816, which is compat_pad[0] of the
++                 * padded wrapper (verified against SDK 11.1-12.1 headers:
++                 * resetEncoder = bit 0, forceIDR = bit 1). The compiled
++                 * bitfields must stay 0: byte 1808 lies in reserved space of
++                 * the embedded pre-12.2 reInitEncodeParams. */
++                params_padded.compat_pad[0] = 0x1 | 0x2;
++            }
+ 
+             needs_encode_config = 1;
+             needs_reconfig = 1;
+@@ -3012,10 +3311,10 @@ static void reconfig_encoder(AVCodecContext *avctx, const AVFrame *frame)
+     }
+ 
+     if (!needs_encode_config)
+-        params.reInitEncodeParams.encodeConfig = NULL;
++        params->reInitEncodeParams.encodeConfig = NULL;
+ 
+     if (needs_reconfig) {
+-        ret = p_nvenc->nvEncReconfigureEncoder(ctx->nvencoder, &params);
++        ret = p_nvenc->nvEncReconfigureEncoder(ctx->nvencoder, params);
+         if (ret != NV_ENC_SUCCESS) {
+             nvenc_print_error(avctx, ret, "failed to reconfigure nvenc");
+         } else {
+@@ -3025,9 +3324,9 @@ static void reconfig_encoder(AVCodecContext *avctx, const AVFrame *frame)
+             }
+ 
+             if (reconfig_bitrate) {
+-                ctx->encode_config.rcParams.averageBitRate = params.reInitEncodeParams.encodeConfig->rcParams.averageBitRate;
+-                ctx->encode_config.rcParams.maxBitRate = params.reInitEncodeParams.encodeConfig->rcParams.maxBitRate;
+-                ctx->encode_config.rcParams.vbvBufferSize = params.reInitEncodeParams.encodeConfig->rcParams.vbvBufferSize;
++                ctx->encode_config.rcParams.averageBitRate = params->reInitEncodeParams.encodeConfig->rcParams.averageBitRate;
++                ctx->encode_config.rcParams.maxBitRate = params->reInitEncodeParams.encodeConfig->rcParams.maxBitRate;
++                ctx->encode_config.rcParams.vbvBufferSize = params->reInitEncodeParams.encodeConfig->rcParams.vbvBufferSize;
+             }
+ 
+         }
+@@ -3126,7 +3425,7 @@ static int nvenc_send_frame(AVCodecContext *avctx, const AVFrame *frame)
+     NV_ENCODE_API_FUNCTION_LIST *p_nvenc = &dl_fn->nvenc_funcs;
+ 
+     NV_ENC_PIC_PARAMS pic_params = { 0 };
+-    pic_params.version = NV_ENC_PIC_PARAMS_VER;
++    pic_params.version = ctx->api_vers->pic_params;
+ 
+     if ((!ctx->cu_context && !ctx->d3d11_device) || !ctx->nvencoder)
+         return AVERROR(EINVAL);
+diff --git a/libavcodec/nvenc.h b/libavcodec/nvenc.h
+index 069ba82bc9..4225c612aa 100644
+--- a/libavcodec/nvenc.h
++++ b/libavcodec/nvenc.h
+@@ -111,6 +111,54 @@ typedef void ID3D11Device;
+ #define NVENC_HAVE_MVHEVC
+ #endif
+ 
++/*
++ * Runtime NVENC API version negotiation.
++ *
++ * The NVENC driver rejects clients that present a newer API version than it
++ * supports, so an FFmpeg built against new SDK headers normally refuses to
++ * run on older drivers. Instead of failing, we query the driver's maximum
++ * supported API version at runtime and present struct version words (and the
++ * session apiVersion) matching what that driver expects, while disabling
++ * features that need a newer API. This keeps one binary working from driver
++ * 470.57.02 (API 11.1, the last driver branch for Kepler / first-generation
++ * NVENC GPUs) up to current drivers, including AV1 support on drivers that
++ * have it.
++ *
++ * The struct version table and the legacy bit-depth field positions below
++ * were derived from and verified against the exact layouts of nv-codec-headers
++ * n11.1.5.3, n12.0.16.1, n12.1.14.0, n12.2.72.0 and n13.0.19.0. All struct
++ * fields FFmpeg touches sit at identical offsets in all of those versions
++ * (new fields are only ever carved out of reserved space). Building against
++ * any other headers invalidates those assumptions, so refuse it.
++ */
++#if !NVENCAPI_CHECK_VERSION(13, 0) || NVENCAPI_CHECK_VERSION(13, 1)
++#error "The nvenc runtime API negotiation patch requires nv-codec-headers 13.0.x. Re-verify the struct version table and legacy bit-depth field layout before moving to other headers."
++#endif
++
++typedef struct NvencApiVersion {
++    uint32_t packed;                   // (major << 4) | minor, the NvEncodeAPIGetMaxSupportedVersion encoding
++    uint32_t api;                      // NVENCAPI_VERSION of that SDK: major | (minor << 24)
++    uint32_t function_list;            // NV_ENCODE_API_FUNCTION_LIST_VER
++    uint32_t open_session_params;      // NV_ENC_OPEN_ENCODE_SESSION_EX_PARAMS_VER
++    uint32_t caps_param;               // NV_ENC_CAPS_PARAM_VER
++    uint32_t initialize_params;        // NV_ENC_INITIALIZE_PARAMS_VER
++    uint32_t config;                   // NV_ENC_CONFIG_VER
++    uint32_t preset_config;            // NV_ENC_PRESET_CONFIG_VER
++    uint32_t pic_params;               // NV_ENC_PIC_PARAMS_VER
++    uint32_t lock_bitstream;           // NV_ENC_LOCK_BITSTREAM_VER
++    uint32_t lock_input_buffer;        // NV_ENC_LOCK_INPUT_BUFFER_VER
++    uint32_t map_input_resource;       // NV_ENC_MAP_INPUT_RESOURCE_VER
++    uint32_t register_resource;        // NV_ENC_REGISTER_RESOURCE_VER
++    uint32_t create_input_buffer;      // NV_ENC_CREATE_INPUT_BUFFER_VER
++    uint32_t create_bitstream_buffer;  // NV_ENC_CREATE_BITSTREAM_BUFFER_VER
++    uint32_t reconfigure_params;       // NV_ENC_RECONFIGURE_PARAMS_VER
++    uint32_t sequence_param_payload;   // NV_ENC_SEQUENCE_PARAM_PAYLOAD_VER
++} NvencApiVersion;
++
++#define NVENC_API_PACKED(major, minor) (((uint32_t)(major) << 4) | (minor))
++#define NVENC_API_AT_LEAST(ctx, major, minor) \
++    ((ctx)->api_version >= NVENC_API_PACKED(major, minor))
++
+ typedef struct NvencSurface
+ {
+     NV_ENC_INPUT_PTR input_surface;
+@@ -216,6 +264,11 @@ typedef struct NvencContext
+     NvencDynLoadFunctions nvenc_dload_funcs;
+ 
+     NV_ENC_INITIALIZE_PARAMS init_encode_params;
++    /* The pre-12.2 NV_ENC_INITIALIZE_PARAMS layout is 8 bytes larger than the
++     * 12.2+ layout this is compiled against. Drivers negotiated to API < 12.2
++     * read that larger footprint, so keep zeroed spare space directly after
++     * the struct. Must stay right after init_encode_params and stay zero. */
++    uint32_t init_encode_params_compat_pad[2];
+     NV_ENC_CONFIG encode_config;
+     CUcontext cu_context;
+     CUcontext cu_context_internal;
+@@ -321,6 +374,11 @@ typedef struct NvencContext
+     int cbr_padding;
+     int multiview, multiview_supported;
+     int display_sei_sent;
++
++    /* Runtime-negotiated NVENC API version: the newest version supported by
++     * both the driver and this build. Set in nvenc_load_libraries. */
++    const NvencApiVersion *api_vers;
++    uint32_t api_version;              // negotiated, (major << 4) | minor
+ } NvencContext;
+ 
+ int ff_nvenc_encode_init(AVCodecContext *avctx);
