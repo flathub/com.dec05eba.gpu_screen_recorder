@@ -66,8 +66,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1399.3bdc117.tar.gz
-        sha512: d3ffb96b93f6caf97bc2bbc89f99e20e12954b99eaea84fb7157ace8f816ececb27e02af1552242b2ddcc02526076c032a4e83c13aa238911bbc2834e5619432
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1405.7baf5e2.tar.gz
+        sha512: 647c03e63f43add273929520771814e0a64195be8f2d35d84af6876fc6b4e0f2903eb5c2ba9aad7a7e57d5e7707d7ff1fc260ba269127b50eb299a35656cdc2c
         strip-components: 0
     modules:
       - name: libdrm
@@ -168,8 +168,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-wayland-bridge"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r706.dc3c2d2.tar.gz
-        sha512: 7114186fdf94aaa5a1849e21277f6a9163550ee363099066301493d091ce3155d54f5d4638b444ed1858d4fd2657fc11e579985aeecf54a57ecf3008f1b94f53
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r708.7a31f49.tar.gz
+        sha512: 03f9319abfb468d1f10a54fd7e43eeaa35f07e1c9e9a9325693abb8e9d654233e27b98775653cd3e136bd5b0d816cc60102f4978df9e1f77c057872f5824b5b7
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
@@ -179,6 +179,6 @@ modules:
       - -Dstrip=true
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r108.fc5da8c.tar.gz
-        sha512: 602b771817026a895611d3c0efb4c8c17c3eb35789500a65e424c2271c514469040ce72e89dcbcc3f7d4c9e1764e6b0d08917168601a034fd723cb6ddf110e57
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r110.8db3818.tar.gz
+        sha512: 70db106f4a43d0faa2d288dd0a5a505dc757b791a5488606c4667c78c4448034552e735238241b4b58d3897b062962ffafe15f1fbfa176cb8f0ab82f6a2f0f14
         strip-components: 0
