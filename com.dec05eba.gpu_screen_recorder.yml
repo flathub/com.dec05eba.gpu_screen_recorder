@@ -161,15 +161,16 @@ modules:
       - /usr/lib/sdk/ziglang/zig cc -target "$(uname -m)"-linux-musl tools/gsr-wayland-bridge/*.c
         -O2 -g0 -s -o gsr-wayland-bridge
       - install -Dm755 gsr-global-hotkeys "$FLATPAK_DEST/bin/gsr-global-hotkeys"
-      - install -Dm755 gsr-game-tracker "$FLATPAK_DEST/bin/gsr-game-helper"
+      - install -Dm755 gsr-game-tracker "$FLATPAK_DEST/bin/gsr-game-tracker"
       - install -Dm755 gsr-wayland-bridge "$FLATPAK_DEST/bin/gsr-wayland-bridge"
       - strip "$FLATPAK_DEST/bin/gsr-ui"
       - strip "$FLATPAK_DEST/bin/gsr-global-hotkeys"
+      - strip "$FLATPAK_DEST/bin/gsr-game-tracker"
       - strip "$FLATPAK_DEST/bin/gsr-wayland-bridge"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r708.7a31f49.tar.gz
-        sha512: 03f9319abfb468d1f10a54fd7e43eeaa35f07e1c9e9a9325693abb8e9d654233e27b98775653cd3e136bd5b0d816cc60102f4978df9e1f77c057872f5824b5b7
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r711.08d4ea8.tar.gz
+        sha512: f624dd2f270ecf0d60723c86e2151cad86da33182f4a2b70f54077377023473d85ad77bf53e3985609ff406925c9df8e4174986e97576a3631b7658b6a269694
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
