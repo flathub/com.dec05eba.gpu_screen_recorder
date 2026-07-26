@@ -7,8 +7,8 @@ config-opts:
 sources:
   - type: git
     url: https://github.com/AyatanaIndicators/libayatana-appindicator.git
-    tag: 0.5.94
-    commit: 31e8bb083b307e1cc96af4874a94707727bd1e79
+    tag: 0.6.0
+    commit: 27f9d9ddcf20be87c6cede65c89c5b098b16330d
     x-checker-data:
       type: anitya
       project-id: 18446
@@ -22,8 +22,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/AyatanaIndicators/libayatana-indicator.git
-        tag: 0.9.4
-        commit: 611bb384b73fa6311777ba4c41381a06f5b99dad
+        tag: 0.9.5
+        commit: 0db7877be8c61953b50540183d5932ab159181f1
         x-checker-data:
           type: anitya
           project-id: 18447
