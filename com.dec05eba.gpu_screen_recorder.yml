@@ -32,7 +32,6 @@ cleanup:
   - /share/doc
 
 modules:
-  - dependencies/ffmpeg.yml
   - dependencies/libayatana-appindicator3-0.1.yml
 
   - name: kms-server-proxy
@@ -53,7 +52,7 @@ modules:
     build-commands:
       - meson setup build
       - meson configure --prefix=$FLATPAK_DEST --buildtype=release -Dcapabilities=false
-        -Dsystemd=false -Dnvidia_suspend_fix=false -Dstrip=true build
+        -Dsystemd=false -Dnvidia_suspend_fix=false -Dffmpeg_static=true -Dstrip=true build
       - ninja -C build install
       - gcc kms/server/kms_server.c -o gsr-kms-server $FLATPAK_DEST/lib/libdrm.a -I$FLATPAK_DEST/include/libdrm
         $GSR_KMS_SERVER_OPTS
@@ -66,8 +65,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1416.8b0afd1.tar.gz
-        sha512: 2746cdc6ac66f5ca7ec173393e6f7afc0aeaf96b3ca174b4b43c061387490b16fe761da694e43fb10a76c4d42fe048bbc2b953ee3f67929314251f6af0fe8843
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1464.8051784.tar.gz
+        sha512: 03b48803bf42184b585f2de72e3614959f200b69a5ce1b472d9b7b5b4b0681e0e5fea7fad5091f8885d3ffc0b02075c07e8f9dd19691abfce068dcf46b4c1a85
         strip-components: 0
     modules:
       - name: libdrm
@@ -133,8 +132,8 @@ modules:
       - update-desktop-database -q "$FLATPAK_DEST/share/applications"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r512.9bb8e0e.tar.gz
-        sha512: fa14339e32011904e4775312075d2d8c970abec4946ba34e1dabef416580899c0a33630cfeea54341f63d78edcbf22e6d770db97fb96e600b0f95b8d414289cc
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-gtk.git.r513.dade88d.tar.gz
+        sha512: ae4619b02efdd6a79cbf8abf1112ebb70a8055f43e9fa09c2d22af7a19687887cf3f60f3f5228ded75cca23dd349fe8ebbbbe6cfa83d6131d46e761475c22791
         strip-components: 0
 
   - name: gpu-screen-recorder-appdata
@@ -143,8 +142,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r41.7b3dc75.tar.gz
-        sha512: 30bbf61cf5eb57cbb3854f66ce8b11f271690b8df340941fd2438a4c5130b4390fbb89b323d7543fdb5cae97298987632bb0395e9df4adb8abb15d3025c599d3
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r42.322daf4.tar.gz
+        sha512: 05c925b9149af34252c6e98b64ea104e79d2a3a831c0fa8afceccae31b4e691b4c31afe6e54aedb1ca4c2578fc598590cef9accf6040cdd1e4391ff36f93f7e2
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -169,8 +168,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-wayland-bridge"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r712.3a399b8.tar.gz
-        sha512: 1060acf461bdbee17eb2120911df8ae546a721548407d738b50fa41a0731f938a4afebd6c38238954e706b79c78c59bbebb55b528f58394d5fe2f216250dc42c
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r716.a21d0e2.tar.gz
+        sha512: 2a5f5716701edcabbc3c7e56a87146c69adb9622cbe6552c120b185b588f1387d479792ab838e41d4dc6991f7574fe3e08e72aa85274b87491a6088df696f4e6
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
