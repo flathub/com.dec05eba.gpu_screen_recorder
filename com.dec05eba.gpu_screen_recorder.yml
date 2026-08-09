@@ -198,8 +198,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-wayland-bridge"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r716.a21d0e2.tar.gz
-        sha512: 2a5f5716701edcabbc3c7e56a87146c69adb9622cbe6552c120b185b588f1387d479792ab838e41d4dc6991f7574fe3e08e72aa85274b87491a6088df696f4e6
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r718.4f3c121.tar.gz
+        sha512: 9ab705d33a717b6e9c9b96bf1ed03e33a904e3294ea81a60528a8780c146f0e99ed15073fadaac499d3f84d31d43e525a1b90ea20ef82bcb03375e69e025313a
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
