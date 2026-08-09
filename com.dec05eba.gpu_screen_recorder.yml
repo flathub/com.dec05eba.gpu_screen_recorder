@@ -65,8 +65,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1464.8051784.tar.gz
-        sha512: 03b48803bf42184b585f2de72e3614959f200b69a5ce1b472d9b7b5b4b0681e0e5fea7fad5091f8885d3ffc0b02075c07e8f9dd19691abfce068dcf46b4c1a85
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1465.6b216d4.tar.gz
+        sha512: 53d08943cd4046c87ca636cc74dd85362f8ac71bd71f5db09c1c97aeb68c76a19bef57a0bc10dd8ab5ec6122fa75ac5c3bf9afdc74445e3a1b456f5b657115bb
         strip-components: 0
     modules:
       - name: libdrm
