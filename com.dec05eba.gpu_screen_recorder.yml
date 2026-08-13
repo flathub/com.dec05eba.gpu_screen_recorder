@@ -172,8 +172,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r42.322daf4.tar.gz
-        sha512: 05c925b9149af34252c6e98b64ea104e79d2a3a831c0fa8afceccae31b4e691b4c31afe6e54aedb1ca4c2578fc598590cef9accf6040cdd1e4391ff36f93f7e2
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r43.c9c9cad.tar.gz
+        sha512: 7e6701631624c2bb1a8d449ea8747c3805ad24c3071194819f730c99e1d4e45d7fffaab9ac82859fa5f935f3b96b53f010592f534a374fcc93a45945076877d0
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -198,8 +198,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-wayland-bridge"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r718.4f3c121.tar.gz
-        sha512: 9ab705d33a717b6e9c9b96bf1ed03e33a904e3294ea81a60528a8780c146f0e99ed15073fadaac499d3f84d31d43e525a1b90ea20ef82bcb03375e69e025313a
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r720.edfc70d.tar.gz
+        sha512: 036f01a329f82c8190ddb0a1f2c8db10fa91cc1b9da9925d518606387ee92c82821b275418e5b22f08fa7d038caba049fccf9babad8d86159f17f921db957901
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
