@@ -65,8 +65,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1496.9ed51e7.tar.gz
-        sha512: 6ab8955f608f489288384052f3fbdf42ffbc152e91ee8b303b3466d176876fba08689253b3752ccf577bac7b9d6c572036d8446ea0a209d0faaebd7546e0cc88
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1497.ad6981c.tar.gz
+        sha512: 41cd8147199450d7e3d403a586cd5abde4af684e565e397efdef200f3cafbde2753a206e0cb5593db57174196f3013c6488b3a7eaf634ee55e336b10961865d0
         strip-components: 0
       - type: file
         url: https://ffmpeg.org/releases/ffmpeg-9.0.tar.xz
