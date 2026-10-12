@@ -65,8 +65,8 @@ modules:
           -DNDEBUG -static -static-libgcc
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1514.396526a.tar.gz
-        sha512: 62791004814e519b70b83599941c91f7a7a26d1a01426edbeacf562acdeb0ca2506100078773ea9f10702b129f4bc8864d26d0ba193b0540b8e62424152e5c69
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1521.d2cff49.tar.gz
+        sha512: 3d8b864de5706ef823ab4b18735826add947017abeedbefd93b103f8fcbb8d1229e4c05ac656a5729b28184ea6132fb97678422bc5c0da5daee3b8b0920b1b98
         strip-components: 0
       - type: file
         url: https://ffmpeg.org/releases/ffmpeg-9.0.tar.xz
@@ -172,8 +172,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r46.8dae618.tar.gz
-        sha512: 66c25538550240e2b1d1b6e237e9fcdc4e018715d377a765617d05f449d99ac876d427a235316aacbaf18a3cd7856ba987b1194bce98e2edc59008f1d46e47d1
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r47.80a5e1f.tar.gz
+        sha512: c8739f4f28e967fe84b58a21b086f410017be595e877a2609ab4fa7b4c4f6dd9f3b3ca2d94d7ec27ab2fef95c8ce70b6eb772b57b27b5b43f180892acceb04bd
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -198,8 +198,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-wayland-bridge"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r743.99c9da1.tar.gz
-        sha512: e26dcb5f299e7b41f5b572149babd1594631fd4d46c047b4f40eaa17966487977c5afb5d2230d1e33bbb73f6c658a8281606c503e0d2e753f72b5b75f49b1926
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r753.e148c78.tar.gz
+        sha512: 7794629d186305e6211462ae6b1bedfed2c8bcf37ac965f2ef29d9ab464cce2d0873853e3c78db866ffd79be9d18cf4c98204b53010f38569de7060bf8b57c81
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
