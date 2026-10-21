@@ -1,7 +1,6 @@
 app-id: com.dec05eba.gpu_screen_recorder
 runtime: org.freedesktop.Platform
-# 25.08 doesn't work on older intel devices that need i956_drv_video.so vaapi
-runtime-version: '24.08'
+runtime-version: '26.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.ziglang
@@ -23,16 +22,58 @@ finish-args:
   # in a folder based on the games name
   - --talk-name=org.kde.KWin
   - --talk-name=org.gnome.Shell.Extensions
+  - --env=LIBVA_DRIVERS_PATH=/usr/lib/x86_64-linux-gnu/dri:/usr/lib/x86_64-linux-gnu/dri/intel-vaapi-driver:/usr/lib/x86_64-linux-gnu/dri/nvidia-vaapi-driver:/usr/lib/x86_64-linux-gnu/GL/lib/dri:/usr/lib/aarch64-linux-gnu/dri:/usr/lib/aarch64-linux-gnu/dri/nvidia-vaapi-driver:/usr/lib/aarch64-linux-gnu/GL/lib/dri:/app/lib/dri
 
 cleanup:
   - /include
   - /lib/pkgconfig
   - /lib/libdrm.a
+  - /lib/libdrm_intel.a
   - /share/gtk-doc
   - /share/doc
 
 modules:
   - dependencies/libayatana-appindicator3-0.1.yml
+
+  - name: libdrm
+    buildsystem: meson
+    config-opts:
+      - -Dintel=auto
+      - -Dradeon=disabled
+      - -Damdgpu=disabled
+      - -Dnouveau=disabled
+      - -Dvmwgfx=disabled
+      - -Domap=disabled
+      - -Dexynos=disabled
+      - -Dfreedreno=disabled
+      - -Dtegra=disabled
+      - -Dvc4=disabled
+      - -Detnaviv=disabled
+      - -Dcairo-tests=disabled
+      - -Dman-pages=disabled
+      - -Dvalgrind=disabled
+      - -Dtests=false
+      - --default-library=static
+      - --buildtype=release
+    sources:
+      - type: git
+        url: https://gitlab.freedesktop.org/mesa/drm.git
+        commit: ad78bb591d02162d3b90890aa4d0a238b2a37cde
+        tag: libdrm-2.4.122
+
+  - name: intel-vaapi-driver
+    only-arches:
+      - x86_64
+    buildsystem: meson
+    config-opts:
+      - --buildtype=release
+      - -Ddriverdir=/app/lib/dri
+      - -Dwith_x11=no
+      - -Dwith_wayland_drm=no
+    sources:
+      - type: archive
+        url: https://github.com/irql-notlessorequal/intel-vaapi-driver/archive/refs/tags/2.4.5.tar.gz
+        sha256: f89f77bc46ec6f46392c1b90b9bf34d09f908bf33c9d16d385897b1fe282bacc
 
   - name: kms-server-proxy
     disabled: false
@@ -42,8 +83,8 @@ modules:
       - install -Dm755 kms-server-proxy "$FLATPAK_DEST/bin/kms-server-proxy"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r32.64615b4.tar.gz
-        sha512: 824d3d07372b66a979e0258de7de4fcc615c90e36f8ccfb8b3c2414b05ffa131c32a44a9c39681b48d93d941532bd8beb580f398512c4183b898bdf9b37b58f8
+        url: https://dec05eba.com/snapshot/kms-server-proxy.git.r33.3b056c0.tar.gz
+        sha512: f009b3b3b2da6c92b2ca0314c1103072437fdec0b96b0dc3e06a2fb159fbe03bee97f1e180991d5da1a4d25e8763b1ee5723ceffb52734d09a93c3128abd2d7c
         strip-components: 0
 
   - name: gpu-screen-recorder
@@ -62,17 +103,22 @@ modules:
     build-options:
       env:
         GSR_KMS_SERVER_OPTS: -fstack-protector-all -O3 -s -flto -Wall -Wextra -Werror
-          -DNDEBUG -static -static-libgcc
+          -DNDEBUG -static -static-libgcc -fno-link-libatomic
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1521.d2cff49.tar.gz
-        sha512: 3d8b864de5706ef823ab4b18735826add947017abeedbefd93b103f8fcbb8d1229e4c05ac656a5729b28184ea6132fb97678422bc5c0da5daee3b8b0920b1b98
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1528.1c01417.tar.gz
+        sha512: 5c2fc60c533fe81f7bc382c5505941fa50d68f63ad3de895f8d3f422b827303928802b3beda9423b8af541ed79c88b7315dee23e60972e9457cdd7b119f81b5c
         strip-components: 0
       - type: file
         url: https://ffmpeg.org/releases/ffmpeg-9.0.tar.xz
         sha256: 7f607a00dd0d28a729d5a4811205812eef01cf6ef6155025febb6f36a9062d52
         dest: subprojects/packagecache
         dest-filename: ffmpeg-9.0.tar.xz
+      - type: file
+        url: https://downloads.sourceforge.net/project/lame/lame/4.0/lame-4.0.tar.gz
+        sha256: 3df5124d5ad3a98312ffd7ba6a9b36230e4f8a3e66d3ce0f425e336c32d216eb
+        dest: subprojects/packagecache
+        dest-filename: lame-4.0.tar.gz
       - type: file
         url: https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-3.6.7/mbedtls-3.6.7.tar.bz2
         sha256: a7e8bcbec0e6f761b4af24f25677626b35f762f68eef79c08677a363212d11f6
@@ -98,33 +144,6 @@ modules:
         sha256: 6eeb82934e69fd51e043bd8c5b0d152839638d1ce7aa4eea65a3fedcf83ff224
         dest: subprojects/packagecache
         dest-filename: x264-b35605ace3ddf7c1a5d67a2eb553f034aef41d55.tar.bz2
-    modules:
-      - name: libdrm
-        buildsystem: meson
-        config-opts:
-          - -Dintel=disabled
-          - -Dradeon=disabled
-          - -Damdgpu=disabled
-          - -Dnouveau=disabled
-          - -Dvmwgfx=disabled
-          - -Domap=disabled
-          - -Dexynos=disabled
-          - -Dfreedreno=disabled
-          - -Dtegra=disabled
-          - -Dvc4=disabled
-          - -Detnaviv=disabled
-          - -Dcairo-tests=disabled
-          - -Dman-pages=disabled
-          - -Dvalgrind=disabled
-          - -Dtests=false
-          - --default-library=static
-          - --buildtype=release
-        sources:
-          - type: git
-            url: https://gitlab.freedesktop.org/mesa/drm.git
-            commit: ad78bb591d02162d3b90890aa4d0a238b2a37cde
-            tag: libdrm-2.4.122
-
   - name: gpu-screen-recorder-gtk
     buildsystem: simple
     build-commands:
@@ -172,8 +191,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r47.80a5e1f.tar.gz
-        sha512: c8739f4f28e967fe84b58a21b086f410017be595e877a2609ab4fa7b4c4f6dd9f3b3ca2d94d7ec27ab2fef95c8ce70b6eb772b57b27b5b43f180892acceb04bd
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r49.3cd5f10.tar.gz
+        sha512: ec4c16f482e2795ac89b98c5a321b309317fc18cff1a351912ff0e6e40296fa85e27e9765259da17d154a7c1bcf43f25bdd6e10c2700fb65c1571958473d59a9
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -198,8 +217,8 @@ modules:
       - strip "$FLATPAK_DEST/bin/gsr-wayland-bridge"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r753.e148c78.tar.gz
-        sha512: 7794629d186305e6211462ae6b1bedfed2c8bcf37ac965f2ef29d9ab464cce2d0873853e3c78db866ffd79be9d18cf4c98204b53010f38569de7060bf8b57c81
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r760.10b0126.tar.gz
+        sha512: 6bf2630b3d9e2a98ae0ca721d140f0b6f2254ed537edf3c9e65b30962a609770401d88cc758752fae5117c675327a9b904cc77c37bd95ab3ae02a35971b4886c
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
@@ -209,6 +228,6 @@ modules:
       - -Dstrip=true
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r114.54bc6c8.tar.gz
-        sha512: d85c4d16d9745d69d8f7cf6aaaa36cb833e38904aac5c4004417ba39b26adca26d0a3b773981aa1da699e0d8dcd2d2da8deb0025a5a8a5197c8ade45d808c549
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r117.4b67014.tar.gz
+        sha512: c3508936fc81c188de796d5abd1ceb0801ea68d3c1710c21044bd1a8cea58775aa6b12c9d169b4cb422b494400687d4bd16b212be00068c624de9f1f8773960f
         strip-components: 0
