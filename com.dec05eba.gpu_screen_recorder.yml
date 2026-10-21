@@ -60,11 +60,10 @@ modules:
         url: https://gitlab.freedesktop.org/mesa/drm.git
         commit: ad78bb591d02162d3b90890aa4d0a238b2a37cde
         tag: libdrm-2.4.122
-
-  # We need to bundle intel-vaapi-driver for i965_drv_video.so which was removed since 25.08 freedesktop runtime.
+  # We need to bundle intel-vaapi-driver for i965_drv_video.so which was removed since the 25.08 freedesktop runtime.
   # We use the irql-notlessorequal fork since upstream intel repository was deprecated in favor of media-driver repository,
   # which unfortunately removes support for i965.
-  # This intel-vaapi-driver fork is maintained (with bug fixes and features) and it's used by Arch Linux (libva-intel-driver)
+  # This intel-vaapi-driver fork is maintained (with bug fixes and features) and it's used by Arch Linux (libva-intel-driver, see https://archlinux.org/packages/extra/x86_64/libva-intel-driver/)
   # and possibly other distros.
   - name: intel-vaapi-driver
     only-arches:
