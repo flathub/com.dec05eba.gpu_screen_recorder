@@ -111,7 +111,7 @@ modules:
     sources:
       - type: archive
         url: https://dec05eba.com/snapshot/gpu-screen-recorder.git.r1536.099a55b.tar.gz
-        sha512: 519c373f41c8efed596d8f1e5dcd855840ad41b289c264709a8d4c84b403f549ca717bfebbd30077afa67a20e9a305d2f657895cb0d8127e9314d59cb92e27a8
+        sha512: 7049d8ffe4235141e31f9fa00c35e22b45f7bf3b4968134636a9f9845f9d77f2937a531c5cfe40988305d22f5987a66d1f8ce74d88856bfea2746710a12e029c
         strip-components: 0
       - type: file
         url: https://ffmpeg.org/releases/ffmpeg-9.0.tar.xz
@@ -195,8 +195,8 @@ modules:
       - install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "$FLATPAK_DEST/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
     sources:
       - type: archive
-        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r49.3cd5f10.tar.gz
-        sha512: ec4c16f482e2795ac89b98c5a321b309317fc18cff1a351912ff0e6e40296fa85e27e9765259da17d154a7c1bcf43f25bdd6e10c2700fb65c1571958473d59a9
+        url: https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.r50.e88b2ce.tar.gz
+        sha512: dd6748787adc462f2a2c856025c6647db281a5bb47782ad3a3a15b034f254b2107a8ca964f569e2e42f14401f8f2f67bf807c5fd7bfbda9e9d39c87001d4e93a
         strip-components: 0
 
   - name: gpu-screen-recorder-ui
@@ -222,7 +222,7 @@ modules:
     sources:
       - type: archive
         url: https://dec05eba.com/snapshot/gpu-screen-recorder-ui.git.r768.1ccade9.tar.gz
-        sha512: dd974bd21300ecabe7fda8fce40bc8422f6ecfc67a1619de4b636a271dd8a88b0778b49d5d5d0ed62ac7390ba4ccce854d1d5e602d43cfc6f99baa449fa33bf3
+        sha512: e23dde5297295604245f5112b0d1c790b2be07c4a9ff9b9fa6913a769af3dd4ee2a724f67d980b0cc0c91800a3d2bcf7f34b226a997a9d22cbc63c986e066db5
         strip-components: 0
 
   - name: gpu-screen-recorder-notification
@@ -233,5 +233,5 @@ modules:
     sources:
       - type: archive
         url: https://dec05eba.com/snapshot/gpu-screen-recorder-notification.git.r119.a894314.tar.gz
-        sha512: 44dea52c4e81b224817b3c5f29a7605d26156ca6ed6faa3e197511bb3fe3f9d1d68b9467bc384a2010267b9ab657b45669af3aee19d59c410a55d1726b2f4601
+        sha512: dce20950e2d9ba22a0bb4f72ee11e97109885c250109b3e0304afd1f5ff4c7a25577a56a9a54c63959c9c137aa4c6d10244b6b6fa5a53f8589ab5640f428f07d
         strip-components: 0
